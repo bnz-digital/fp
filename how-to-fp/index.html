@@ -1,0 +1,319 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 2.12.0"/><title data-react-helmet="true">FP Tutorial - How to FP</title><link rel="shortcut icon" href="/icons/icon-48x48.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="manifest" href="/manifest.webmanifest"/><meta name="theme-color" content="#333"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link as="script" rel="preload" href="/webpack-runtime-b6e99614b4a73e7a63bf.js"/><link as="script" rel="preload" href="/app-7ea7839cf3c0f726986c.js"/><link as="script" rel="preload" href="/0-1d5345cb509a315a641a.js"/><link as="script" rel="preload" href="/component---src-templates-tutorial-js-aed779472e6b01bec72f.js"/><link as="fetch" rel="preload" href="/page-data/how-to-fp/page-data.json" crossorigin="use-credentials"/></head><body><noscript id="gatsby-noscript">This app works best with JavaScript enabled.</noscript><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div class="tutorial-container"><div class="tutorial"><h1>How to FP</h1><div class="tutorial-content"><h2>Rule #1</h2>
+<p><strong>As often as possible, functions should take <em>at least</em> one argument and return <em>exactly one</em> result.</strong></p>
+<pre><code class="language-javascript">// square(3) returns 9
+function square (x) {
+  return x * x
+}
+
+// add(2, 3) returns 5
+function add (x, y) {
+  return x + y
+}
+</code></pre>
+<h3>Corollary to Rule #1</h3>
+<p><strong>As often as possible, the output of a function should depend <em>only</em> on its inputs: the same inputs should <em>always</em> return the same output.</strong></p>
+<p>This allows us to reason about our code by simplifying it using substitution. If <code>square(3)</code> <em>always</em> returns <code>9</code>, then everywhere I see <code>square(3)</code> in my code, I can replace it with <code>9</code>.</p>
+<p>This is another way of saying that a function should only change what is <em>inside</em> the function.</p>
+<p>Primitive values such as numbers, booleans, and strings are passed in "by value", which means that a copy is made inside the function and you are operating on that copy. Consider this:</p>
+<pre><code class="language-javascript">function makeShade (baseColour) {
+  return 'dark ' + baseColour
+}
+
+const colour = 'red'
+
+makeShade(colour) // returns 'dark red'
+
+// colour is still 'red'
+</code></pre>
+<p>In the above example, when <code>makeShade</code> is called with the value of <code>colour</code>, it makes a <em>copy</em> of its value ('red') and puts it in a local variable called <code>baseColour</code>. We then prepend 'dark ' to it and return the new value. So our original variable, <code>colour</code>, remains unchanged.</p>
+<p>In contrast, when we pass in a complex type such as an array or an object, it is passed in "by reference", which means that instead of making a copy of the value, our local variable points to the outer variable's value. So if we change that local variable in our function, it changes outside the function as well.</p>
+<p><strong>We want to avoid this as much as possible.</strong> Life is much easier when variables, once set, never change. Instead, make copies.</p>
+<p>In the example below, we make a copy of the array that was passed in using the <code>...</code> "spread" operator. This takes the items in the passed-in array and "spreads" them out into a new array. Now we can append our new value by including it at the end of the new array:</p>
+<pre><code class="language-javascript">function append (value, list) {
+  return [...list, value]
+}
+
+const arr = [1, 2, 3]
+
+append(4, arr) // returns [1, 2, 3, 4]
+
+// arr is still [1, 2, 3]
+</code></pre>
+<p>We can <code>prepend</code> just as easily:</p>
+<pre><code class="language-javascript">function prepend (value, list) {
+  return [value, ...list]
+}
+
+const arr = [2, 3, 4]
+
+prepend(1, arr) // returns [1, 2, 3, 4]
+</code></pre>
+<p>This works with objects as well:</p>
+<pre><code class="language-javascript">function setColour (colour, options) {
+  return {
+    ...options,
+    colour // shorthand for `colour: colour`
+  }
+}
+
+const myOptions = {
+  name: 'Bob',
+  age: 27,
+  colour: 'blue'
+}
+
+setColour('green', myOptions) // returns { name: 'Bob', age: 27, colour: 'green' }
+
+// myOptions.colour is still 'blue
+</code></pre>
+<h2>Rule #2</h2>
+<p><strong>Assign the value of a variable when it is declared (immediately), then <em>never change it</em>. Instead, create a new variable.</strong></p>
+<p>First, this means that we will always assign a variable when we declare it, and once we've assigned it, we will never re-assign it. In JavaScript, <code>let</code> is used for variables that we may want to re-assign (just forget all about <code>var</code>). If a variable will not be re-assigned, we can use <code>const</code> instead. Therefore, as much as possible, <strong>you should always use <code>const</code> to declare variables in JavaScript</strong>. As <code>const</code> cannot be re-assigned, you will be forced to assign it as you declare it.</p>
+<p>If you "must" use <code>let</code>, examine carefully <em>why</em> you are using it. This should be a very, very rare occurrence, as in, um, <em>never</em>. Virtually always there is a <em>better</em> approach using <code>const</code>. Get used to <code>const</code>!</p>
+<p>Note, however, that using <code>const</code> is not enough to ensure that a variable is never changed! It is true that if you use <code>const</code> with a a "primitive" type such as a number, then it is "immutable" (can't be changed):</p>
+<pre><code class="language-javascript">const x = 3
+
+x = 5 // throws an "x is read-only" error
+</code></pre>
+<p>But while <code>const</code> prevents the variable from being re-assigned, when the variable is a complex type such as an array or object, it is still possible to reach into that value and change it internally.</p>
+<p><strong>Don't.</strong></p>
+<p>When you need to <em>change</em> a variable, create a new variable instead.</p>
+<p>But doesn't this making looping difficult? Yes, it does! So...</p>
+<h2>Rule #3</h2>
+<p><strong>Avoid loops! Use functions instead.</strong></p>
+<p>JavaScript has a host of built-in methods that allow you to avoid loops in most (if not all) instances. Even better, there are libraries such as <code>ramda</code> and <code>lodash/fp</code> (never use the non-fp lodash as it is broken) that provide truly-functional versions of these methods.</p>
+<p>What are these amazing functions/methods? Among the most used are <code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>, <code>join</code>, and <code>sort</code>. Let's look at some examples. We've included the way to do each of these using the built-in methods as well (so-called "Vanilla JS"), but the pure functional way is better in most circumstances. We'll explain why later in this tutorial. Patience, please.</p>
+<h3>map</h3>
+<p>The <code>map</code> function is used to apply some kind of transformation to each item in a list, and to return a <em>new</em> list of the transformed items. Because <code>map</code> transforms each item in the list successively, it always returns a new list (array) <em>of the same length</em>. Remember that.</p>
+<pre><code class="language-javascript">import { map, toUpper } from 'ramda'
+
+toUpper('make me big') // returns 'MAKE ME BIG'
+
+const words = ['these', 'aRe', 'Some', 'strINGS']
+
+// Convert all strings to uppercase
+map(toUpper, words) // returns ['THESE', 'ARE', 'SOME', 'STRINGS']
+
+// Using Vanilla JS (returns a new list)
+words.map(toUpper) // returns ['THESE', 'ARE', 'SOME', 'STRINGS']
+
+words // still ['these', 'aRe', 'Some', 'strINGS']
+</code></pre>
+<p>Look, ma! No loops!</p>
+<h3>filter</h3>
+<p>The <code>filter</code> function takes a function and a list, applies the function to each item in the list, and includes in the output only those items for which the function applied to that item returns <code>true</code>.</p>
+<pre><code class="language-javascript">import { filter } from 'ramda'
+
+function isEven (num) {
+  return num % 2 === 0
+}
+
+const someNumbers = [1, 3, 4, 6, 7, 8, 9]
+
+// Return a list of only the even numbers
+filter(isEven, someNumbers) // returns [4, 6, 8]
+
+// Using Vanilla JS (returns a new list)
+someNumbers.filter(isEven) // returns [4, 6, 8]
+
+someNumbers // still [1, 3, 4, 6, 7, 8, 9]
+</code></pre>
+<h3>find</h3>
+<p>The <code>find</code> function takes a function and a list, applies the function to each item in the list in turn, and returns the <em>first item</em> for which the function when applied to it returns <code>true</code>:</p>
+<pre><code class="language-javascript">import { find } from 'ramda'
+
+function moreThanFive (x) {
+  return x > 5
+}
+
+const possibles = [1, 2, 4, 6, 9]
+
+// Find the first item greater than five
+find(moreThanFive, possibles) // returns 6
+
+// Using Vanilla JS
+possibles.find(moreThanFive) // returns 6
+</code></pre>
+<p>Easy peasy, right?</p>
+<h3>reduce</h3>
+<p>The <code>reduce</code> function takes <strong>three</strong> parameters and can return just about anything! This is the most powerful of our functions, and can replace almost any loop. In fact, we can make any of the other functions here—<code>map</code>, <code>filter</code>, <code>find</code>, etc.—using the <code>reduce</code> function, so you can consider those functions really just sugar on top of <code>reduce</code>.</p>
+<p>The first parameter of the <code>reduce</code> function is a function, similar to <code>map</code>, <code>filter</code>, and <code>find</code>, and the <em>third</em> parameter is the list we're going to operate on, again, similar to <code>map</code>, <code>filter</code>, <code>find</code>, etc. The special extra parameter is the middle one. It is the "accumulator" because as we loop through the items in the list provided as the third argument, we are going to use this accumulator to build our final result.</p>
+<p>This is much easier done than said! One common use for <code>reduce</code> (as the name implies) is to take a list and combine the terms in some way, perhaps by adding them up. So suppose I wanted to add a list of numbers. In this instance, you can think of the accumulator as the "running total". So, naturally, we start with 0:</p>
+<pre><code class="language-javascript">import { reduce } from 'ramda'
+
+const numbersToSum = [5, 10, 15, 20]
+
+reduce(
+  function (total, num) { return total + num },
+  0,
+  numbersToSum
+) // returns 50 (0 + 5 + 10 + 15 + 20)
+
+// Using Vanilla JS
+numbersToSum.reduce((total, num) => total + num, 0)
+
+// `(total, num) => total + num` is a shorter way to write
+// `function (total, num) { return total + num }` -- see "arrow functions"
+</code></pre>
+<p>What is happening here? It's very simple! The <code>reduce</code> function takes the list in the third argument—<code>[5, 10, 15, 20]</code>—and loops through it. For each item in the list is calls the function in the first argument—<code>function (total, num) { return total + num }</code>— and it passes it the <em>running total</em> (starting with the second argument, 0) and the item from the list.</p>
+<p>The function adds the running total (<code>total</code>) to the item (<code>num</code>) and returns the new total, _which is passed as the <code>total</code> when the function is called on the next item. So this function is called four times. Our anonymous function just takes two numbers and adds them together, so we can use the <code>ramda</code> <code>add</code> function just as easily:</p>
+<pre><code class="language-javascript">import { add, reduce } from 'ramda'
+
+reduce(add, 0, [5, 10, 15, 20])
+
+// is the same as doing
+
+add(0, 5) // returns 5
+add(5, 10) // returns 15
+add(15, 15) // returns 30
+add(30, 20) // returns 50
+
+// the first argument is the running total, and the second is the next item in the list
+</code></pre>
+<p>But <code>reduce</code> can do so much more. Let's recreate our <code>map</code>, <code>filter</code>, and <code>find</code> functions using <code>reduce</code>.</p>
+<p>First, <code>map</code>:</p>
+<pre><code class="language-javascript">import { reduce } from 'ramda'
+
+function map (f, list) {
+  return reduce(
+    (acc, item) => [...acc, f(item)],
+    [],
+    list
+  )
+}
+
+map(x => x * x, [1, 2, 3]) // returns [1, 4, 9]
+</code></pre>
+<p>Take a close look at our function, <code>(acc, item) => [...acc, f(item)]</code>. This is the same as this: <code>function (acc, item) { return [...acc, f(item)] }</code>. Here is what that looks like as it runs:</p>
+<pre><code class="language-javascript">// First item
+([], 1) => [...[], 1 * 1] // ...[] spreads to nothing, and 1 * 1 === 1, so the return is [1]
+
+// Second item
+([1], 2) => [...[1], 2 * 2]  // ...[1] spreads to 1, and 2 * 2 === 4, so the return is [1, 4]
+
+// Last item
+([1, 4], 3) => [...[1, 4], 3 * 3] // ...[1, 4] spreads to 1, 4, and 3 * 3 === 9, so the return is [1, 4, 9]
+</code></pre>
+<p>Really not difficult. We are taking our "accumulator" (which can be anything) and modifying it on each call to the function, then returning the modified accumulator which is the first argument to the <em>next</em> call to the function. Build the output one function call at a time, <em>just like in a loop</em>.</p>
+<p>Now what about <code>filter</code>?</p>
+<pre><code class="language-javascript">import { reduce } from 'ramda'
+
+function filter (f, list) {
+  return reduce(
+    (acc, item) => f(item) ? [...acc, item] : acc,
+    [],
+    list
+  )
+}
+
+filter(n => n % 2 === 0, [1, 2, 3, 4, 5]) // returns [2, 4]
+</code></pre>
+<p>Same as map, but this time we are using the function <code>f</code> to check each item in the list. If <code>f(item)</code> returns <code>true</code>, then we include that item in the new array: <code>[...acc, item]</code>. If it returns <code>false</code>, then we return the new array unchanged: <code>acc</code>. If <code>acc</code> (for "accumulator") is confusing, then call it <code>out</code> or <code>output</code> or <code>filteredListSoFar</code> or whatever makes sense to you.</p>
+<p>Note: <code>n => n % 2 === 0</code> is the same as <code>function (n) { return n % 2 === 0 }</code>. It takes a number, divides it by 2 and takes the remainder and then compares that to 0. If the remainder is 0, then it returns <code>true</code> (the number is even). If it is anything but 0 (which could only be 1 in this instance), then it returns <code>false</code> because the number is not even.</p>
+<p>The "ternary operator" (<code>?:</code>) returns the second term (<code>[...acc, item]</code>) if the first term (<code>f(item)</code>) returns "truthy", or the third term (<code>acc</code>) if it returns anything other than "truthy".</p>
+<p>OK, <code>find</code>:</p>
+<pre><code class="language-javascript">import { reduce } from 'ramda'
+
+function find (f, list) {
+  return reduce(
+    (acc, item) => acc === undefined &#x26;&#x26; f(item) ? item : acc,
+    undefined,
+    list
+  )
+}
+</code></pre>
+<p>This works similarly to <code>filter</code>, but when we start with our accumulator undefined. For each item in the list, if the accumulator has yet to be defined and the <code>f(item)</code> returns <code>true</code>, we return the item. If the accumulator is already filled or the <code>f(item)</code> returns <code>false</code>, then we return the accumulator unchanged.</p>
+<p>This is not the ideal way to write this function as the loop continues all the way to the end, even if we find the item in the first spot. Later in this tutorial we'll show you a better way to implement the <code>find</code> function (not that you'll ever actually have to...).</p>
+<p>We could also use <code>reduce</code> to map through an object. For example, here we want to convert the values of each key-value pair to uppercase:</p>
+<pre><code class="language-javascript">import { keys, reduce, toUpper } from 'ramda'
+
+const colours = {
+  red: 'f00',
+  yellow: 'ff0',
+  green: '0f0',
+  cyan: '0ff',
+  blue: '00f',
+  magenta: 'f0f'
+}
+
+/* Returns
+  {
+      blue: "00F",
+      cyan: "0FF",
+      green: "0F0",
+      magenta: "F0F",
+      red: "F00",
+      yellow: "FF0"
+  }
+ */
+reduce(
+  (acc, key) => ({
+    ...acc, // copy the current accumulator
+    [key]: toUpper(colours[key]) // overwrite the value of `key` with the uppercase value of `key`
+  }),
+  {}, // our starting accumulator: will contain the uppercased key-value pairs when we're done
+  keys(colours) // an array of just the keys in `colours`
+)
+
+// Using Vanilla JS
+Object.keys(colours).reduce((acc, key) => ({...acc, [key]: colours[key].toUpperCase() }), {})
+</code></pre>
+<h3>join</h3>
+<p>The <code>join</code> function takes an array of strings and joins them together inserting a separator between individual items. The first parameter is the separator; the second parameter is the array of strings to join (unless you're using the <code>join</code> method on the array itself, as in the Vanilla JS version):</p>
+<pre><code class="language-javascript">import { join } from 'ramda'
+
+const colours = ['red', 'green', 'blue']
+
+join(' / ', colours) // returns 'red / green / blue'
+
+// Using Vanilla JS
+colours.join(' / ') // returns 'red / green / blue'
+</code></pre>
+<h3>sort</h3>
+<p>The <code>sort</code> function takes a comparator function and a list and sorts the items in the list using the comparator function. The comparator  function should return a negative number if the first value is comes first, a positive number if it comes second, and zero if it doesn't matter (e.g., they're equal). So if we wanted to sort a list of numbers in <em>descending</em> order, we could do it this way:</p>
+<pre><code class="language-javascript">import { sort } from 'ramda'
+
+function compare (a, b) {
+  return b - a
+}
+
+const nums = [5, 1, 4, 2, 3]
+
+sort(compare, nums) // returns [5, 4, 3, 2, 1]
+
+// Using Vanilla JS
+nums.sort(compare) // returns [5, 4, 3, 2, 1]
+</code></pre>
+<p>If we use our <code>compare</code> function on the first two numbers, 5 and 1, we can see that it returns -4: <code>compare(5, 1) // 1 - 5 === -4</code>. We said that a negative number means the first value goes first, so that means the 5 comes before the 1. On the other hand, comparing the 1 and the 4—<code>compare(1, 4) // 4 - 1 === 3</code>—returns a positive number, so the <em>second</em> number (4) comes first. And so on.</p>
+<p>What if we want to sort in ascending order? Just change the compare function: <code>(a, b) = a - b</code>.</p>
+<p>How does this work internally? Who cares? It works. If sorting algorithms are your thing, feel free to look at the source code. But to use <code>sort</code>, you don't "need to know".</p>
+<p><strong>Note that all of these functions <em>return copies</em> of the original list (or a new value entirely). None of them mutate the original list in place. If you started with an array, e.g., <code>[1, 2, 3]</code>, then after you've run one of these functions on it, the original array <em>is still</em> <code>[1, 2, 3]</code>.</strong> That's very important.</p>
+<h2>Rule 4</h2>
+<p><strong>Avoid loops! You can also create a function that calls itself over and over again.</strong></p>
+<p>We used <code>reduce</code> to define a <code>find</code> function above, but we said it was less than optimal because it ran through the entire list, even if it found the item it was looking for on in the first spot.</p>
+<p>There is another way to implement the <code>find</code> function without a loop. We can create a function that looks in the first spot, and if it finds the item we're looking for, then it returns it and <em>we're done</em>. No need to loop through the remaining items.</p>
+<p>But what if the first item is not the one we're looking for? Easy! In that instance, we'll just <em>call the find function again with <strong>the rest of the list</strong></em>. Meaning, we'll take the "tail" of the list (all the items except the first, "head" item), and call our <code>find</code> function on it <em>from inside our <code>find</code> function</em>. Sounds crazy, but it's very simple in practice. Here's our <code>find</code>:</p>
+<pre><code class="language-javascript">function find (f, [x, ...xs]) {
+  return f(x)
+    ? x
+    : find(f, xs)
+}
+
+find(n => n > 3,  [2, 4, 6]) // returns 4
+</code></pre>
+<p>So what's happening here? Simple: <code>find</code> takes a function that returns <code>true</code> or <code>false</code> and a list of items. We call the function on the first item, and if it returns <code>true</code> then we return that item from <code>find</code>. If it returns <code>false</code>, then we move on to the next item.</p>
+<p>The <code>[x, ...xs]</code> trick is a common one in JS. It "destructures" our array into a "head" (<code>x</code>), which is a single item, and a "tail" (<code>xs</code>), which is the rest of the array. Remember: <code>x</code> is an <strong>item</strong> in the array, and <code>xs</code> is an <strong>array of items</strong>. Very different things! The <code>x</code> and <code>xs</code> terminology is common, with <code>x</code> being an item and <code>xs</code> being "the rest of the items". We could as easily have called them <code>head</code> and <code>tail</code>, or <code>firstItem</code> and <code>remainingItems</code>, but <code>x</code> and <code>xs</code> are so common in functional programming that everyone understands what we mean.</p>
+<p>Inside the function, we use a ternary operator again. First we apply the function <code>f</code> to the first item (head) <code>x</code>. If it returns <code>true</code> (or truthy), then we return <code>x</code> and we're done. If it returns <code>false</code> (or falsy), then <em>we call <code>find</code> again and pass it the remaining items:</em> <code>find(f, xs)</code>.</p>
+<p>You may have noticed a problem here. What if we call our <code>find</code> on a list that <em>does not contain what we're looking for?</em> If you try it, you'll get an error that says "Maximum call stack size exceeded" or something like that. This is because our <code>find</code> function doesn't know when to stop looking! It keeps calling itself even though the list is empty. We can't have that.</p>
+<p>All functions that call themselves like this must have a "base case" that stops them from looping infinitely, <em>and each time the function is called, it must get <strong>closer</strong> to the base case</em>. In other words, it does no good to have a base case that says "stop if the argument is zero" if my function is <em>adding</em> numbers: I'll never get there.</p>
+<p>When our list is empty, <code>x</code> will be undefined. So we could add a guard clause to stop the loop when <code>x</code> is undefined, or we could just add it to our condition in the ternary:</p>
+<pre><code class="language-javascript">function find (f, [x, ...xs]) {
+  return x === undefined || f(x)
+    ? x
+    : find(f, xs)
+}
+
+find(n => n > 3,  [1, 2, 3]) // returns undefined
+</code></pre>
+<p>(Note: this won't work on an array with some items undefined, but that's probably OK for our purposes. If we have to permit undefined values in the array, we could use the array length instead and stop when it is empty.)</p>
+<p>This kind of function can pile up calls on the stack (memory) until it finally returns, so don't use it for functions that will operate on lists so long that you're likely to run out of memory or suffer a big performance hit. But for most instances where you are looping through only a few (or a few hundred) items, it's probably fast enough. For the others, prefer the functions such as <code>map</code>, which are optimised.</p></div></div></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/how-to-fp";window.webpackCompilationHash="932602368f9cc7541fab";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-7ea7839cf3c0f726986c.js"],"component---src-templates-tutorial-js":["/component---src-templates-tutorial-js-aed779472e6b01bec72f.js"],"component---src-pages-404-js":["/component---src-pages-404-js-942aeddd474583b3739f.js"],"component---src-pages-index-js":["/component---src-pages-index-js-1a6173e7ef8a3673af41.js"]};/*]]>*/</script><script src="/component---src-templates-tutorial-js-aed779472e6b01bec72f.js" async=""></script><script src="/0-1d5345cb509a315a641a.js" async=""></script><script src="/app-7ea7839cf3c0f726986c.js" async=""></script><script src="/webpack-runtime-b6e99614b4a73e7a63bf.js" async=""></script></body></html>
