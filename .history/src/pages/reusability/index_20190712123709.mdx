@@ -1,0 +1,178 @@
+---
+title: Reusability
+---
+import { Link } from 'gatsby'
+
+import Highlighter from '../../components/Highlighter'
+import CodeBlock from '../../components/CodeBlock'
+import addSource from '../../runkits/add'
+import areaFromDiameterSource from '../../runkits/area-from-diameter'
+import byReferenceSource from '../../runkits/by-reference'
+import functionFactorySource from '../../runkits/function-factory'
+import impureNoNoNoSource from '../../runkits/impure-no-no-no'
+import multipleResultsSource from '../../runkits/multiple-results'
+import multipleResultsRevisedSource from '../../runkits/multiple-results-revised'
+import noParametersSource from '../../runkits/no-parameters'
+import recursiveSumSource from '../../runkits/recursive-sum'
+import returningUndefinedSource from '../../runkits/returning-undefined'
+import sortSource from '../../runkits/sort'
+
+
+## Functions are the basic unit of reusability
+
+Functional programming is programming _with functions_. Shocking, no? Who knew?
+
+Functions are the basic unit of reusability. If we have a few lines of code, and they do something that we might want to do again somewhere else in our code, then we can wrap them in a function. Then we can use that function throughout our code.
+
+We don't have to write the algorithm over and over again, which might mean making mistakes and getting different results. It's wrapped up in the function, and we just call the function to run the code and get a result back.
+
+We probably want the function to behave slightly differently in different contexts, so we can pass it arguments. These are the parameters of the function: the context in which it operates. The function takes one or more arguments and returns a single result.
+
+If you think about this, we can consider the input to the function to be the current state of our application (part of it anyway), and the result of the function represents a new, transformed state.
+
+So functions are the way we change state in our application. Essentially, a function is a black box that takes state (in the form of arguments) and returns new state (in the form of a single result):
+
+
+
+For example, suppose we wanted to be able to calculate the area of a circle given its diameter. We know that the area of a circle is the radius squared times PI (3.1415926...). We can create a function called `areaFromDiameter` that takes the diamter as a parameter and returns the area of the circle with that diameter:
+
+<CodeBlock {...areaFromDiameterSource} />
+
+Now we can use that throughout our code. See? Functional programming is easy!
+
+<h3 id="purity-rules">Given the same arguments, a function must return the same result</h3>
+
+Put another way, what a function returns depends _entirely_ on the arguments passed to the function. Avoid as much as possible writing functions that return a value _independently of the inputs_.
+
+Here is a good example: the `add` function. It takes two numbers and returns the sum of the numbers. If we call it with 5 and 7, then it always returns 12. It doesn't sometimes return 12, sometimes 11, sometimes 13. Right? Make all your functions work this way and your life as a programmer will get much, much easier.
+
+<CodeBlock {...addSource} />
+
+<h3 id='real-functions-have-parameters'>Functions take at least one parameter</h3>
+
+You have probably noticed that we can create a function that has no parameters. How about this one?
+
+<CodeBlock {...noParametersSource} />
+
+Kinda boring, huh? Remember that _a function always returns the same result for the same arguments_. We can't pass this function any arguments, so we can't change the input in any way, hence we can't change the output either. We have a name for this kind of function. We call it a **constant**.
+
+Ha, ha. Get it? Because its output is _constant_.
+
+Believe it or not, a parameterless function can be useful in rare circumstances in which we _want_ a function to return the same thing every time it is called. There's an exception to every rule, no? But in daily use, remember that _functions take at least one parameter_.
+
+<h3 id='real-functions-return-a-value'>Functions return exactly one result</h3>
+
+You probably already know that you can't return more than one value from a function. But what we mean by "exactly one result" is that you should always return a value. A function that returns no value is **useless**, as we'll explain below.
+
+To be clear, that value might be the value `undefined`. But if you are returning `undefined` from your function, it should be because whatever is calling the function expects `undefined` to be a possible result and will act on it accordingly. That's different from not returning anything (even though a function without a return statement will, by default, return `undefined`).
+
+To make this explicit to the next programmer&mdash;that you _intended_ to return `undefined`&mdash;return it explicitly: `return undefined`. Here is an example:
+
+<CodeBlock {...returningUndefinedSource} />
+
+There may be rare occasions when we want to return multiple values from a function. In this instance, we can wrap them up into a composite value and return that. Then we can destructure our values out of it on the other end.
+
+For example, we can use the JavaScript `Array` as a kind of tuple. A tuple is an ordered list of elements, typically having different datatypes, such as a number, a string, and a boolean. In JavaScript, arrays aren't limited to a single datatype, so they can work as tuples. 
+
+Here we have a function that calculates the area and the cirumference of a circle given the radius and returns them in a tuple. We can then destructure them from the tuple:
+
+<CodeBlock {...multipleResultsSource} />
+
+In general, returning multiple values from a function is a **code smell**. Try to avoid it. If you must do it, at least delegate the work to smaller, single-purpose functions:
+
+<CodeBlock {...multipleResultsRevisedSource} />
+
+Notice how the name of our function is kind of long? That's a hint that our function is probably doing too much. Refactor, if possible.
+
+<h3 id='join-the-higher-order'>Functions can be passed as arguments to other functions</h3>
+
+Here is where FP starts to come into its own. If we can pass a function as an argument to another function, then our functions become exponentially more powerful.
+
+This is best explained with an example. The JavaScript `Array` object has a `sort` method. The default is to sort in ascending order. This uses a "comparator" function that takes two elements from the array and compares them.
+
+If the elements are of equal priority, meaning their ordering doesn't matter, then the comparator function returns zero. If the first argument should come first in the list, then the comparator returns one; if it should come second, it returns minus one. So our default comparator looks like this: `(a, b) => a - b`.
+
+But what if we want to sort in descending order? Well, we could make our `sort` method take a constant, such as `ASC` or `DESC` and switch up the comparator function so on `DESC` it was `(a, b) => b - a`, right? But our options are pretty limited here, no? For example, what if we wanted to sort a list of strings by _the first uppercase letter in the string?_ Uh, oh.
+
+So the "Vanilla JS" `sort` method allows us to pass it our own comparator function. Items in the list (array) will be passed to the comparator two at a time, and  the comparator should return 1, 0, or -1 accordingly. How it does that is up to us.
+
+Here is our example:
+
+<CodeBlock {...sortSource} />
+
+Now that is power.
+
+<h3 id='who-wants-curry'>Functions can be returned from other functions</h3>
+
+We can also return a function from a function. This means we can use functions as factories to create other functions. Here is an example:
+
+<CodeBlock {...functionFactorySource} />
+
+This is a pretty simple example, but more useful than you might think. Later, we'll talk about how  we can "partially apply" some types of functions, and we'll use an `add` function as an example. When we start maniuplating lists of items _without using loops_ we'll see how incredibly powerful this ability to return a function from a function really is.
+
+One thing to note is that under normal circumstances, when we call our `addToN` function and pass it an argument, say `5`, the function creates a local (to the function) variable `n` and assigns it the value `5`. We can then use it inside our `addToN` function.
+
+Normally when a function exits and returns a value, it releases all its local variables to be garbage collected. But because our `addToN` function includes `n` in the function it returns, we still have a pointer to that variable, which prevents it from being garbage collected until the function we returned is garbage collected.
+
+In this way we can "capture" (or "close" on) a bit of state and reuse it over and over again, as we did with our `addToFive` and `addToTen` functions above. That is a _very powerful_ feature of JavaScript: one you will use over and over and over again.
+
+<h3 id='we-can-has-recursion'>Functions can call functions, including themselves</h3>
+
+Suppose we want to add up numbers from an array to get the sum. We could use a loop, but that's so last millennium. Let's try another approach using functions **without loops**. We'll see more of this in the next section, conveniently titled <Link to="/iteration/" aria-label="Iteration"><em>Loops are so last millennium!</em></Link>
+
+We need to consider several different possibilities. For example, what if the list we want to add up is empty? What should we return?
+
+You might say an `Error` object, and in some instances that might be the best option. But in functional programming, we try to avoid using errors wherever possible. And error in functional programming should mean _the damn thing is broke_ and there ain't no fixing it.
+
+So what is the sum of an empty list of numbers? Why not zero? In short:
+
+<Highlighter code='sum([]) === 0 // should return true' showLineNumbers={false} />
+
+What about a list with only one number in it, such as `[5]`? Well, that's just `5`, isn't it? And `5` is the same as `5 + 0`, which is the same as `5 + sum([])`.
+
+(Because the same input to a function always yields the same result, we can substitute `sum([])` for `0` in that last example. If `sum([])` could return different things at different times, then we could not make that substitution. This is the power of "pure" functions.)
+
+So if we were to take the list, `[5]` and pop the head off it (`5`) and add it to the sum of the remaining list (`[]`), then we'd get our new sum. But doesn't this work for a list of _any_ length? Isn't the sum of `[1, 2, 3]` just `1` plus the sum of `[2, 3]`, which is just `2` plus the sum of `[3]`, which is just `3` plus the sum of `[]`, which is just `0`?
+
+<Highlighter code='sum([1, 2, 3]) === 1 + 2 + 3 + 0 === 6' showLineNumbers={false} />
+
+So our `sum` function could work by taking the first number in our list (the "head") and adding it to _the sum of the remaining items in the list_ (the "tail"). And it can do this by calling itself over and over again with the ever-shrinking tail until it hits an empty list in which case it returns zero and the sum is complete:
+
+<CodeBlock {...recursiveSumSource} />
+
+We get into this more in the next section, but the ability of functions to call themselves means we never need to bother with loops again. And as you'll see, there are many common operations for which we might use this superpower, so naturally we've made built-in methods (and libraries of functions such as [Ramda](https://ramdajs.com/docs/)) to avoid having to write so many functions over and over again. Reusability, right? High five!
+
+<h3 id='say-no-to-side-effects'>Don't be reaching outside the function to mess with shit</h3>
+
+This is a bad and sometimes hard-to-break habit that many OO programmers have. As we said above, functions take parameters and return a result, and that should be _all_ they do. Functions should not be reaching outside the function to tweak any values or variables in a higher scope, such as the global scope.
+
+Neither should anything in the outer scope change the return from our function. If it did, then we could not guarantee that for the same arguments we'll always get the same result.
+
+The exception to this is when we are returning a function from a function, as discussed in <Link to='#who-wants-curry'>Functions can be returned from other functions</Link> above. In that case, we are capturing the value of a variable in the outer function's scope and using it in the scope of the function returned.
+
+But note that unless the outer function (our "function factory") is _itself_ reaching outside its scope, then as soon as it returns our new function with the captured variable, it goes out of scope. So, effectively, when we capture values in this manner we are not actually reaching outside the function.
+
+Of course, at some point we must reach outside. We need to have input and output from our program, unless we want to recreate the entire universe inside the program, which might take some time (and a hell of a lot of memory). So the big exception to this rule is input-output. In pure functional programming languages, the "impure" I/O functionality is isolated in its own modules to avoid impurifying the rest of the code.
+
+In JavaScript, just make sure that if you're function is changing something outside the function, or if it is affected by the state of something outside the function (other than an argument passed in), that you _know what you're doing and why_. Avoid it unless you absolutely have to do it, and then keep any "impure" functions isolated from the rest. Quarantine those babies.
+
+Here are examples of things **you should never do**. The squeamish among you may wish to cover your eyes lest this code haunt your nightmares. Don't say we didn't warn you.
+
+<CodeBlock {...impureNoNoNoSource} />
+
+What's an example of when it's OK to use an impure function to affect something other than by the result? How about `console.log`? It returns `undefined` no matter what the input, and it reaches out to the console and changes it, and that's outside our function, right? But this is input/output, which we already admitted is an exception. In general, _no exceptions_.
+
+<h3 id='no-mutating-variables'>Make copies when passing by reference</h3>
+
+Often when programmers are just starting to work with functional JavaScript, they will mutate (change) a value from inside a function without realising it.
+
+A "feature" of JavaScript is that primitive values, such as numbers, strings, and booleans, are _copied_ when they are passed as arguments to a function:
+
+<CodeBlock {...byReferenceSource} />
+
+<h3 id='closures-are-cool'>Functions can remember things for you</h3>
+
+We already discussed this above in <Link to='#functions-as-results'>Functions can be returned from other functions</Link>, but it's worth revisiting.
+
+
+

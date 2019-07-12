@@ -1,0 +1,37 @@
+import { Link } from 'gatsby'
+
+## Introduction
+
+**Functional programming in JavaScript is easy.** Easier, in fact, than OOP in JavaScript. Simpler. Cleaner.
+
+So why do so many OO programmers find learning FP so difficult? In part, it's because they search online and what they come across is _academic_ discussions of the theory behind functional programming: Category Theory, one of the more advanced and difficult of the maths disciplines. And in these discussions they discover a host of obscure terms, such as _lambda calculus_, _referential transparency_, _recursion_, and the dreaded _monad_.
+
+These concepts are difficult even for academics. **The good news** is that _you don't have to understand Category Theory or know  what any of these terms mean to write good functional code_. The way the code is written is quite simple and easy (until it isn't, but that's true of OOP as well, isn't it?).
+
+Here we present the fundamental ideas behind functional programming without all the boring, academic details and terminology. You, too, can FP.
+
+## How to FP
+
+<ol>
+  <li>
+    <Link to="/reusability/" aria-label="Reusability">Functions are the basic unit of reusability</Link>
+    <ol>
+      <li>Functions take at least one argument</li>
+      <li>Functions return exactly one result</li>
+      <li>Functions can be passed as arguments to other functions</li>
+      <li>Functions can be returned from other functions</li>
+      <li>Functions can call functions, <em>including themselves</em></li>
+      <li>Given the same arguments, functions must return the same result</li>
+      <li>Don't be reaching outside the function to mess with shit</li>
+    </ol>
+  </li>
+  <li>
+    <Link to="/immutability/" aria-label="Immutability">Variables are "set and forget"</Link>
+    <ol>
+      <li>Assign variables when they are declared</li>
+      <li>Once a variable has been assigned, don't be changing it</li>
+      <li>Don't erase state: create new state instead!</li>
+      <li>Unreassignable !== immutable</li>
+    </ol>
+  </li>
+</ol>

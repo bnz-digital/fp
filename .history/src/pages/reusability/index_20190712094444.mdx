@@ -1,0 +1,105 @@
+---
+title: Reusability
+---
+import { Link } from 'gatsby'
+
+import CodeBlock from '../../components/CodeBlock'
+import addSource from '../../runkits/add'
+import areaFromDiameterSource from '../../runkits/area-from-diameter'
+import multipleResultsSource from '../../runkits/multiple-results'
+import multipleResultsRevisedSource from '../../runkits/multiple-results-revised'
+import noParametersSource from '../../runkits/no-parameters'
+import returningUndefinedSource from '../../runkits/returning-undefined'
+import sortSource from '../../runkits/sort'
+
+
+## Functions are the basic unit of reusability
+
+Functional programming is programming _with functions_. Shocking, no? Who knew?
+
+Functions are the basic unit of reusability. If we have a few lines of code, and they do something that we might want to do again somewhere else in our code, then we can wrap them in a function. Then we can use that function throughout our code.
+
+We don't have to write the algorithm over and over again, which might mean making mistakes and getting different results. It's wrapped up in the function, and we just call the function to run the code and get a result back.
+
+We probably want the function to behave slightly differently in different contexts, so we can pass it arguments. These are the parameters of the function: the context in which it operates. The function takes one or more arguments and returns a single result.
+
+If you think about this, we can consider the input to the function to be the current state of our application (part of it anyway), and the result of the function represents a new, transformed state.
+
+So functions are the way we change state in our application. Essentially, a function is a black box that takes state (in the form of arguments) and returns new state (in the form of a single result):
+
+
+
+For example, suppose I wanted to be able to calculate the area of a circle given its diameter. I know that the area of a circle is the radius squared times PI (3.1415926...). I can create a function called `areaFromDiameter` that takes the diamter as a parameter and returns the area of the circle with that diameter:
+
+<CodeBlock {...areaFromDiameterSource} />
+
+Now I can use that throughout my code. See? Functional programming is easy!
+
+<h3 id="same-input-same-output">Given the same arguments, a function must return the same result</h3>
+
+Put another way, what a function returns depends _entirely_ on the arguments passed to the function. Avoid as much as possible writing functions that return a value _independently of the inputs_.
+
+Here is a good example: the `add` function. It takes two numbers and returns the sum of the numbers. If I call it with 5 and 7, then it always returns 12. It doesn't sometimes return 12, sometimes 11, sometimes 13. Right? Make all your functions work this way and your life as a programmer will get much, much easier.
+
+<CodeBlock {...addSource} />
+
+<h3 id='at-least-one-parameter'>Functions take at least one parameter</h3>
+
+You have probably noticed that we can create a function that has no parameters. How about this one?
+
+<CodeBlock {...noParametersSource} />
+
+Kinda boring, huh? Remember that _a function always returns the same result for the same arguments_. We can't pass this function any arguments, so we can't change the input in any way, hence we can't change the output either. We have a name for this kind of function. We call it a **constant**.
+
+Ha, ha. Get it? Because its output is _constant_.
+
+Believe it or not, a parameterless function can be useful in rare circumstances in which we _want_ a function to return the same thing every time it is called. There's an exception to every rule, no? But in daily use, remember that _functions take at least one parameter_.
+
+<h3 id='exactly-one-result'>Functions return exactly one result</h3>
+
+You probably already know that you can't return more than one value from a function. But what we mean by "exactly one result" is that you should always return a value. A function that returns no value is **useless**, as we'll explain below.
+
+To be clear, that value might be the value `undefined`. But if you are returning `undefined` from your function, it should be because whatever is calling the function expects `undefined` to be a possible result and will act on it accordingly. That's different from not returning anything (even though a function without a return statement will, by default, return `undefined`).
+
+To make this explicit to the next programmer&mdash;that you _intended_ to return `undefined`&mdash;return it explicitly: `return undefined`. Here is an example:
+
+<CodeBlock {...returningUndefinedSource} />
+
+There may be rare occasions when we want to return multiple values from a function. In this instance, we can wrap them up into a composite value and return that. Then we can destructure our values out of it on the other end.
+
+For example, we can use the JavaScript `Array` as a kind of tuple. A tuple is an ordered list of elements, typically having different datatypes, such as a number, a string, and a boolean. In JavaScript, arrays aren't limited to a single datatype, so they can work as tuples. 
+
+Here we have a function that calculates the area and the cirumference of a circle given the radius and returns them in a tuple. We can then destructure them from the tuple:
+
+<CodeBlock {...multipleResultsSource} />
+
+In general, returning multiple values from a function is a **code smell**. Try to avoid it. If you must do it, at least delegate the work to smaller, single-purpose functions:
+
+<CodeBlock {...multipleResultsRevisedSource} />
+
+Notice how the name of our function is kind of long? That's a hint that our function is probably doing too much. Refactor, if possible.
+
+<h3 id='functions-as-arguments'>Functions can be passed as arguments to other functions</h3>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<h3 id=''>Functions can be returned from other functions</h3>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<h3 id=''>Functions can call functions, including themselves</h3>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<h3 id=''>Don't be reaching outside the function to mess with shit</h3>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<h3 id=''>Make copies when passing by reference</h3>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<h3 id=''>Functions can remember things for you</h3>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
