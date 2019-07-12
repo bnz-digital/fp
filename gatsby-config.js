@@ -1,5 +1,6 @@
 module.exports = {
   siteMetadata: {
+    pathPrefix: `/fp`,
     title: `How to FP`,
     description: `Functional JavaScript for the OO programmer.`,
     author: `@chasm`
