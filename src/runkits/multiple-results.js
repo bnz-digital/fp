@@ -1,11 +1,14 @@
-const code = `function getAreaAndCircumferenceFromRadius (radius) {
+const code = `const Tuple = Array // Just for fun
+
+function getAreaAndCircumferenceFromRadius (radius) {
   const area = Math.PI * radius * radius
   const circumference = Math.PI * radius * 2
 
-  return [area, circumference]
+  return new Tuple(area, circumference)
 }
 
-const [area, circumference] = getAreaAndCircumferenceFromRadius(1)
+const circleProperties = getAreaAndCircumferenceFromRadius(1)
+const [area, circumference] = circleProperties // Ordering is important!
 
 console.log(\`The area is \${area}\`)
 console.log(\`The circumference is \${circumference}\`)`

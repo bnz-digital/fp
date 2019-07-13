@@ -1,4 +1,6 @@
 const code = `function addToN (n) {
+  // This function takes an x and adds n to it
+  // n is "remembered" even though addToN has returned and left scope
   return x => n + x
 }
 

@@ -1,12 +1,26 @@
 import { Link } from 'gatsby'
-import React from 'react'
+import React, { Fragment } from 'react'
 
-export default function BreadcrumbTrail ({ title }) {
-  return title ? (
-    <p>
-      <Link to='/'>Home</Link>
-      {` > `}
+import TrailSeparator from '../TrailSeparator'
+
+function getCrumbs (title, trail = []) {
+  return (
+    <>
+      {trail.map(({ href, label }) => (
+        <Fragment key={href}>
+          <Link to={href}>{label}</Link>
+          <TrailSeparator />
+        </Fragment>
+      ))}
       {title}
-    </p>
-  ) : null
+    </>
+  )
+}
+
+export default function BreadcrumbTrail ({ title, trail }) {
+  if (trail === undefined) {
+    return null
+  }
+
+  return <p>{getCrumbs(title, trail)}</p>
 }

@@ -9,6 +9,9 @@
     ".eslintrc.js": true,
     "gatsby-browser.js": true,
     "gatsby-node.js": true,
-    "gatsby-ssr.js": true
+    "gatsby-ssr.js": true,
+    ".history": true,
+    "public": true,
+    ".gitignore": true
   }
 }

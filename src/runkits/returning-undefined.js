@@ -7,7 +7,7 @@ const code = `function testN (n) {
 
 console.log('Testing -5:', testN(-5))
 console.log('Testing 7:', testN(7))
-console.log('Testing 0:', testN(0))`
+console.log('Testing 0:', testN(0), 'Yeah, we expected that.')`
 
 const imports = ``
 

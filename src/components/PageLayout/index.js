@@ -5,12 +5,12 @@ import Layout from '../Layout'
 import SEO from '../SEO'
 
 function PageLayout ({ children, pageContext }) {
-  const { title } = pageContext.frontmatter
+  const { title, trail } = pageContext.frontmatter
 
   return (
     <Layout>
       <SEO title={title} />
-      <BreadcrumbTrail title={title} />
+      <BreadcrumbTrail title={title} trail={trail} />
       <article>{children}</article>
     </Layout>
   )

@@ -1,0 +1,82 @@
+---
+title: Bottom-up
+trail:
+  - label: Home
+    href: '/'
+---
+import { Link } from 'gatsby'
+
+**Functional programming in JavaScript is easy.**
+
+Easier, in fact, than OOP in JavaScript.
+
+If you've been looking at academic discourses about functional programming with terms such as _referential transparency_, _lambda calculus_, and the dreaded _monad_, then it's no wonder you're confused. But you don't need to understand any of that terminology (or even the theory) to _FP_.
+
+Here we present the fundamental **techniques** for functional programming without all the painful academic theory and terminology. You, too, can FP.
+
+## How to FP
+
+<ul>
+  <li>
+    <Link to='/inductive/reusability/' aria-label='Reusability'>Functions are the basic unit of reusability</Link>
+    <ul>
+      <li><Link to='/inductive/reusability/#purity-rules'>Given the same arguments, a function must return the same result</Link></li>
+      <li><Link to='/inductive/reusability/#real-functions-have-parameters'>Functions take at least one parameter</Link></li>
+      <li><Link to='/inductive/reusability/#real-functions-return-a-value'>Functions return exactly one result</Link></li>
+      <li><Link to='/inductive/reusability/#join-the-higher-order'>Functions can be passed as arguments to other functions</Link></li>
+      <li><Link to='/inductive/reusability/#who-wants-curry'>Functions can be returned from other functions</Link></li>
+      <li><Link to='/inductive/reusability/#we-can-has-recursion'>Functions can call functions, <em>including themselves</em></Link></li>
+      <li><Link to='/inductive/reusability/#say-no-to-side-effects'>Don't be reaching outside the function to mess with shit</Link></li>
+      <li><Link to='/inductive/reusability/#no-mutating-variables'>Make copies when passing by reference</Link></li>
+      <li><Link to='/inductive/reusability/#closures-are-cool'>Functions can remember things for you</Link></li>
+    </ul>
+  </li>
+  <li>
+    <Link to='/inductive/immutability/' aria-label='Immutability'>Variables are &ldquo;set and forget&rdquo;</Link>
+    <ul>
+      <li><Link to='/inductive/immutability/#use-const-exclusively'>Use <code>const</code> exclusively!</Link></li>
+      <li><Link to='/inductive/immutability/#assign-upon-declaration'>Assign variables when they are declared</Link></li>
+      <li><Link to='/inductive/immutability/#never-mutate'>Once a variable has been assigned, don't be changing it</Link></li>
+      <li><Link to='/inductive/immutability/#never-destroy-state'>Don't erase state: create new state instead!</Link></li>
+      <li><Link to='/inductive/immutability/#unreassignable-is-not-immutable'>Unreassignable !== immutable</Link></li>
+      <li><Link to='/inductive/immutability/#use-destructuring-to-make-copies'>Use destructuring and the rest/spread operators to make copies</Link></li>
+    </ul>
+  </li>
+  <li>
+    <Link to='/inductive/iteration/' aria-label='Iteration'>Loops are so last millennium!</Link>
+    <ul>
+      <li><Link to='/inductive/iteration/#recusrive-functions'>Functions can call themselves! No, really...</Link></li>
+      <li><Link to='/inductive/iteration/#map'>Use <code>map</code> to modify each value in a list</Link></li>
+      <li><Link to='/inductive/iteration/#filter'>Use <code>filter</code> to choose particular values from a list</Link></li>
+      <li><Link to='/inductive/iteration/#adjust'>Use <code>adjust</code> to update a single value in a list</Link></li>
+      <li><Link to='/inductive/iteration/#append'>Use <code>append</code>, <code>insert</code>, or <code>prepend</code> to add an item to a list</Link></li>
+      <li><Link to='/inductive/iteration/#concat'>Use <code>concat</code> or <code>zip</code> to combine two lists</Link></li>
+      <li><Link to='/inductive/iteration/#times'>Use <code>times</code> to create a new list</Link></li>
+      <li><Link to='/inductive/iteration/#reduce'>Use <code>reduce</code> to combine elements in a list</Link></li>
+      <li><Link to='/inductive/iteration/#reduce-again'>Use <code>reduce</code> to convert a list to some other data type</Link></li>
+      <li><Link to='/inductive/iteration/#head'>Use <code>head</code> or destructuring to get the first item in a list</Link></li>
+      <li><Link to='/inductive/iteration/#tail'>Use <code>tail</code> or destructuring to get the list minus the first element</Link></li>
+      <li><Link to='/inductive/iteration/#all'>Use <code>all</code>, <code>any</code>, or <code>none</code> to test a list</Link></li>
+      <li><Link to='/inductive/iteration/#flatten'>Use <code>flatten</code> to flatten nested lists into a single list</Link></li>
+      <li><Link to='/inductive/iteration/#avoid-foreach'>Avoid <code>forEach</code>! Avoid <code>forEach</code>! Avoid <code>forEach</code>!</Link></li>
+    </ul>
+  </li>
+  <li>
+    <Link to='/inductive/composition/' aria-label='Composition'>We can has pipelines!</Link>
+    <ul>
+      <li><Link to='/inductive/composition/#pipe'>Use <code>pipe</code> or <code>compose</code> to combine functions into pipelines</Link></li>
+      <li><Link to='/inductive/composition/#curry'>Use <code>curry</code> to make functions that make functions</Link></li>
+      <li><Link to='/inductive/composition/#state-state-state'>Think in terms of state!</Link></li>
+    </ul>
+  </li>
+  <li>
+    <Link to='/inductive/patterns-antipatterns/' aria-label='Patterns and anti-patterns'>Patterns and anti-patterns</Link>
+    <ul>
+      <li><Link to='/inductive/patterns-antipatterns/#one'>Do this not that</Link></li>
+      <li><Link to='/inductive/patterns-antipatterns/#two'>Do this not that</Link></li>
+      <li><Link to='/inductive/patterns-antipatterns/#three'>Do this not that</Link></li>
+      <li><Link to='/inductive/patterns-antipatterns/#four'>Do this not that</Link></li>
+      <li><Link to='/inductive/patterns-antipatterns/#five'>Do this not that</Link></li>
+    </ul>
+  </li>
+</ul>

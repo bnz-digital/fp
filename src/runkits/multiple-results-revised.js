@@ -2,7 +2,7 @@ const code = `const calculateArea = radius => Math.PI * radius * radius
 const calculateCircumference = radius => Math.PI * radius * 2
 
 function getAreaAndCircumferenceFromRadius (radius) {
-  // We can also return an object
+  // We could return an object instead
   return {
     area: calculateArea(radius),
     circumference: calculateCircumference(radius)

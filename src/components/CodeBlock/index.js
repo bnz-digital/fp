@@ -19,8 +19,12 @@ export default function CodeBlock ({ code = '', imports = '', requires = '' }) {
   }, [])
 
   return show ? (
-    <div style={{ marginBottom: '1rem' }}>
-      <Embed source={`${requires}${code}`} nodeVersion='12' />
+    <div className='code-block'>
+      <Embed
+        source={`${requires}${code}`}
+        nodeVersion='12'
+        theme='solarized-light'
+      />
     </div>
   ) : (
     <Highlighter code={`${imports}${code}`} />

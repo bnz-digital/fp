@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "how-to-fp",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "Two approaches to learning functional programming in JavaScript: one inductive and one deductive.",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Charles F. Munat <charles_munat@bnz.co.nz>",
   "dependencies": {
     "@mdx-js/mdx": "^1.0.21",
     "@mdx-js/react": "^1.0.21",
@@ -56,7 +56,7 @@
     ]
   },
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build --prefix-paths",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "format": "prettier-standard 'src/**/*.js'",

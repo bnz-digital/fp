@@ -1,9 +1,9 @@
 const code = `function sum (nums = []) {
-  if (nums.length < 1) { return 0 }
+  if (nums.length < 1) { return 0 } // If nums is empty, return 0
 
-  const [head, ...tail] = nums
+  const [head, ...tail] = nums // Get the head (first number) and the tail (remaining numbers)
 
-  return head + sum(tail)
+  return head + sum(tail) // The function calls itself!
 }
 
 console.log('The sum of [] is:', sum([]))

@@ -1,6 +1,10 @@
 const code = `const asc = (a, b) => a - b
 const desc = (a, b) => b - a
 
+// String.match returns an array, the first item of which is the string matched
+// In this instance, that will be the first uppercase letter
+// Then charCodeAt(0) extracts that letter from the string and converts it
+// to its character code, between 65 (A) and 90 (Z)
 const getFirstCapCharCode = s => s.match(/[A-Z]/)[0].charCodeAt(0)
 
 const firstCapAsc = (a, b) => getFirstCapCharCode(a) - getFirstCapCharCode(b)

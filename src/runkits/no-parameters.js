@@ -5,7 +5,8 @@ const code = `function alwaysTrue () {
 // Let's try it!
 console.log('Calling alwaysTrue', alwaysTrue())
 console.log('Calling alwaysTrue again', alwaysTrue())
-console.log('Calling alwaysTrue one more time', alwaysTrue())`
+console.log('Calling alwaysTrue one more time', alwaysTrue())
+console.log('Sigh...')`
 
 const imports = ``
 

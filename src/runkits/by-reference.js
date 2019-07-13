@@ -9,8 +9,9 @@ function updateName (person, name) {
   return person
 }
 
-console.log(\`updateName(person, 'Bobby') returns person.name of \${updateName(person, 'Bobby').name}\`)
-console.log(\`Now look what happened to our outer person.name: \${person.name}. Not good.\`)`
+console.log(\`\\\`updateName(person, 'Bobby')\\\` returns \\\`person.name\\\` of '\${updateName(person, 'Bobby').name}'\`)
+console.log(\`Now our outer \\\`person.name\\\` is... wait for it... '\${person.name}'.\`)
+console.log(\`That's just not right.\`)`
 
 const imports = ``
 

@@ -32,14 +32,14 @@ progress {
 }
 
 a {
-  color: RebeccaPurple;
+  color: DodgerBlue;
   background-color: transparent;
   text-decoration: none;
   -webkit-text-decoration-skip: objects;
 }
 
 a:active, a:hover {
-  color: DodgerBlue;
+  color: RoyalBlue;
   outline-width: 0;
   text-decoration: underline;
 }
@@ -272,7 +272,7 @@ h2:before {
 h3 {
   margin-left: 0;
   margin-right: 0;
-  margin-top: 0;
+  margin-top: 3rem;
   padding-bottom: 0;
   padding-left: 0;
   padding-right: 0;
@@ -588,7 +588,6 @@ li>p {
 }
 
 code {
-  font-size: 0.9rem;
   line-height: 1.45rem;
 }
 
@@ -644,14 +643,16 @@ th:last-child, td:last-child {
 }
 
 tt, code {
+  font-size: 1.15rem;
   color: FireBrick;
-  background-color: hsla(0, 0%, 0%, 0.04);
   border-radius: 3px;
 }
 
 pre code {
+  font-size: 1.05rem;
   background: none;
   line-height: 1.42;
+  padding: 0;
 }
 
 code:before, code:after, tt:before, tt:after {
@@ -666,4 +667,17 @@ pre code:before, pre code:after, pre tt:before, pre tt:after {
   html {
     font-size: 100%;
   }
+}
+
+.react-syntax-highlighter-line-number {
+  color: Gray;
+}
+
+.code-block {
+  margin: 2rem 0;
+}
+
+.separator {
+  display: inline-block;
+  padding: 0 0.5rem;
 }

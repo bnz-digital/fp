@@ -11,8 +11,9 @@ function updateNameCorrectly (person, name) {
   }
 }
 
-console.log(\`updateName(person, 'Bobby') returns person.name of \${updateNameCorrectly(person, 'Bobby').name}\`)
-console.log(\`Now look what happened to our outer person.name: \${person.name}. No change. Hooray! We're GENIUSES!\`)`
+console.log(\`\\\`updateName(person, 'Bobby')\\\` returns \\\`person.name\\\` of '\${updateNameCorrectly(person, 'Bobby').name}'\`)
+console.log(\`Now look what happened to our outer \\\`person.name\\\`: '\${person.name}'.\`)
+console.log(\`No change! Hooray! We're GENIUSES!\`)`
 
 const imports = ``
 
