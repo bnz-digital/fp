@@ -4,7 +4,7 @@ trail:
   - label: Home
     href: '/'
 ---
-import { Link } from 'gatsby'
+import Link from '../../components/Link'
 
 **Functional programming in JavaScript is easy.**
 
@@ -38,7 +38,6 @@ Here we present the fundamental **techniques** for functional programming withou
       <li><Link to='/inductive/immutability/#assign-upon-declaration'>Assign variables when they are declared</Link></li>
       <li><Link to='/inductive/immutability/#never-mutate'>Once a variable has been assigned, don't be changing it</Link></li>
       <li><Link to='/inductive/immutability/#never-destroy-state'>Don't erase state: create new state instead!</Link></li>
-      <li><Link to='/inductive/immutability/#unreassignable-is-not-immutable'>Unreassignable !== immutable</Link></li>
       <li><Link to='/inductive/immutability/#use-destructuring-to-make-copies'>Use destructuring and the rest/spread operators to make copies</Link></li>
     </ul>
   </li>
@@ -47,13 +46,13 @@ Here we present the fundamental **techniques** for functional programming withou
     <ul>
       <li><Link to='/inductive/iteration/#recusrive-functions'>Functions can call themselves! No, really...</Link></li>
       <li><Link to='/inductive/iteration/#map'>Use <code>map</code> to modify each value in a list</Link></li>
+      <li><Link to='/inductive/iteration/#reduce'>Use <code>reduce</code> to combine elements in a list</Link></li>
+      <li><Link to='/inductive/iteration/#reduce-again'>More fun with <code>reduce</code></Link></li>
       <li><Link to='/inductive/iteration/#filter'>Use <code>filter</code> to choose particular values from a list</Link></li>
       <li><Link to='/inductive/iteration/#adjust'>Use <code>adjust</code> to update a single value in a list</Link></li>
       <li><Link to='/inductive/iteration/#append'>Use <code>append</code>, <code>insert</code>, or <code>prepend</code> to add an item to a list</Link></li>
       <li><Link to='/inductive/iteration/#concat'>Use <code>concat</code> or <code>zip</code> to combine two lists</Link></li>
       <li><Link to='/inductive/iteration/#times'>Use <code>times</code> to create a new list</Link></li>
-      <li><Link to='/inductive/iteration/#reduce'>Use <code>reduce</code> to combine elements in a list</Link></li>
-      <li><Link to='/inductive/iteration/#reduce-again'>Use <code>reduce</code> to convert a list to some other data type</Link></li>
       <li><Link to='/inductive/iteration/#head'>Use <code>head</code> or destructuring to get the first item in a list</Link></li>
       <li><Link to='/inductive/iteration/#tail'>Use <code>tail</code> or destructuring to get the list minus the first element</Link></li>
       <li><Link to='/inductive/iteration/#all'>Use <code>all</code>, <code>any</code>, or <code>none</code> to test a list</Link></li>

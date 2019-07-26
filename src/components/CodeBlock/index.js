@@ -3,7 +3,12 @@ import Embed from 'react-runkit'
 
 import Highlighter from '../Highlighter'
 
-export default function CodeBlock ({ code = '', imports = '', requires = '' }) {
+export default function CodeBlock ({
+  code = '',
+  imports = '',
+  requires = '',
+  theme = 'light'
+}) {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -23,10 +28,10 @@ export default function CodeBlock ({ code = '', imports = '', requires = '' }) {
       <Embed
         source={`${requires}${code}`}
         nodeVersion='12'
-        theme='solarized-light'
+        theme={`solarized-${theme}`}
       />
     </div>
   ) : (
-    <Highlighter code={`${imports}${code}`} />
+    <Highlighter code={`${imports}${code}`} theme={theme} />
   )
 }

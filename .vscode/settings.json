@@ -2,7 +2,6 @@
   "files.exclude": {
     ".cache": true,
     ".vscode": true,
-    "node_modules": true,
     "LICENSE": true,
     "README.md": true,
     "yarn.lock": true,
@@ -13,5 +12,8 @@
     ".history": true,
     "public": true,
     ".gitignore": true
-  }
+  },
+  "cSpell.words": [
+    "solarized"
+  ]
 }

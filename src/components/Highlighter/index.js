@@ -1,13 +1,23 @@
 import React from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { solarizedLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import {
+  solarizedDark,
+  solarizedLight
+} from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
-export default function Highlighter ({ code = '', showLineNumbers = true }) {
+export default function Highlighter ({
+  code = '',
+  language = 'javascript',
+  showLineNumbers = true,
+  startingLineNumber = 1,
+  theme = 'light'
+}) {
   return (
     <SyntaxHighlighter
-      language='javascript'
-      style={solarizedLight}
+      language={language}
+      style={theme === 'light' ? solarizedLight : solarizedDark}
       showLineNumbers={showLineNumbers}
+      startingLineNumber={startingLineNumber}
     >
       {code}
     </SyntaxHighlighter>

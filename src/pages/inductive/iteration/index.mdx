@@ -6,49 +6,314 @@ trail:
   - label: Bottom-up
     href: '/inductive/'
 ---
-import { Link } from 'gatsby'
+import Link from '../../../components/Link'
 
 import CodeBlock from '../../../components/CodeBlock'
-import mapSource from '../../../runkits/map'
+import Highlighter from '../../../components/Highlighter'
+import badLoopSource from '../../../runkits/inductive/bad-loop'
+import jsAdjustSource from '../../../runkits/inductive/js-adjust'
+import jsAdjustCurriedSource from '../../../runkits/inductive/js-adjust-curried'
+import jsAppendSource from '../../../runkits/inductive/js-append'
+import jsFilterSource from '../../../runkits/inductive/js-filter'
+import jsMapWithGuardSource from '../../../runkits/inductive/js-map-with-guard'
+import jsMapSquaresSource from '../../../runkits/inductive/js-map-squares'
+import jsMapToUpperSource from '../../../runkits/inductive/js-map-to-upper'
+import jsPrependSource from '../../../runkits/inductive/js-prepend'
+import jsReduceAsMapSource from '../../../runkits/inductive/js-reduce-as-map'
+import jsReduceOverObjectSource from '../../../runkits/inductive/js-reduce-over-object'
+import jsReduceSumSource from '../../../runkits/inductive/js-reduce-sum'
+import jsReduceStringToUpperSource from '../../../runkits/inductive/js-reduce-string-to-upper'
+import jsVadjustSource from '../../../runkits/inductive/js-vadjust'
+import lessBadLoopSource from '../../../runkits/inductive/less-bad-loop'
+import lessBadLoopFixedSource from '../../../runkits/inductive/less-bad-loop-fixed'
+import nonTailSource from '../../../runkits/inductive/non-tail'
+import recursiveSquaresSource from '../../../runkits/inductive/recursive-squares'
+import recursiveSumLoggedSource from '../../../runkits/inductive/recursive-sum-logged'
+import recursiveSumSource from '../../../runkits/inductive/recursive-sum'
 
 ## Loops are so last millennium!
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+If you've done much programming, then you've almost certainly used looping constructs. JavaScript offers numerous ways to loop in an "imperative" manner (meaning you tell the code to loop rather than just giving it a list of items and letting it decide how to loop):
 
+* `for`: repeat a code block a specified number of times
+* `for/in`: repeat a code block for each of the properties of an object
+* `for/of`: repeat  a code block for each values in an "iterable" object, such as an array
+* `while`: repeat a block of code while a specified condition is true
+* `do/while`: same as while, but always applies the code block at least once
+
+If you think these are easy to use, then you're fooling yourself. You've just been using them so long that you've forgotten how confusing they were the first time you saw them. Consider the `for` loop:
+
+<CodeBlock {...badLoopSource} />
+
+Easy, right?
+
+Don't be absurd. There is _nothing_ easy about this. Let's look at it a bit more carefully.
+
+First, what on Earth could this possibly mean?
+
+<Highlighter code={`(let i = 0; i < len; i++)`} showLineNumbers={false}/>
+
+OK, `let i = 0;` is obvious enough: we're setting a local, mutable variable to `0`. By why `i`? Unless you've been _taught_ how this works, it's not obvious that `i` is an _index_, or that we'll be incrementing it.
+
+So what is this `i < len;`? A conditional, obviously, and we can see that `len` is `5` and `i` is `0`, so `i < len` is obviously `true`, but so what? What does that do?
+
+And then there is this mystifying `i++`. Again, you have to be _taught_ (and them memorise) that `++` is the **increment operator** and that here it is applied to `i` in the **postfix** position, which would normally mean that we would use the value _first_, and then increment it.
+
+But in truth in the `for` loop this increment is not applied until _after_ the loop has run, and then is applied _before_ the next iteration of the loop. So despite that nearly _everyone_ who writes `for` loops uses `i++`, it really should be `++i`&mdash;and that will also work (try it).
+
+Eventually, the new programmer figures out that `i < len;` is used to _stop_ the loop. When this condition evaluates to `false`, the loop stops running. This condition is checked before _every_ application of the code block, so if I write `i > len;` the loop never runs at all (try it).
+
+But if you're familiar with this loop, then you'll know that the most common mistake is to write `i <= len;`, which causes the loop to run an extra iteration (try it). This throws no error, but results in `sum` being `NaN`. Not good.
+
+So awful is the `for` construct that later versions of JavaScript have introduced `for/in` and `for/of`. These simplify our loop, but again, you have to remember when to use `in` and when to use `of`, and this still ends up mutating a variable, though at least we don't have to worry about indexes:
+
+<CodeBlock {...lessBadLoopSource} />
+
+Ha, ha. Yeah. You thought that `for/in` would pass you each item in the array one at a time? Seems obvious, but think again. It passes the _index_. So we're back to indexes! Let's try that again:
+
+<CodeBlock {...lessBadLoopFixedSource} />
+
+Wondering why we ended up with `0012345` in the broken version of `for/in` above? That's because for some difficult-to-grasp reason, the index is passed in as a **string**, and the `+=` operator _concatenates_ strings. WTF? WHY???
+
+Here the TC-39 committee tried to make life easier for JavaScript coders and ended up making things just that much **less intuitive**.
+
+The above constructs work, and you can _eventually_ get reasonably good at using them, but there is _nothing intuitive_ about them and they are, in fact, one of the _most difficult_ things for new programmers to learn.
+
+Surely, there is a better way!
 
 <h3 id='recusrive-functions'>Functions can call themselves! No, really...</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+One simple way to handle looping through a set of items, such as an array of numbers, is to process each number in turn. We can use a function call to do this, and rather than putting our function in a loop, we can just pass it the list, have it pop the first number off the list, process it, and then _call itself again with the rest of the list_.
+
+And we can continue this until we run out of items to process. Then we will stop and return the fully processed list, whatever that looks like.
+
+For example, let's take our `sum` above. Adding a list of numbers together is the same as adding each number to the number after it and keeping a running total. If you think about it, that's precisely what our loop above does. It creates a running total in a `sum` variable and initialises it to `0`, then adds the numbers in the list to it sequentially until it exhausts the list. What's left is our final total.
+
+We can do the same thing by creating a function that takes our list and our running total (defaulting to `0`), and calls itself on the first item, adding it to the running total, and then calling itself again on the rest of the list and passing the current subtotal:
+
+<CodeBlock {...recursiveSumSource} />
+
+That works. Of course, we could have written the function more simply this way, but doing so might create a problem:
+
+<Highlighter code={nonTailSource.code} />
+
+So why not do it that way?
+
+Well, a minor benefit of having the running total as a parameter to the function is that we can set it to something other than zero. For example, we could add a list of numbers to `100` instead of zero&mdash;`sum([1, 4, 9, 16], 100)`&mdash;returning `130` instead of `30`.
+
+But a more important reason is found in line \#6: `return head + sum(tail)`. By choosing to do it this way, we have to push our first function call onto the stack (in memory) and _wait for the second call to return_ before we can return from the first. Then we have to push the second call onto the stack and wait for the third, etc.
+
+If the list is 1000 items long, then we have to hold 999 calls on the stack waiting for that last call to return. That takes a lot of memory. But we can't do the addition&mdash;`head + sum(tail)`&mdash;until we know what `sum(tail)` is, right? So we're stuck.
+
+But if we do it like this:
+
+<Highlighter code={`return sum(tail, total + head)`} showLineNumbers={false} />
+
+Then we _know_ what `tail` is and we _know_ what `total + head` is _at the time of the function call_. So instead of pushing our function onto the stack and waiting for the second iteration to return, we can simply **replace** the first function call with the second, right?
+
+Essentially, writing our function-that-calls-itself in this manner makes it work _exactly like a loop_. So it's as fast and uses as little memory, effectively. Now we get the benefits of the speed and efficiency of a loop without all the unintuitive looping constructs: the best of both worlds.
+
+Looked at another way, the second example above runs _nested_:
+
+<Highlighter code={`sum([1, 2, 3, 4, 5]) === 1 + (\n  2 + (\n    3 + (\n      4 + (\n        5 + (\n          0\n        )\n      )\n    )\n  )\n)`} />
+
+Which means it actually adds the list from last to first: `0 + 5 + 4 + 3 + 2 + 1`.
+
+The first example above just makes successive calls to the same function:
+
+<Highlighter code={`sum([1, 2, 3, 4, 5]) // replaced by\nsum([2, 3, 4, 5], 1) // replaced by\nsum([3, 4, 5], 3)    // replaced by\nsum([4, 5], 6)       // replaced by\nsum([5], 10)         // returns 15`} />
+
+So this version adds in the order you'd expect: `0 + 1 + 2 + 3 + 4 + 5`.
+
+**Each of the three lines of our function block has a specific purpose**.
+
+For a function calling itself to work, we must observe two rules:
+
+1. We must have a **base case** where the function returns something _without_ calling itself.
+1. Each time we call the function from within the function we must call it with _different_ arguments, _and the arguments must approach the base case!_
+
+Let's look at the lines one at a time:
+
+<Highlighter code={`if (nums.length < 1) { return total }`} startingLineNumber={2} />
+
+This is our "base case". It tells our function when to **stop** calling itself. When there is nothing left in the array that we're passing to our function&mdash;i.e., the argument is the empty list&mdash;then we just return our running total. That stops the loop. It's essentially a guard statement.
+
+<Highlighter code={`const [head, ...tail] = nums`} startingLineNumber={4} />
+
+We are always going to operate on one element of the array at a time, so we'll need to pop the head off the array. When we next call the function, it will be on the remaining elements&mdash;the **tail**&mdash;so we need to hang on to those as well.
+
+Recall that arrays are passed by "reference", which means they are not copied in but merely pointed to. So we'll want to copy the tail and use the copy rather than mutating the original list. Destructuring and the `...` (rest) syntax achieves that for us.
+
+When we do:
+
+<Highlighter code={`const [head, ...tail] = [1, 2, 3, 4, 5]`} showLineNumbers={false} />
+
+Then:
+
+* variable `head` has value `1`
+* variable `tail` has value `[2, 3, 4, 5]`.
+
+Finally, we do the work in our third line of code:
+
+<Highlighter code={`return sum(tail, total + head)`} startingLineNumber={6} />
+
+First time through, our `total` defaulted to `0`, so given the `head` and `tail` above, this becomes:
+
+<Highlighter code={`return sum([2, 3, 4, 5], 0 + 1)`} showLineNumbers={false} />
+
+Watch it in action:
+
+<CodeBlock {...recursiveSumLoggedSource} />
+
+As you can see, the `total` accumulates the value of our running total. But we could accumulate anything, right?
+
+Consider an example where we have an array of numbers and we want to convert it to an array of the _squares_ of those numbers. In other words, we want to loop through the array squaring each element and returning a _new_ array of the squares. Easy!
+
+<CodeBlock {...recursiveSquaresSource} />
+
+Passing an accumulator makes it possible to do almost _anything_ a loop can do by simply writing a function that calls itself.
+
+Writing functions that call themselves is easy and fun, but functional JavaScript is all about **reusability**. It doesn't take writing too many functions like the ones above to start to see certain patterns emerging.
+
+When we wrote our `sum` function, we took a list of items and reduced it down to a single item. We can write a function called `reduce` that takes a list of items and reduces it to a single output. We just need three things:
+
+1. The code block that will be executed each time the function runs
+1. The starting value of our accumulator (`0` and `[]` respectively above)
+1. The list on which we'll operate (`[1, 2, 3, 4, 5]` above)
+
+But we want our `reduce` function to be generic, so we'll want to pass it the code block. How do we pass code blocks around in functional JavaScript? **Functions**, of course. So our `reduce` function will take:
+
+1. A **function** to be applied to the accumulator and each item of the list in turn
+1. The starting accumulator
+1. The list of values
+
+And we can see that the function we provide as our first argument must:
+
+1. Take the accumulator (running total) as an argument
+1. Take the head of the list as an argument
+1. Return a _new_ accumulator value, which will be used on the next call
+
+When we `map` our list to the squares of the numbers, things get even simpler. We know we're just mapping from one array to another of equal size, right? So our starting accumulator is always `[]`, so we don't need to pass it to our function. We can create a `map` function that:
+
+1. Takes a function to apply to each item in a list
+1. Takes a list of items to apply it to
+1. Returns a _new_ list of the results from passing the originals list's items through the function supplied
+
+Modern JavaScript provides functions such as `map` and `reduce` (and many more) already implemented for you. You just need to supply the right arguments.
+
+The built-in versions work in a very OO way: You call the `map` _method_ on the array you want to map, pass it the function you want to apply to each item in turn, and it returns a _new_ array of the results.
+
+Similarly, you call the `reduce` method on the array you want to reduce in some way, pass it the function that takes the accumulator and each item in turn and returns a new accumulator value, and pass it the starting accumulator. It returns the accumulator, whatever that is.
+
+There is an even better way to do this functionally by pulling the methods out into their own functions, and passing the lists they operate on as an argument, rather than as the caller of a method. For this purpose, there are numerous libraries out there, the most popular of which is [lodash](https://github.com/lodash/lodash/wiki/FP-Guide) (but only use the `lodash/fp` module!).
+
+The [ramda](https://ramdajs.com/) library is much better, having been built (mostly) correctly from the getgo. The best, however, is [sanctuary](https://sanctuary.js.org/), which is [scrupulously correct](https://sanctuary.js.org/#overview), but this also makes it difficult to use in production. There is no slack at all. You must be _meticulous_.
+
+For most cases, `ramda` is your best bet unless you are already committed to something else. Below we examine the most common functions/methods available and show how they can be used both in vanilla JavaScript and in `ramda`.
+
+(Note: While there is a Node framework called "VanillaJS" with no apparent sense of irony, what we mean here by vanilla JavaScript is JavaScript used _without_ adding libraries or frameworks&mdash;using only the built-in functionality.)
+
+(P.S. the [Ramda REPL](https://ramdajs.com/repl/) is awesome.)
 
 <h3 id='map'>Use <code>map</code> to modify each value in a list</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The `map` method (or function) does exactly what our `map` method above does, except abstractly. In other words, to get it to _square_ each  of the numbers in our array, we need to pass it a squaring function: `x => x * x` will work:
+
+<CodeBlock {...jsMapSquaresSource} />
+
+They work the same, so why use the latter? We'll see advantages when we get to pipelining functions below. If you're working on a small project and you can do it entirely in vanilla JS without importing a library such as Ramda, then probably you should use vanilla JS. But on most larger projects, you're going to need a library such as Ramda for many things, so you might as well use Ramda functions over the built in ones.
+
+But more on that below. Let's take another example of `map` before we move on:
+
+<CodeBlock {...jsMapToUpperSource} />
+
+OK, one more:
+
+<CodeBlock {...jsMapWithGuardSource} />
+
+So we can use conditionals or anything we like really, modifying some, all, or none.
+
+<h3 id='reduce'>Use <code>reduce</code> to combine elements in a list</h3>
+
+We've already talked about `reduce` above. It takes a function, a starting accumulator, and the list to process. It returns the final accumulator. Above we used `reduce` first to add a list of numbers. Let's do it again using the `reduce` method and Ramda's `reduce` function:
+
+<CodeBlock {...jsReduceSumSource} />
+
+We'll see `reduce` again and again in the examples below. You can make any of these other functions from `reduce`.
+
+<h3 id='reduce-again'>More fun with <code>reduce</code></h3>
+
+Suppose we want to loop through an object and uppercase every string value. Can we do that with `reduce`? Easy peasy:
+
+<CodeBlock {...jsReduceStringToUpperSource} />
+
+The above example isn't the greatest. We reach outside the `reduce` function to access our `bob` object. We should really wrap the function and make a version that takes an object:
+
+<CodeBlock {...jsReduceOverObjectSource} />
+
+Now we're beginning to see the advantage of Ramda. Our new `reduceOverObject` function takes a function and passes it _three_ arguments: the current accumulator, the current key, and the current value. And we pass it the object rather than just the array of keys.
+
+Sweet. Everything is neatly contained in my `reduceOverObject` function. Consider how clean and readable this line is:
+
+<Highlighter code={`const upcased = reduceOverObject(upcaseStrings, {}, bob)`} startingLineNumber={25} />
+
+Can we duplicate the `map` function with `reduce`? Easy!
+
+<CodeBlock {...jsReduceAsMapSource} />
+
+No need to write this function, of course! Just use `map`. But as you'll see here, `reduce` is the mother of all these functions. We can recreate all of them with `reduce`, and we can build even more powerful functions on top of `reduce`. And `reduce` is easily created itself by writing a function that calls itself.
+
+Functional code, especially with reuse, is _simpler_ than the OO equivalent. That means fewer lines, drier code, more reusability, and more power. Free your methods! Use functions instead, and treat Objects as types to be passed around, rather than the output of `new <ClassName>()`.
 
 <h3 id='filter'>Use <code>filter</code> to choose particular values from a list</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The `filter` method or function takes a function that returns a Boolean value and a list of items. It applies the function to each item in the list in turn. If the value returned is `true`, then that item is included in the output list. If it is `false`, then it isn't included. Remember, the output is a copy.
+
+Suppose we had a list of names and we wanted to find all the names at least 5 letters long. We could do that easily with the `filter` method:
+
+<CodeBlock {...jsFilterSource} />
+
+Who needs loops? Not us.
 
 <h3 id='adjust'>Use <code>adjust</code> to update a single value in a list</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+What if we want to update an element at a specified index in an array. The mutable way would be simple: `names[1] = 'Carole'`.
+
+But that mutates our original list. What we want is a new copy of the list with just that element updated. Ramda provides an `adjust` function to do just this, but we could also write our own version in vanilla JS:
+
+<CodeBlock {...jsAdjustSource} />
+
+Now you're probably wondering why we might add the Ramda dependency with its load time if we can write our own functions so easily.
+
+Well, it depends on what we need. If our needs are as simple as above, then write our own is probably the way to go. (But be advised that we are then responsible for testing and maintaining our utility function as well.)
+
+But the Ramda [adjust](https://ramdajs.com/docs/#adjust) function can do much more than our version. For one thing, we can apply the arguments _one a time_, and with each, get back a function that remembers the arguments already supplied and takes the remaining parameters:
+
+<CodeBlock {...jsAdjustCurriedSource} />
+
+Ramda's `adjust` can also handle negative indexes (it works back from the end of the list). Our `vadjust` fails on negative indexes. And if we pass an index that's out of range, then Ramda's `adjust` returns our list unchanged so we can continue processing. Again, our version fails. We could fix our version:
+
+<CodeBlock {...jsVadjustSource} />
+
+But now it's on us to test it and keep it current. So much easier to use a library such as Ramda or Lodash/FP.
 
 <h3 id='append'>Use <code>append</code>, <code>insert</code>, or <code>prepend</code> to add an item to a list</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+These functions do exactly what you'd expect. Should we do it by hand, or use a library. For `append` and `prepend`, at least, vanilla JS is probably enough (unless we're pipelining&mdash;"composing"&mdash;functions).
+
+The `append` is the easiest:
+
+<CodeBlock {...jsAppendSource} />
+
+The `prepend` is also very easy:
+
+<CodeBlock {...jsPrependSource} />
 
 <h3 id='concat'>Use <code>concat</code> or <code>zip</code> to combine two lists</h3>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 <h3 id='times'>Use <code>times</code> to create a new list</h3>
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-<h3 id='reduce'>Use <code>reduce</code> to combine elements in a list</h3>
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-<h3 id='reduce-again'>Use <code>reduce</code> to convert a list to some other data type</h3>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -71,6 +336,3 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <h3 id='avoid-foreach'>Avoid <code>forEach</code>! Avoid <code>forEach</code>! Avoid <code>forEach</code>!</h3>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-<CodeBlock {...mapSource} />

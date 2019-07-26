@@ -6,24 +6,24 @@ trail:
   - label: Bottom-up
     href: '/inductive/'
 ---
-import { Link } from 'gatsby'
+import Link from '../../../components/Link'
 
 import Highlighter from '../../../components/Highlighter'
 import CodeBlock from '../../../components/CodeBlock'
-import addSource from '../../../runkits/add'
-import areaFromDiameterSource from '../../../runkits/area-from-diameter'
-import byReferenceSource from '../../../runkits/by-reference'
-import byValueSource from '../../../runkits/by-value'
-import copyReferencesSource from '../../../runkits/copy-references'
-import functionFactorySource from '../../../runkits/function-factory'
-import impureNoNoNoSource from '../../../runkits/impure-no-no-no'
-import multipleResultsSource from '../../../runkits/multiple-results'
-import multipleResultsRevisedSource from '../../../runkits/multiple-results-revised'
-import noParametersSource from '../../../runkits/no-parameters'
-import pipelineArithmeticSource from '../../../runkits/pipeline-arithmetic'
-import recursiveSumSource from '../../../runkits/recursive-sum'
-import returningUndefinedSource from '../../../runkits/returning-undefined'
-import sortSource from '../../../runkits/sort'
+import addSource from '../../../runkits/inductive/add'
+import areaFromDiameterSource from '../../../runkits/inductive/area-from-diameter'
+import byReferenceSource from '../../../runkits/inductive/by-reference'
+import byValueSource from '../../../runkits/inductive/by-value'
+import copyReferencesSource from '../../../runkits/inductive/copy-references'
+import functionFactorySource from '../../../runkits/inductive/function-factory'
+import impureNoNoNoSource from '../../../runkits/inductive/impure-no-no-no'
+import multipleResultsSource from '../../../runkits/inductive/multiple-results'
+import multipleResultsRevisedSource from '../../../runkits/inductive/multiple-results-revised'
+import noParametersSource from '../../../runkits/inductive/no-parameters'
+import pipelineArithmeticSource from '../../../runkits/inductive/pipeline-arithmetic'
+import recursiveSumSource from '../../../runkits/inductive/recursive-sum'
+import returningUndefinedSource from '../../../runkits/inductive/returning-undefined'
+import sortSource from '../../../runkits/inductive/sort'
 
 ## Functions are the basic unit of reusability
 
@@ -47,7 +47,7 @@ We can create a function called `areaFromDiameter` that takes the diamter as a p
 
 Now we can use that throughout our code. See? Functional programming is easy!
 
-<h3 id="purity-rules">Given the same arguments, a function must return the same result</h3>
+### <span id="purity-rules">Given the same arguments, a function must return the same result</span>
 
 Put another way, what a function returns depends _entirely_ on the arguments passed to the function. Avoid as much as possible writing functions that return a value _independently of the inputs_.
 
@@ -55,7 +55,7 @@ Here is a good example: the `add` function. It takes two numbers and returns the
 
 <CodeBlock {...addSource} />
 
-<h3 id='real-functions-have-parameters'>Functions take at least one parameter</h3>
+### <span id='real-functions-have-parameters'>Functions take at least one parameter</span>
 
 You have probably noticed that we can create a function that has no parameters. How about this one?
 
@@ -67,7 +67,7 @@ Ha, ha. Get it? Because its output never changes.
 
 Believe it or not, a parameterless function can be useful in rare circumstances in which we _want_ a function to return the same thing every time it is called. There's an exception to every rule, no? But in daily use, remember that _functions take at least one parameter_.
 
-<h3 id='real-functions-return-a-value'>Functions return exactly one result</h3>
+### <span id='real-functions-return-a-value'>Functions return exactly one result</span>
 
 You probably already know that you can't return more than one value from a function. But what we mean by "exactly one result" is that you should **always return a value**. A function that does not return a value is useless&mdash;because the only way a function can change anything is _with its return value_.
 
@@ -91,7 +91,7 @@ In general, returning multiple values from a function is a **code smell**. Try t
 
 **Notice how the name of our function is kind of long?** That's a hint that our function is probably doing too much. Refactor, if possible.
 
-<h3 id='join-the-higher-order'>Functions can be passed as arguments to other functions</h3>
+### <span id='join-the-higher-order'>Functions can be passed as arguments to other functions</span>
 
 Here is where FP starts to come into its own. If we can pass a function as an argument to another function, then our functions become exponentially more powerful.
 
@@ -103,7 +103,7 @@ If the elements are of equal priority, meaning their ordering doesn't matter, th
 
 But what if we want to sort in descending order? Well, we could make our `sort` method take a constant, such as `ASC` or `DESC` and switch up the comparator function so on `DESC` it was `(a, b) => b - a`, right? But our options are pretty limited here, no? For example, what if we wanted to sort a list of strings by _the first uppercase letter in the string?_ Uh, oh.
 
-So the "Vanilla JS" `sort` method allows us to pass it our own comparator function. Items in the list (array) will be passed to the comparator two at a time, and  the comparator should return a positive number (keep the ordering), 0 (doesn't matter), or a negative number (reverse the ordering). How it does that is up to us.
+So the vanilla JavaScript `sort` method allows us to pass it our own comparator function. Items in the list (array) will be passed to the comparator two at a time, and  the comparator should return a positive number (keep the ordering), 0 (doesn't matter), or a negative number (reverse the ordering). How it does that is up to us.
 
 Here is our example:
 
@@ -111,7 +111,7 @@ Here is our example:
 
 Now that is power.
 
-<h3 id='who-wants-curry'>Functions can be returned from other functions</h3>
+### <span id='who-wants-curry'>Functions can be returned from other functions</span>
 
 We can also return a function from a function. This means we can use functions as factories to create other functions. Here is an example:
 
@@ -125,7 +125,7 @@ Normally when a function exits and returns a value, it releases all its local va
 
 In this way we can "capture" (or "close" on) a bit of state and reuse it over and over again, as we did with our `addToFive` and `addToTen` functions above. That is a _very powerful_ feature of JavaScript: one you will use over and over and over again.
 
-<h3 id='we-can-has-recursion'>Functions can call functions, including themselves</h3>
+### <span id='we-can-has-recursion'>Functions can call functions, including themselves</span>
 
 Suppose we want to add up numbers from an array to get the sum. We could use a loop, but that's so last millennium. Let's try another approach using functions **without loops**. We'll see more of this in the next section, conveniently titled <Link to="/inductive/iteration/" aria-label="Iteration"><em>Loops are so last millennium!</em></Link>
 
@@ -153,7 +153,7 @@ We get into this more in the next section, but the ability of functions to call 
 
 Reusability, right? High fives all around!
 
-<h3 id='say-no-to-side-effects'>Don't be reaching outside the function to mess with shit</h3>
+### <span id='say-no-to-side-effects'>Don't be reaching outside the function to mess with shit</span>
 
 This is a bad and sometimes hard-to-break habit that many OO programmers have. Oh, look! We can put a variable in global scope, then mutate it from inside our function! Isn't that cool?
 
@@ -181,7 +181,7 @@ What's an example of when it's OK to use an impure function to affect something 
 
 In general, input/output aside, _no exceptions_.
 
-<h3 id='no-mutating-variables'>Make copies when passing by reference</h3>
+### <span id='no-mutating-variables'>Make copies when passing by reference</span>
 
 Often when programmers are just starting to work with functional JavaScript, they will mutate (change) a value from inside a function without realising it.
 
@@ -201,7 +201,7 @@ So how do we avoid this? We can use the spread operator `...` to make a copy of 
 
 <CodeBlock {...copyReferencesSource} />
 
-<h3 id='closures-are-cool'>Functions can remember things for you</h3>
+### <span id='closures-are-cool'>Functions can remember things for you</span>
 
 We already discussed this above in <Link to='/reusability/#who-wants-curry'>Functions can be returned from other functions</Link>, but it's worth revisiting.
 
@@ -300,7 +300,7 @@ So we can see that the value of `doTheMath` is a function that takes the `y` tha
 add(5)(12) // returns 17, passed to
 subtract(7)(17) // returns 10, passed to
 multiply(10)(10) // returns 100, passed to
-divide(4)(100) // returns 25, which is returned from doTheMath(12)`} />
+divide(4)(100) // returns 25, which is returned from doTheMath(12)`} showLineNumbers={false} />
 
 Combining functions together can get quite complex, but if we name the functions well, and we use pure functions that always return the same result for the same arguments, then we can substitute again and again, simplifying our code, until we see what's really happening.
 
