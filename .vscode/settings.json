@@ -3,7 +3,6 @@
     ".cache": true,
     ".vscode": true,
     "LICENSE": true,
-    "README.md": true,
     "yarn.lock": true,
     ".eslintrc.js": true,
     "gatsby-browser.js": true,
