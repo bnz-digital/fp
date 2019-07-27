@@ -1,10 +1,96 @@
 ---
-title: Top-down
+title: Top-down FP
 trail:
   - label: Home
     href: '/'
 ---
-# We can FP!
+import Link from '../../components/Link'
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+**FP is easy, but it can seem difficult at first.**
+
+Functional programming (FP) is a programming paradigm, meaning that it is a way of thinking about software construction based on some fundamental, defining principles. Other examples of programming paradigms include object-oriented programming (OOP) and procedural programming.
+
+## Why Functional Programming?
+
+Functional code tends to be more concise, more predictable, and easier to test than imperative or object-oriented code&mdash;but if you're unfamiliar with it and the common patterns associated with it, then functional code can also seem a lot more dense.
+
+Functional Programming revolves around the idea that a program is made of a set of functions and that they follow certain rules. Forget classes and inheritance: the patterns that you will encounter are quite different here.
+
+FP is the process of building software by:
+
+* composing _pure functions_ and,
+* avoiding _shared state_, _mutable data_, and _side-effects_. 
+
+Let's learn more about these concepts...
+
+## FP from the top down
+
+<ul>
+  <li>
+    <Link to='/deductive/pure-functions/' aria-label='Pure functions'>Pure functions</Link>
+    <ul>
+      <li><Link to='/deductive/pure-functions/#avoid-side-effects'>Avoid side effects</Link></li>
+      <li><Link to='/deductive/pure-functions/#avoid-shared-state'>Avoid shared state</Link></li>
+      <li><Link to='/deductive/pure-functions/#avoid-mutating-state'>Avoid mutating state</Link></li>
+      <li><Link to='/deductive/pure-functions/#const-not-immutable'><code>const</code> does not mean immutable</Link></li>
+      <li><Link to='/deductive/pure-functions/#is-purity-possible'>Can we write a program using only pure functions?</Link></li>
+    </ul>
+  </li>
+  <li>
+    <Link to='/deductive/more-fp-concepts/' aria-label='More FP Concepts'>More FP concepts</Link>
+    <ul>
+      <li><Link to='/deductive/more-fp-concepts/#higher-order-functions'>Higher-order functions for reusability</Link></li>
+      <li><Link to='/deductive/more-fp-concepts/#declarative-vs-imperative'>Declarative vs. imperative style</Link></li>
+      <li><Link to='/deductive/more-fp-concepts/#composition'>Functional composition</Link></li>
+      <li><Link to='/deductive/more-fp-concepts/#currying'>Currying</Link></li>
+      <li><Link to='/deductive/more-fp-concepts/#things-to-avoid'>More things to avoid</Link></li>
+    </ul>
+  </li>
+</ul>
+
+## Appendix
+
+### Which languages follow which paradigms? (For the curious...)
+
+You might be very surprised. Purely FP, OOP, or procedural langauges are fairly rare. Many langagues begin with a procedural base and then add FP and/or OOP features. Among these are some very popular langauges commonly considered object-oriented.
+
+C++, C#, Java, and JavaScript are all procedural languages with features of object-oriented languages and functional programming languages. Java in particular has been moving quickly in a functional direction, perhaps spurred on by Scala, which is a multi-paradigm competitor to Java.
+
+In JavaScript (ECMAScript), the move toward a strongly functional paradigm has been accelerating annually for several years.
+
+BASIC, C, COBOL, and Fortran are examples of procedural languages still in use.
+
+Object-oriented languages as most of us know them should really be called "class-oriented", as they make a distinction between classes and instances. Some languages are purely OO, for example Ruby, in which _everything_ is an object. Scala has classes and inheritance, but also strong functional features.
+
+JavaScript is actually an object-oriented _prototype-based_ language, which means is lacks the distinction between classes and instances, although the recent (and controversial) addition of "class" syntax hides this a bit. But JavaScript has reasonably strong functional capabilities, and they get stronger with each new version.
+
+Popular object-oriented _class-based_ languages include C++, C#, Java (and Groovy), Objective-C, Perl 5, PHP 5, Python, Ruby, and Scala.
+
+Popular functional programming languages include Erlang and Elixir, F#, Groovy, JavaScript, Java (since version 8), Kotlin, Lisp, Perl 6, PHP, Python, Ruby, Rust, and Scala. **Pure** functional programming languages include Elm, Haskell, and PureScript.
+
+As you can see, most of the popular languages are now multi-paradigm. Ruby, for example, is a "pure" object-oriented class-based language (everything is an object), but Ruby can still be used in a very functional style (and this style is often recommended strongly).
+
+There are many ways to classify programming languages. If you're interested, check out this [list of programming languages by type](https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Procedural_languages). Note how many languages appear under many different types.
+
+### FP vs. OOP
+
+* [Great blog post from Kent C. Dodds](https://kentcdodds.com/blog/classes-complexity-and-functional-programming)
+
+### Resources
+
+* [ImmutableJS](https://immutable-js.github.io/immutable-js/docs/#/)
+* [RamdaJS](https://ramdajs.com/)
+* [ESLint FP plugin](https://www.npmjs.com/package/eslint-plugin-fp)
+* [OOP vs. FP](https://medium.com/@cscalfani/)
+* [Goodby object-oriented programming](goodbye-object-oriented-programming-a59cda4c0e53)
+* [7 reasons to use FP on the front end](https://tsh.io/blog/7-reasons-to-use-functional-programming-on-frontend-1-2/)
+
+### Sources
+
+* [Master the JavaScript interview: What is FP?](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0)
+* [Functional programming paradigms in modern JavaScript: currying](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-currying-5652e489cce8)
+* [So you want to be a functional programmer, part 3](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-3-1b0fd14eb1a7)
+* [Functional programming paradigms in modern JavaScript: pure functions](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
+* [7 reasons to use FP on the front end](https://tsh.io/blog/7-reasons-to-use-functional-programming-on-frontend-1-2/)
+
 

@@ -1,0 +1,98 @@
+---
+title: Pure functions
+trail:
+  - label: Home
+    href: '/'
+  - label: Top-down
+    href: '/deductive/'
+---
+import Link from '../../../components/Link'
+
+import CodeBlock from '../../../components/CodeBlock'
+import erasingHistorySource from '../../../runkits/deductive/erasing-history'
+import makingCopiesSource from '../../../runkits/deductive/making-copies'
+import objectFreezeSource from '../../../runkits/deductive/object-freeze'
+import pureAndImpureSource from '../../../runkits/deductive/pure-and-impure'
+import pureAndImpureReduxSource from '../../../runkits/deductive/pure-and-impure-redux'
+import sharedStateSource from '../../../runkits/deductive/shared-state'
+import sideEffectSource from '../../../runkits/deductive/side-effect'
+
+A [pure function](https://en.wikipedia.org/wiki/Pure_function) is a function which:
+
+1. Given the same inputs, always returns the same output, and
+1. Has no side-effects (we'll explain below)
+
+<CodeBlock {...pureAndImpureSource} />
+
+If you run the above Runkit multiple times, you'll see that the `getRandomNumber` function returns an unpredictable number between 0 and 1, wheras given the same `x` and `y` values, the `add` function will always return the same result, e.g., `add(2, 3) // returns 5`.
+
+Because pure functions are [referentially transparent](https://en.wikipedia.org/wiki/Referential_transparency), we can use [substitution](https://en.wikipedia.org/wiki/Substitution_(algebra)) to replace a pure function call with its result without changing the meaning of the program. This makes it easier to reason about our programs.
+
+Returning the same result when called more than once is also called [idempotency](https://en.wikipedia.org/wiki/Idempotence).
+
+Let's look at another example using shared state:
+
+<CodeBlock {...pureAndImpureReduxSource} />
+
+<h3 id='avoid-side-effects'>Avoid side effects</h3>
+
+A [side effect](https://en.wikipedia.org/wiki/Side_effect_(computer_science)) is any application state change that is observable outside the called function other than its return value. Side effects include:
+
+* Modifying shared state: any external variable or object property (e.g., a global variable, or a variable in the parent function scope chain)
+* Logging to the console
+* Writing to the screen
+* Writing to a file
+* Writing to the network
+* Triggering any external process
+* Calling any other functions with side-effects
+
+<CodeBlock {...sideEffectSource} />
+
+As you can see, the effect of calling `displayName` was to log a message to the console. The result returned from the function was `undefined`. So the _effect_ of the function was _not_ solely dependent on the value returned from the function. This, too, is an impure function and should be avoided whenever possible.
+
+Avoiding side effects makes the effects of a program much easier to understand, and much easier to test.
+
+<h3 id='avoid-shared-state'>Avoid shared state</h3>
+
+Shared state is any variable, object, or memory space that exists in a shared scope, or as the property of an object being passed between scopes. A shared scope can include global scope or closure scopes. Often, in object-oriented programming, objects are shared between scopes by adding properties to other objects.
+
+For example, a computer game might have a master game object, with characters and game items stored as properties owned by that object. Functional programming avoids shared state&mdash;instead relying on immutable data structures and pure calculations to derive new data from existing data. 
+
+The problem with shared state is that in order to understand the effects of a function, you have to know _the entire history of every shared variable that the function uses or affects_. Race conditions are a very common bug associated with shared state.
+
+Another common problem associated with shared state is that changing the order in which functions are called can cause a cascade of failures because functions that act on shared state are timing dependent:
+
+<CodeBlock {...sharedStateSource} />
+
+The above is obviously oversimplified, but it's not difficult to imagine a more complex example where shared state could get you in trouble. Also, shared state makes it difficult to thread or parallel process. In FP, we avoid shared state as much as possible.
+
+<h3 id='avoid-mutating-state'>Avoid mutating state</h3>
+
+**Immutability** is a central concept of functional programming because without it, the data flow in your program is **lossy**. State history is abandoned, and strange bugs can creep into your software.
+
+Mutation causes defects. If you have a dollar, and I give you another dollar, it does not change the fact that a moment ago you only had one dollar, and now you have two. Again, mutation _erases history_, which can manifest as bugs in the program.
+
+Here's an example:
+
+<CodeBlock {...erasingHistorySource} />
+
+If you have ever dubgged code where you have tried to find where a variable's value changed to `undefined`, then you'll appreciate _immutability_.
+
+**This means when we practice functional JavaScript, _everything is a `const`_.** We will never use `var` or `let`. 
+
+When you need to change the value of a variable, you'll create a new variable. Example:
+
+<CodeBlock {...makingCopiesSource} />
+
+As you can see from the example above, making a copy of state rather than mutating it means that our initial state remains unchanged, so we have lost no history (we can always discard it if we don't need it).
+
+<h3 id='const-not-immutable'><code>const</code> does not mean immutable</h3>
+
+In JavaScript, it's important not to confuse `const`, with immutability. `const` creates a variable name binding which _can't be reassigned_ after creation. `const` does not create immutable objects!
+
+If your variable name is bound to a primitive value such as a number, string, or boolean, then `const` is "effectively" immutable. But if your variable points to a complex object, then although the object itself cannot be replaced, _properties on the object can be mutated._ This is not true immutability.
+
+Truly immutable objects can't be changed at all. You can make a value truly immutable by deep freezing the object. JavaScript has a method that freezes an object one-level deep:
+
+<CodeBlock {...objectFreezeSource} />
+
