@@ -9,6 +9,7 @@ trail:
 import Link from '../../../components/Link'
 
 import CodeBlock from '../../../components/CodeBlock'
+import deepFreezeSource from '../../../runkits/inductive/deep-freeze'
 import erasingHistorySource from '../../../runkits/deductive/erasing-history'
 import makingCopiesSource from '../../../runkits/deductive/making-copies'
 import objectFreezeSource from '../../../runkits/deductive/object-freeze'
@@ -96,3 +97,24 @@ Truly immutable objects can't be changed at all. You can make a value truly immu
 
 <CodeBlock {...objectFreezeSource} />
 
+As you can see, the top level primitive properties of a frozen object can’t change, but any property which is also an object (including arrays, etc…) can still be mutated&mdash;so even frozen objects are not immutable unless you walk the whole object tree and freeze every object property.
+
+A better way to freeze objects to ensure that they are immutable is to write your own `deepFreeze` function that returns a completely frozen _copy_ of the object:
+
+<CodeBlock {...deepFreezeSource} />
+
+There are also several libraries for creating immutable objects&mdash;[Immutable.js](https://github.com/immutable-js/immutable-js)&mdash;or for simply freezing objects recursively&mdash:[deep-freeze](https://www.npmjs.com/package/deep-freeze).
+
+This is probably overkill in production. The best way to keep things immutable in JavaScript is with best practices. Learn the techniques and the gotchas and practice them religiously. Use libraries such as `deep-freeze` (or write your own utility function) in your **tests** to make sure that your code isn't mutating variables or sharing state.
+
+<h3 id='is-purity-possible'>Can we write a program using only pure functions?</h3>
+
+No. 
+
+Any function that reaches out for the DOM or uses variables that are not in its scope is impure. But how can our program work if we can't write out to the DOM (or to logs)? We need I/O.
+
+In "pure" functional programming languages, the "impure" I/O is isolated in its own module, as is anything else impure. This permits the bulk of the application to be kept pure. The best practice is to do the  same in your code.
+
+The goal of FP is to compose the majority of your program from small pieces of logic that can be combined together and reused. Side effects are inevitable, but by limiting them to certain places in your application, they will be easier to manage and track.
+
+<small>Errors, bugs, suggestions, questions? Contact <a href='mailto:Prateek_Sharma@bnz.co.nz'>Prateek Sharma</a></small>.

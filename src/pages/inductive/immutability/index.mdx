@@ -29,7 +29,7 @@ We know what you're thinking! Whoa, that's insane, right? But we kid you not, Ja
 
 Here is an example: We could declare a variable with `let`, then later assign a number as its value, and then later still assign a string to the same variable:
 
-<CodeBlock {...letSource} />
+<CodeBlock {...letSource} theme='dark' />
 
 If you were looking for an effective way to create **hard-to-find bugs** in your code, you'd be hard-pressed to find a better one. If variables can change not only value, but also **type**, then how can you be sure what the value or type of _any_ variable is anywhere in your code?
 
@@ -141,3 +141,5 @@ function example ({ name, ...props }) {
 example({ name: 'Bob', nickname: 'J.R.', seeks: 'slack' })`} />
 
 So useful. Now that we understand how functions provide high <Link to='/inductive/reusability/'>reusability</Link> and variables should be "<Link to='/inductive/immutability/'>set and forget</Link>", let's see how we can <Link to='/inductive/iteration/'>avoid loops</Link>.
+
+<small>Errors, bugs, suggestions, questions? Contact <a href='mailto:charles_munat@bnz.co.nz'>Charles Munat</a></small>.

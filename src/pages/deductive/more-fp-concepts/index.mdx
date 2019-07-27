@@ -9,23 +9,145 @@ trail:
 import Link from '../../../components/Link'
 
 import CodeBlock from '../../../components/CodeBlock'
-import mapSource from '../../../runkits/inductive/map'
+import Highlighter from '../../../components/Highlighter'
+import bestCurrySource from '../../../runkits/deductive/best-curry'
+import composeSource from '../../../runkits/deductive/compose'
+import currySource from '../../../runkits/deductive/curry'
+import declarativeSource from '../../../runkits/deductive/declarative'
+import higherOrderFunctionSource from '../../../runkits/deductive/higher-order-function'
+import imperativeSource from '../../../runkits/deductive/imperative'
+import ourCurrySource from '../../../runkits/deductive/our-curry'
+import ramdaMapSource from '../../../runkits/deductive/ramda-map'
+import simpleCurrySource from '../../../runkits/deductive/simple-curry'
 
-## more of 'em fp concepts
+There's much more to functional programming. We haven't really begun to see the power it brings.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<h3 id='higher-order-functions'>Higher-order functions aid reusability</h3>
 
-<h3 id='pipe'>Use <code>pipe</code> or <code>compose</code> to combine functions into pipelines</h3>
+JavaScript has **first class functions**, which allow us to treat functions as data&mdash;that means that we can assign them to variables, pass them as arguments to other functions, return them from functions, etc.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+A **higher-order functions** is a function that takes one or more functions as parameters, return a function, or both.
 
-<h3 id='curry'>Use <code>curry</code> to make functions that make functions</h3>
+Functional programming tends to reuse a common set of functional utilities to process data.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<CodeBlock {...higherOrderFunctionSource} />
 
-<h3 id='state-state-state'>Think in terms of state!</h3>
+Object-oriented programming binds functions and data together, so that the functions&mdash;now called "methods"&mdash;can only operate on the data to which they are attached. For example, in the `Array.sort` method above, we must start with an array and then do the sort on that array.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Granted, we can operate on any _type_ of array&mdash;strings, numbers, objects, even other arrays&mdash;but because `sort` is an _instance_ method, we have to call it directly on the Array we want to sort.
 
+We can also use libraries of true FP functions to do the same thing, but without binding our function to a specific array instance. Compare, for example, the [Ramda](https://ramdajs.com/docs/#map) `map` function to the built-in, vanilla JS `Array.map` _method_.
 
-<CodeBlock {...mapSource} />
+<CodeBlock {...ramdaMapSource} />
+
+As you can see, Ramda's pure `map` function is more powerful and reusable than even the `Array.map` method. We'll get to currying and composition more below.
+
+<h3 id='declarative-vs-imperative'>Declarative vs. imperative style</h3>
+
+Functional programming is **declarative**, meaning that the program logic is expressed without explicitly describing the flow control: it tells the code _what_ to do rather than telling it _how_ to do it.
+
+**Imperative** programs spend lines of code describing the specific steps used to achieve the desired results&mdash;the flow control: **How** to do things.
+
+**Declarative** programs abstract the flow control process, and instead spend lines of code describing the data flow: **What** to do.
+
+This means that under the covers, declarative languages are imperative. At some level, the computer only responds to "how". But by abstracting the "how" into higher-level "what", functional programming makes life much easier for the programmer.
+
+Loops are a good example of imperative code. At a quick glance, what does the code below do?
+
+<CodeBlock {...imperativeSource} theme='dark' />
+
+Notice how you have to work your way through the `for` loop syntax. There's a lot going on. Now compare that to the declarative version:
+
+<CodeBlock {...declarativeSource} />
+
+**Imperative** code frequently utilizes statements. A statement is a piece of code which performs some action. Examples of commonly used statements include `for`, `if`, `switch`, `throw`, etc.
+
+**Declarative** code relies more on expressions. An expression is a piece of code which evaluates to some value. Expressions are usually some combination of function calls, values, and operators which are evaluated to produce the resulting value. Examples include:
+
+* `2 * 2`
+* `doubleMap([2, 3, 4])`
+* `Math.max(4, 3, 2)`
+* etc.
+
+<h3 id='composition'>Functional composition</h3>
+
+Function composition is the act of combining multiple functions together in order to create more complex logical flows. 
+
+**The precondition that we need to have in mind is that when we compose functions each one should take the output from the previous.**
+
+If we had to add two numbers and then multiply the result of the addition by 10, then we might write something like this:
+
+<Highlighter code={`const add = (a, b) => a + b
+const multiplyByTen = x => x * 10
+\nconst result = multiplyByTen(add(3, 5)) // 10 * (3 + 5)`} />
+
+The code is easy to understand but if we had to perform more operations readability suffers:
+
+<Highlighter code={`const sum = (a, b) => a + b
+const square = x => x * x
+const addTen = x => x + 10
+\nconst computeNumbers = addTen(square(sum(3, 5))) // 74`} />
+
+We can use [Ramda](https://ramdajs.com/docs/) to enable us to easily write functional code:
+
+<CodeBlock {...composeSource} />
+
+<h3 id='currying'>Currying</h3>
+
+A **curried** function is a function that permits you to pass one parameter at a time. If you pass fewer arguments than the function expects, then it returns a function that takes the remaining arguments and remembers the arguments already passed.
+
+Essentially, you can "partially apply" curried functions, creating  new functions that remember the arguments already passed (called a "closure"). You can see this in the composition example above with the `add` function that takes two parameters, but is partially applied with the first parameter, `add(10)` to create a new function that will take a single number and add 10 to it.
+
+An easy way to "curry" JavaScript functions is by nesting single-parameter functions:
+
+<CodeBlock {...simpleCurrySource} />
+
+In the above example, `add(10, 5)` returned a function because it ignored the second argument, so instead it worked the same as `add(10)`: we got back a function that remembers the 10 and takes the second parameter.
+
+What we want is a function that let's us apply the arguments in any combination. [Ramda](https://ramdajs.com/docs/#curry) provides us with just such a function:
+
+<CodeBlock {...currySource} />
+
+Currying shines during refactoring when you create a generalized version of a function with lots of parameters and then use it to create specialized versions with fewer parameters. This way we can write more descriptive code and achieve much better code reusability.
+
+<CodeBlock {...bestCurrySource} />
+
+We can easily write our own function to curry functions (as long as they take a fixed number of arguments&mdash;can you guess why?). So if you're into impressing your friends (or just curious), check out the example below:
+
+<CodeBlock {...ourCurrySource} />
+
+Curry FTW.
+
+<h3 id='things-to-avoid'>More things to avoid</h3>
+
+A good first step towards writing good Functional code is to stop using the below JS constructs as they break one or more FP principles.
+
+* Loops (loops lead to imperative code)
+  * while
+  * do...while
+  * for
+  * for...of
+  * for...in
+* Void functions (a void function returns nothing so is impure)
+* Variable declarations with `var` or `let` (permit mutation of state)
+* Object mutation, for example: `obj.x = 5` (permit mutation of state)
+* Array mutator methods (these mutate the Array in place)
+  * copyWithin
+  * fill
+  * pop
+  * push
+  * reverse
+  * shift
+  * sort
+  * splice
+  * unshift
+* Map mutator methods (these mutate the Map in place)
+  * clear
+  * delete
+  * set
+* Set mutator methods (these mutate the Set in place)
+  * add
+  * clear
+  * delete
+
+<small>Errors, bugs, suggestions, questions? Contact <a href='mailto:Prateek_Sharma@bnz.co.nz'>Prateek Sharma</a></small>.
