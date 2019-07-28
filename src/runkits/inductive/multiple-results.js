@@ -8,7 +8,10 @@ function getAreaAndCircumferenceFromRadius (radius) {
 }
 
 const circleProperties = getAreaAndCircumferenceFromRadius(1)
-const [area, circumference] = circleProperties // Ordering is important!
+
+// In an arry, ordering is important, but you can name your variables
+// whatever you like: values are assigned by position
+const [area, circumference] = circleProperties
 
 console.log(\`The area is \${area}\`)
 console.log(\`The circumference is \${circumference}\`)`

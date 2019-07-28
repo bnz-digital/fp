@@ -6,10 +6,10 @@ trail:
   - label: Top-down
     href: '/deductive/'
 ---
-import Link from '../../../components/Link'
-
 import CodeBlock from '../../../components/CodeBlock'
 import Highlighter from '../../../components/Highlighter'
+import Link from '../../../components/Link'
+import OffsiteLink from '../../../components/OffsiteLink'
 import bestCurrySource from '../../../runkits/deductive/best-curry'
 import composeSource from '../../../runkits/deductive/compose'
 import currySource from '../../../runkits/deductive/curry'
@@ -36,7 +36,7 @@ Object-oriented programming binds functions and data together, so that the funct
 
 Granted, we can operate on any _type_ of array&mdash;strings, numbers, objects, even other arrays&mdash;but because `sort` is an _instance_ method, we have to call it directly on the Array we want to sort.
 
-We can also use libraries of true FP functions to do the same thing, but without binding our function to a specific array instance. Compare, for example, the [Ramda](https://ramdajs.com/docs/#map) `map` function to the built-in, vanilla JS `Array.map` _method_.
+We can also use libraries of true FP functions to do the same thing, but without binding our function to a specific array instance. Compare, for example, the <OffsiteLink href='https://ramdajs.com/docs/#map'>Ramda</OffsiteLink> `map` function to the built-in, vanilla JS `Array.map` _method_.
 
 <CodeBlock {...ramdaMapSource} />
 
@@ -88,7 +88,7 @@ const square = x => x * x
 const addTen = x => x + 10
 \nconst computeNumbers = addTen(square(sum(3, 5))) // 74`} />
 
-We can use [Ramda](https://ramdajs.com/docs/) to enable us to easily write functional code:
+We can use <OffsiteLink href='https://ramdajs.com/docs/'>Ramda</OffsiteLink> to enable us to easily write functional code:
 
 <CodeBlock {...composeSource} />
 
@@ -104,7 +104,7 @@ An easy way to "curry" JavaScript functions is by nesting single-parameter funct
 
 In the above example, `add(10, 5)` returned a function because it ignored the second argument, so instead it worked the same as `add(10)`: we got back a function that remembers the 10 and takes the second parameter.
 
-What we want is a function that let's us apply the arguments in any combination. [Ramda](https://ramdajs.com/docs/#curry) provides us with just such a function:
+What we want is a function that let's us apply the arguments in any combination. <OffsiteLink href='https://ramdajs.com/docs/#curry'>Ramda</OffsiteLink> provides us with just such a function:
 
 <CodeBlock {...currySource} />
 

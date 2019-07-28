@@ -7,7 +7,8 @@ export default function CodeBlock ({
   code = '',
   imports = '',
   requires = '',
-  theme = 'light'
+  theme = 'light',
+  warn = () => null
 }) {
   const [show, setShow] = useState(false)
 
@@ -25,6 +26,7 @@ export default function CodeBlock ({
 
   return show ? (
     <div className='code-block'>
+      {warn()}
       <Embed
         source={`${requires}${code}`}
         nodeVersion='12'
@@ -32,6 +34,6 @@ export default function CodeBlock ({
       />
     </div>
   ) : (
-    <Highlighter code={`${imports}${code}`} theme={theme} />
+    <Highlighter code={`${imports}${code}`} theme={theme} warn={warn} />
   )
 }

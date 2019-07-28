@@ -9,9 +9,9 @@ function pipe (f, ...fs) {
   return (...args) => pipe(...fs)(f(...args))
 }
 
-// \`add\` is a function that takes \`x\`
-// and returns a function that takes \`y\`
-// adds it to \`x\`, and returns the sum
+// add is a function that takes x
+// and returns a function that takes y
+// adds it to x, and returns the sum
 const add = x => y => y + x
 
 // These work the same way

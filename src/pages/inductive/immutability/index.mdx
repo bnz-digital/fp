@@ -6,10 +6,11 @@ trail:
   - label: Bottom-up
     href: '/inductive/'
 ---
-import Link from '../../../components/Link'
-
-import Highlighter from '../../../components/Highlighter'
 import CodeBlock from '../../../components/CodeBlock'
+import Highlighter from '../../../components/Highlighter'
+import Link from '../../../components/Link'
+import OffsiteLink from '../../../components/OffsiteLink'
+import TerminologyBlock from '../../../components/TerminologyBlock'
 import assignAtDeclarationSource from '../../../runkits/inductive/assign-at-declaration'
 import constSource from '../../../runkits/inductive/const'
 import deepFreezeSource from '../../../runkits/inductive/deep-freeze'
@@ -23,15 +24,17 @@ import spreadObjectSource from '../../../runkits/inductive/spread-object'
 
 ## Variables are &ldquo;set and forget&rdquo;
 
-One fun "feature" of JavaScript is that variables are not statically typed. That means not only that we can reassign variables or mutate their values, but also that we can change their _type_.
+One fun &ldquo;feature&rdquo; of JavaScript is that variables are not <OffsiteLink href='https://en.wikipedia.org/wiki/Type_system#Static_type_checking'>statically typed</OffsiteLink>. That means not only that we can reassign variables or mutate their values, but also that we can change their _type_.
 
-We know what you're thinking! Whoa, that's insane, right? But we kid you not, JavaScript actually considers this a _feature_. Go figure.
+We know what you're thinking! Whoa, that's insane, right? We can not only mutate the value of a variable but also the **type**? No way!
+
+But we kid you not, JavaScript actually considers this a _feature_. Go figure.
 
 Here is an example: We could declare a variable with `let`, then later assign a number as its value, and then later still assign a string to the same variable:
 
 <CodeBlock {...letSource} theme='dark' />
 
-If you were looking for an effective way to create **hard-to-find bugs** in your code, you'd be hard-pressed to find a better one. If variables can change not only value, but also **type**, then how can you be sure what the value or type of _any_ variable is anywhere in your code?
+If you were looking for an effective way to create **hard-to-find bugs** in your code, you'd be hard-pressed (heh) to find a better one. If variables can change not only value, but also **type**, then how can you be sure what the value or type of _any_ variable is anywhere in your code?
 
 In short, if you enjoy chasing down bugs due to unexpected mutations&mdash;have fun with that!&mdash;then `let` and mutability are for you!
 
@@ -41,7 +44,7 @@ How do we manage this? Read on.
 
 ### <span id='use-const-exclusively'>Use <code>const</code> exclusively!</span>
 
-As a start, we prevent variables from being reassigned. We do this with `const`, a misnamed keyword. It is misnamed because it does not actually create a constant, but only prevents _reassingment_. More on this below.
+As a start, we prevent variables from being reassigned. We do this with `const`, a misnamed keyword. It is misnamed because it does not actually create a constant, but only prevents _re-assignment_. More on this below.
 
 Here is `const` in action. Note: there is never a good reason to use `let` or, heaven forbid, `var` in your applications. (If you're building a library, on the other hand, then let's talk.)
 
@@ -49,27 +52,29 @@ Here is `const` in action. Note: there is never a good reason to use `let` or, h
 
 ### <span id='assign-upon-declaration'>Assign variables when they are declared</span>
 
-We said that `const` can't be reassigned, so if we declare it without assigning a value, then we're stuck. In the real world, JavaScript won't let you do this. So we have to assign the value at the point of declaration:
+We said that `const` can't be reassigned, so if we declare it without assigning a value, then we're stuck. In the real world, JavaScript usually won't let you do this (depends on the interpreter). So we have to **assign the value at the point of declaration**:
 
 <CodeBlock {...assignAtDeclarationSource} />
 
 ### <span id='never-mutate'>Once a variable has been assigned, don't be changing it</span>
 
-Unreassignable is not the same thing as "immutable" (unchangeable). If a `const` is assigned a complex value, such as an `Array` or `Object`, then it _is_  possible to reach into that complex value and change it _without_ "reassigning" the variable. This is a significant failing of `const` in our opinion. It can give a false sense of security.
+Unreassignable is not the same thing as &ldquo;immutable&rdquo; (unchangeable). If a `const` is assigned a complex value, such as an `Array` or `Object`, then it _is_  possible to reach into that complex value and change it _without_ &ldquo;reassigning&rdquo; the variable. This is a significant failing of `const` in our not-really-so-humble opinion. It can give one a false sense of security.
 
-JavaScript does offer, however, a way to reach into objects and make them "read-only". Now they really are immutable. Unfortunately, this capability only freezes one level at a time, so to fully "freeze" an object, we have to traverse the entire tree freezing all the levels.
+<TerminologyBlock>When a variable cannot be changed (mutated), we say that that variable is <strong>immutable</strong>. <OffsiteLink href='https://en.wikipedia.org/wiki/Immutable_object'>Immutability</OffsiteLink> is extremely important in functional programming because it helps us to achieve <strong>referential transparency</strong>. <OffsiteLink href='https://en.wikipedia.org/wiki/Referential_transparency'>Referential transparency</OffsiteLink> means that our variable can be replaced with its value at any time without altering the program's behaviour, which means we can use <OffsiteLink href='https://en.wikipedia.org/wiki/Substitution_(algebra)'>substitution</OffsiteLink> to simplify and reason about our code.</TerminologyBlock>
+
+JavaScript does offer, however, a way to reach into objects and make them &ldquo;read-only&rdquo;. Now they really are immutable. Unfortunately, this capability only freezes one level at a time, so to fully &ldquo;freeze&rdquo; an object, we have to traverse the entire tree freezing all the levels.
 
 <CodeBlock {...freezeMyButtSource} />
 
-Well, now, ain't that a damn shame.
+Well, now, ain't that a damn shame. Mutations be getting all up in them nested objects.
 
-To make this easier, a few people have written libraries and utility functions. Or we can just write a function that calls itself and traverses the object freezing each level in turn:
+To make this easier, a few people have written libraries and utility functions, such as <OffsiteLink href='https://www.npmjs.com/package/deep-freeze'>deep-freeze</OffsiteLink>. Or we can just write a function that calls itself and traverses the object freezing each level in turn:
 
 <CodeBlock {...deepFreezeSource} />
 
-Unfortunately, these fail to mutate silently rather than throwing an error. Sigh... nothing is perfect.
+Unfortunately, these fail to mutate **silently** rather than throwing an error. Sigh... nothing is perfect.
 
-Truth is that with best practices and making it a habit to keep things immutable, you probably don't need a `freeze` function except in unit tests. In your unit tests, you definitely should ensure that you aren't mutating variables.
+Truth is that with best practices and making it a habit to keep things immutable, you probably don't need a `freeze` function except in unit tests. In your unit tests, you most definitely should ensure that you aren't mutating variables.
 
 ### <span id='never-destroy-state'>Don't erase state: create new state instead!</span>
 
@@ -79,13 +84,17 @@ Think about it. Suppose I use `let` to create a variable `x` and assign it value
 
 Now a bit later, I assign it a new value. Say, `5`. OK, what was the previous value?
 
-You might remember, _but your code doesn't_, because you _overwrote it_. Now why you wanna erase that state? What did it ever do to you?
+You might remember, _but your code doesn't_, because you _overwrote it_. Now why you wanna destroy that state? What did it ever do to you?
 
-In functional JavaScript we keep track of state, in general, by making new copies when we want to change something. This means that if I go back to look at the value of `x` for any reason, then it is still `3`. My `newX` is `5`.
+In functional JavaScript we keep track of state, in general, by making **new copies** when we want to change something. This means that if I go back to look at the value of `x` for any reason, then it is still `3`. My `newX` is `5`.
 
-This also allows us to set up "time-travel debugging", where we can move a slider back and forth and see how the state of our application changes over time. Often, it means that we can "replay" everything, too. It almost makes debugging fun.
+This also allows us to set up &ldquo;time-travel debugging&rdquo;, where we can move a slider back and forth and see how the state of our application changes over time. Often, it means that we can &ldquo;replay&rdquo; everything, too. It almost makes debugging fun.
 
-Speaking of state, one of the reasons we keep our variables immutable and our functions "pure" is to avoid sharing state. That's kind of a mantra for functional programmers: _no shared state_. Sharing state is a good way to create difficult-to-find bugs. And it makes parallel processing difficult. When each process is responsible for its own state, life is sweet.
+Almost.
+
+Speaking of state, one of the reasons we keep our variables immutable and our functions &ldquo;pure&rdquo; is to **avoid sharing state**. That's kind of a mantra for functional programmers: _no shared state_.
+
+Sharing state is a good way to create difficult-to-find bugs. And it makes parallel processing difficult. When each process is responsible for its own state, life is sweet.
 
 So think about state whenever you write code. After all, every application manages some kind of state. If nothing ever changed, then what would be the point of the app?
 
@@ -99,9 +108,11 @@ Check it out:
 
 <CodeBlock {...restArraySource} />
 
-Remember that JavaScript arrays _preserve ordering_. You can think of the left-hand side of the assignment operator as a "pattern" or "mask" for the right-hand side. By placing `x` in the position of the first element of the array, it is assigned the first element of our `[1, 2, 3, 4, 5]` array, which is `1`.
+Remember that JavaScript arrays _preserve ordering_. You can think of the left-hand side of the assignment operator as a &ldquo;pattern&rdquo; or &ldquo;mask&rdquo; for the right-hand side. By placing `x` in the position of the first element of the array, it is assigned the first element of our `[1, 2, 3, 4, 5]` array, which is `1`.
 
-Now we want to scoop up the remaining elements of the array&mdash;the "rest" of them&mdash;and put them in another variable. The custom of using `x` and `xs` for the head and the tail of an array is very common and well understood in functional programming (not just in JavaScript). So we use `...xs` to collect all the remaining elements save the first of `[1, 2, 3, 4, 5]` and put them in an array, which is `[2, 3, 4, 5]`.
+Now we want to scoop up the remaining elements of the array&mdash;the &ldquo;rest&rdquo; of them&mdash;and put them in another variable. The custom of using `x` and `xs` for the head and the tail of an array is very common and well understood in functional programming (not just in JavaScript). So we use `...xs` to collect all the remaining elements save the first of `[1, 2, 3, 4, 5]` and put them in an array, which is `[2, 3, 4, 5]`.
+
+We call `x` the &ldquo;head&rdquo; of our array, and `xs` the &ldquo;tail&rdquo;. Note that the head has the type of the first element in the array, whereas the tail is always an array of elements (even when empty).
 
 We can also use the **rest** syntax to collect key-value pairs from an object:
 
@@ -111,11 +122,11 @@ Unfortunately, Runkit doesn't support this, but you can copy and paste the above
 
 <Highlighter code={`{
   food: 'Tiramisu',
-  show: 'Game of Throne',
+  show: 'Game of Thrones',
   song: 'Swimming Pools (Drank)'
 }`} />
 
-Now let's consider the **spread** syntax. When we use `...` on the right-hand side of the assignment operator, it takes a collection of values&mdash;it could be either an array or an object&mdash;and "spreads" them out into a new array or object.
+Now let's consider the **spread** syntax. When we use `...` on the **right-hand side** of the assignment operator, it takes a collection of values&mdash;it could be either an array or an object&mdash;and &ldquo;spreads&rdquo; them out into a new array or object.
 
 Here we see the spread syntax in action with an array:
 
@@ -140,6 +151,6 @@ function example ({ name, ...props }) {
 }
 example({ name: 'Bob', nickname: 'J.R.', seeks: 'slack' })`} />
 
-So useful. Now that we understand how functions provide high <Link to='/inductive/reusability/'>reusability</Link> and variables should be "<Link to='/inductive/immutability/'>set and forget</Link>", let's see how we can <Link to='/inductive/iteration/'>avoid loops</Link>.
+So useful. Now that we understand how functions provide high <Link to='/inductive/reusability/'>reusability</Link> and variables should be &ldquo;<Link to='/inductive/immutability/'>set and forget</Link>&rdquo;, let's see how we can <Link to='/inductive/iteration/'>avoid loops</Link>.
 
 <small>Errors, bugs, suggestions, questions? Contact <a href='mailto:charles_munat@bnz.co.nz'>Charles Munat</a></small>.

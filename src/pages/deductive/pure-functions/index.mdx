@@ -6,9 +6,9 @@ trail:
   - label: Top-down
     href: '/deductive/'
 ---
-import Link from '../../../components/Link'
-
 import CodeBlock from '../../../components/CodeBlock'
+import Link from '../../../components/Link'
+import OffsiteLink from '../../../components/OffsiteLink'
 import deepFreezeSource from '../../../runkits/inductive/deep-freeze'
 import erasingHistorySource from '../../../runkits/deductive/erasing-history'
 import makingCopiesSource from '../../../runkits/deductive/making-copies'
@@ -18,7 +18,7 @@ import pureAndImpureReduxSource from '../../../runkits/deductive/pure-and-impure
 import sharedStateSource from '../../../runkits/deductive/shared-state'
 import sideEffectSource from '../../../runkits/deductive/side-effect'
 
-A [pure function](https://en.wikipedia.org/wiki/Pure_function) is a function which:
+A <OffsiteLink href='https://en.wikipedia.org/wiki/Pure_function'>pure function</OffsiteLink> is a function which:
 
 1. Given the same inputs, always returns the same output, and
 1. Has no side-effects (we'll explain below)
@@ -27,9 +27,9 @@ A [pure function](https://en.wikipedia.org/wiki/Pure_function) is a function whi
 
 If you run the above Runkit multiple times, you'll see that the `getRandomNumber` function returns an unpredictable number between 0 and 1, wheras given the same `x` and `y` values, the `add` function will always return the same result, e.g., `add(2, 3) // returns 5`.
 
-Because pure functions are [referentially transparent](https://en.wikipedia.org/wiki/Referential_transparency), we can use [substitution](https://en.wikipedia.org/wiki/Substitution_(algebra)) to replace a pure function call with its result without changing the meaning of the program. This makes it easier to reason about our programs.
+Because pure functions are <OffsiteLink href='https://en.wikipedia.org/wiki/Referential_transparency'>referentially transparent</OffsiteLink>, we can use <OffsiteLink href='https://en.wikipedia.org/wiki/Substitution_(algebra'>substitution</OffsiteLink>) to replace a pure function call with its result without changing the meaning of the program. This makes it easier to reason about our programs.
 
-Returning the same result when called more than once is also called [idempotency](https://en.wikipedia.org/wiki/Idempotence).
+Returning the same result when called more than once is also called <OffsiteLink href='https://en.wikipedia.org/wiki/Idempotence'>idempotency</OffsiteLink>.
 
 Let's look at another example using shared state:
 
@@ -37,7 +37,7 @@ Let's look at another example using shared state:
 
 <h3 id='avoid-side-effects'>Avoid side effects</h3>
 
-A [side effect](https://en.wikipedia.org/wiki/Side_effect_(computer_science)) is any application state change that is observable outside the called function other than its return value. Side effects include:
+A <OffsiteLink href='https://en.wikipedia.org/wiki/Side_effect_(computer_science'>side effect</OffsiteLink>) is any application state change that is observable outside the called function other than its return value. Side effects include:
 
 * Modifying shared state: any external variable or object property (e.g., a global variable, or a variable in the parent function scope chain)
 * Logging to the console
@@ -103,7 +103,7 @@ A better way to freeze objects to ensure that they are immutable is to write you
 
 <CodeBlock {...deepFreezeSource} />
 
-There are also several libraries for creating immutable objects&mdash;[Immutable.js](https://github.com/immutable-js/immutable-js)&mdash;or for simply freezing objects recursively&mdash:[deep-freeze](https://www.npmjs.com/package/deep-freeze).
+There are also several libraries for creating immutable objects&mdash;<OffsiteLink href='https://github.com/immutable-js/immutable-js'>Immutable.js</OffsiteLink>&mdash;or for simply freezing objects recursively&mdash:<OffsiteLink href='https://www.npmjs.com/package/deep-freeze'>deep-freeze</OffsiteLink>.
 
 This is probably overkill in production. The best way to keep things immutable in JavaScript is with best practices. Learn the techniques and the gotchas and practice them religiously. Use libraries such as `deep-freeze` (or write your own utility function) in your **tests** to make sure that your code isn't mutating variables or sharing state.
 

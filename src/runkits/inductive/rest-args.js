@@ -6,6 +6,9 @@ function oneAttaTime (x, ...xs) {
   console.log('The value of xs is', xs)
 }
 
+// Uncomment this to see that it won't work
+// function wrongOrder (...xs, x) { console.log('oops') }
+
 oneAttaTime('first', 'second', 'third')`
 
 const imports = ``

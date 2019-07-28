@@ -1,21 +1,21 @@
 const code = `// For the love of all that is sacred and true, DO NOT DO THIS!
 
 // Do not let the evil "let" into your code!
-// Be constant to "const"
+// Be constant to "const" (constant === faithful, get it?)
 let x = 'x'
 
 function doEvil (y) {
-  x = y // Aieeee!
+  x = y // Aieeee! Mutant variable!
 }
 
-console.log(\`Oh, look what doEvil returns: \${doEvil('y')}\`)
+console.log(\`Oh, look what doEvil('y') returns: \${doEvil('y')}\`)
 
 console.log(\`And x is now \${x}! Oh, the humanity!\`)
-console.log(\`doEvil changed something other than through its result. That's just so wrong.\`)
+console.log(\`doEvil changed something other than through its result. That's just so wrong!\`)
 
 // More evil!
 
-let i = 1 // Global
+let i = 1 // Global, ack!
 
 function inc (n) {
   return n + i // Reaching out to the global. Ugh.
@@ -25,7 +25,7 @@ console.log(\`The inc function increments by 1: inc(5) is \${inc(5)}\`)
 
 i = 5 // The global mutates. Ack!
 
-console.log(\`Or does it: inc(5) is \${inc(5)}\`)
+console.log(\`Or does it? inc(5) is \${inc(5)}. WTF?\`)
 console.log('Calling inc(5) at different times got different results. Ack! No! No! No!')
 `
 

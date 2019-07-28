@@ -1,6 +1,6 @@
 const code = `// DO NOT DO ANY OF THIS. JUST DON'T.
 try {
-  // \`x\` does not yet exist
+  // \`x\` does not yet exist so this will throw and Error
   console.log(\`x === \${x} (x is not declared)\`)
 } catch (e) {
   console.log(e)

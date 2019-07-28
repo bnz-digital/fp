@@ -8,7 +8,7 @@ x = 'let is evil'
 console.log(\`\\\`x\\\` === '\${x}'\`)
 
 // This does not work! And no, a semicolon won't save you.
-// Uncomment the next line to see what happens:
+// Uncomment the next line to see what happens. (Hint: it breaks)
 // const y; y = 'We broken'
 
 // Declare and assign at the same time

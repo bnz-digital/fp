@@ -10,16 +10,20 @@ export default function Highlighter ({
   language = 'javascript',
   showLineNumbers = true,
   startingLineNumber = 1,
-  theme = 'light'
+  theme = 'light',
+  warn = () => null
 }) {
   return (
-    <SyntaxHighlighter
-      language={language}
-      style={theme === 'light' ? solarizedLight : solarizedDark}
-      showLineNumbers={showLineNumbers}
-      startingLineNumber={startingLineNumber}
-    >
-      {code}
-    </SyntaxHighlighter>
+    <>
+      {warn()}
+      <SyntaxHighlighter
+        language={language}
+        style={theme === 'light' ? solarizedLight : solarizedDark}
+        showLineNumbers={showLineNumbers}
+        startingLineNumber={startingLineNumber}
+      >
+        {code}
+      </SyntaxHighlighter>
+    </>
   )
 }

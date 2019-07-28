@@ -18,8 +18,8 @@ const vjsUpdatedNames = vadjust(1, () => 'Carol', names)
 // Ramda's adjust
 const ramdaUpdatedNames = adjust(1, () => 'Carol', names)
 
-console.log('The updated names by vanilla JS:', vjsUpdatedNames)
-console.log('The updated names by Ramda\\'s adjust:', ramdaUpdatedNames)
+console.log('Update Carole to Carol by vanilla JS:', vjsUpdatedNames)
+console.log('Update Carole to Carol by Ramda\\'s adjust:', ramdaUpdatedNames)
 console.log('The original list is unchanged:', names)`
 
 const imports = ``

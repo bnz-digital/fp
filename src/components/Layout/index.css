@@ -682,3 +682,13 @@ pre code:before, pre code:after, pre tt:before, pre tt:after {
   display: inline-block;
   padding: 0 0.5rem;
 }
+
+.offsite-link {
+  color: SeaGreen;
+  text-decoration: underline;
+}
+
+blockquote {
+  background-color: MistyRose;
+  padding: 0.5rem;
+}
