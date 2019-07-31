@@ -1,10 +1,496 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><style data-href="/fp/styles.5376d4f1b85eb94c0666.css">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{color:#1e90ff;background-color:transparent;text-decoration:none;-webkit-text-decoration-skip:objects}a:active,a:hover{color:#4169e1;outline-width:0;text-decoration:underline}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:112.5%/1.45em Verdana,serif;box-sizing:border-box;overflow-y:scroll}*,:after,:before{box-sizing:inherit}body{color:rgba(0,0,0,.8);font-family:Verdana,serif;font-weight:400;word-wrap:break-word;-webkit-font-kerning:normal;font-kerning:normal;-ms-font-feature-settings:"kern","liga","clig","calt";-webkit-font-feature-settings:"kern","liga","clig","calt";font-feature-settings:"kern","liga","clig","calt"}img{max-width:100%;padding:0;margin:0 0 1.45rem}h1{margin:0 0 1.45rem;color:inherit;font-size:2.25rem}h1,h2{padding:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:700;text-rendering:optimizeLegibility;line-height:1.1}h2{margin:3rem 0 1.45rem;color:#b22222;font-size:1.62671rem}h2:before{content:"\2605   ";vertical-align:text-top}h3{padding:0;margin:3rem 0 1.45rem;color:#b22222;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:400;text-rendering:optimizeLegibility;font-size:1.38316rem;line-height:1.1}h3:before{padding-right:.5rem;content:"\261E   "}h4{font-size:1rem}h4,h5{padding:0;margin:0 0 1.45rem;color:inherit;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:700;text-rendering:optimizeLegibility;line-height:1.1}h5{font-size:.85028rem}h6{color:inherit;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:700;text-rendering:optimizeLegibility;font-size:.78405rem;line-height:1.1}h6,hgroup{padding:0;margin:0 0 1.45rem}ol,ul{padding:0;margin:0 0 1.45rem 1.45rem;list-style-position:outside;list-style-image:none}dd,dl,figure,p{padding:0;margin:0 0 1.45rem}pre{margin:0 0 1.45rem;font-size:.85rem;line-height:1.42;background:rgba(0,0,0,.04);border-radius:3px;overflow:auto;word-wrap:normal;padding:1.45rem}table{font-size:1rem;line-height:1.45rem;border-collapse:collapse;width:100%}fieldset,table{padding:0;margin:0 0 1.45rem}blockquote{padding:0;margin:0 1.45rem 1.45rem}form,iframe,noscript{padding:0;margin:0 0 1.45rem}hr{padding:0;margin:0 0 calc(1.45rem - 1px);background:rgba(0,0,0,.2);border:none;height:1px}address{padding:0;margin:0 0 1.45rem}b,dt,strong,th{font-weight:700}li{margin-bottom:.725rem}ol li,ul li{padding-left:0}li>ol,li>ul{margin-left:1.45rem;margin-bottom:.725rem;margin-top:.725rem}blockquote :last-child,li :last-child,p :last-child{margin-bottom:0}li>p{margin-bottom:.725rem}code{line-height:1.45rem}kbd,samp{font-size:.85rem;line-height:1.45rem}abbr,abbr[title],acronym{border-bottom:1px dotted rgba(0,0,0,.5);cursor:help}abbr[title]{text-decoration:none}td,th,thead{text-align:left}td,th{border-bottom:1px solid rgba(0,0,0,.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding:.725rem .96667rem calc(.725rem - 1px)}td:first-child,th:first-child{padding-left:0}td:last-child,th:last-child{padding-right:0}code,tt{font-size:1.15rem;color:#b22222;border-radius:3px}pre code{font-size:.88rem;background:none;line-height:1.42;padding:0}code:after,code:before,tt:after,tt:before{letter-spacing:-.2em}pre code:after,pre code:before,pre tt:after,pre tt:before{content:""}@media only screen and (max-width:480px){html{font-size:100%}}.react-syntax-highlighter-line-number{color:grey}.code-block{margin:2rem 0}.separator{display:inline-block;padding:0 .5rem}.offsite-link{color:#2e8b57;text-decoration:underline}blockquote{background-color:#ffe4e1;padding:.5rem}</style><meta name="generator" content="Gatsby 2.13.32"/><title data-react-helmet="true">Pipelines | How to FP</title><script data-react-helmet="true" src="https://embed.runkit.com" data-element-id="runkit"></script><link rel="shortcut icon" href="/fp/icons/icon-48x48.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="manifest" href="/fp/manifest.webmanifest"/><meta name="theme-color" content="#663399"/><link rel="apple-touch-icon" sizes="48x48" href="/fp/icons/icon-48x48.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="72x72" href="/fp/icons/icon-72x72.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="96x96" href="/fp/icons/icon-96x96.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="144x144" href="/fp/icons/icon-144x144.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="192x192" href="/fp/icons/icon-192x192.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="256x256" href="/fp/icons/icon-256x256.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="384x384" href="/fp/icons/icon-384x384.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="512x512" href="/fp/icons/icon-512x512.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link as="script" rel="preload" href="/fp/webpack-runtime-aaaffb739411eafb5019.js"/><link as="script" rel="preload" href="/fp/app-d102fe6008af028834bb.js"/><link as="script" rel="preload" href="/fp/styles-f3560c2066c1ba871771.js"/><link as="script" rel="preload" href="/fp/1-60b116aff0e55006d660.js"/><link as="script" rel="preload" href="/fp/2-a6d82e9708fac40fa4bc.js"/><link as="script" rel="preload" href="/fp/component---src-pages-inductive-composition-index-mdx-012b1e36cc9ee1de0353.js"/><link as="fetch" rel="preload" href="/fp/page-data/inductive/composition/page-data.json" crossorigin="use-credentials"/></head><body><noscript id="gatsby-noscript">This app works best with JavaScript enabled.</noscript><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group" id="gatsby-focus-wrapper"><header style="background:RebeccaPurple;margin-bottom:1.45rem"><div style="display:flex;align-items:center;margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0;display:inline-block;flex-grow:1"><a style="color:white;text-decoration:none" href="/fp/">How to FP</a></h1><div style="flex-shrink:1"><a style="color:white;text-decoration:none;text-transform:lowercase;display:inline-block;padding:0 0.5rem" href="/fp/inductive">Bottom-up</a><a style="color:white;text-decoration:none;text-transform:lowercase;display:inline-block;padding:0 0.5rem" href="/fp/deductive">Top-down</a><a style="color:white;text-decoration:none;text-transform:lowercase;display:inline-block;padding:0 0.5rem" href="/fp/patterns-antipatterns">Patterns</a></div></div></header><div style="margin:0 auto;max-width:960px;padding:0 1.0875rem 1.45rem;padding-top:0"><main><p><a href="/fp/">Home</a><span class="separator">»</span><a href="/fp/inductive/">Bottom-up</a><span class="separator">»</span>Pipelines</p><article><h2>We can has pipelines!</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><h3 id="pipe">Use <code>pipe</code> or <code>compose</code> to combine functions into pipelines</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><h3 id="curry">Use <code>curry</code> to make functions that make functions</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><h3 id="state-state-state">Think in terms of state!</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><style data-href="/fp/styles.5f75b4d44ec2f6f51644.css">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{color:#1e90ff;background-color:transparent;text-decoration:none;-webkit-text-decoration-skip:objects}a:active,a:hover{color:#4169e1;outline-width:0;text-decoration:underline}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:112.5%/1.45em Verdana,serif;box-sizing:border-box;overflow-y:scroll}*,:after,:before{box-sizing:inherit}body{color:rgba(0,0,0,.8);font-family:Verdana,serif;font-weight:400;word-wrap:break-word;-webkit-font-kerning:normal;font-kerning:normal;-ms-font-feature-settings:"kern","liga","clig","calt";-webkit-font-feature-settings:"kern","liga","clig","calt";font-feature-settings:"kern","liga","clig","calt"}img{max-width:100%;padding:0;margin:0 0 1.45rem}h1{margin:0 0 1.45rem;color:inherit;font-size:2.25rem}h1,h2{padding:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:700;text-rendering:optimizeLegibility;line-height:1.1}h2{margin:3rem 0 1.45rem;color:#b22222;font-size:1.62671rem}h2:before{content:"\2605   ";vertical-align:text-top}h3{padding:0;margin:3rem 0 1.45rem;color:#b22222;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:400;text-rendering:optimizeLegibility;font-size:1.38316rem;line-height:1.1}h3:before{padding-right:.5rem;content:"\261E   "}h4{font-size:1rem}h4,h5{padding:0;margin:0 0 1.45rem;color:inherit;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:700;text-rendering:optimizeLegibility;line-height:1.1}h5{font-size:.85028rem}h6{color:inherit;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;font-weight:700;text-rendering:optimizeLegibility;font-size:.78405rem;line-height:1.1}h6,hgroup{padding:0;margin:0 0 1.45rem}ol,ul{padding:0;margin:0 0 1.45rem 1.45rem;list-style-position:outside;list-style-image:none}dd,dl,figure,p{padding:0;margin:0 0 1.45rem}pre{margin:0 0 1.45rem;font-size:.85rem;line-height:1.42;background:rgba(0,0,0,.04);border-radius:3px;overflow:auto;word-wrap:normal;padding:1.45rem}table{font-size:1rem;line-height:1.45rem;border-collapse:collapse;width:100%}fieldset,table{padding:0;margin:0 0 1.45rem}blockquote{padding:0;margin:0 1.45rem 1.45rem}form,iframe,noscript{padding:0;margin:0 0 1.45rem}hr{padding:0;margin:0 0 calc(1.45rem - 1px);background:rgba(0,0,0,.2);border:none;height:1px}address{padding:0;margin:0 0 1.45rem}b,dt,strong,th{font-weight:700}li{margin-bottom:.725rem}ol li,ul li{padding-left:0}li>ol,li>ul{margin-left:1.45rem;margin-bottom:.725rem;margin-top:.725rem}blockquote :last-child,li :last-child,p :last-child{margin-bottom:0}li>p{margin-bottom:.725rem}a>{line-height:1.45rem}kbd,samp{font-size:.85rem;line-height:1.45rem}abbr,abbr[title],acronym{border-bottom:1px dotted rgba(0,0,0,.5);cursor:help}abbr[title]{text-decoration:none}td,th,thead{text-align:left}td,th{border-bottom:1px solid rgba(0,0,0,.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding:.725rem .96667rem calc(.725rem - 1px)}td:first-child,th:first-child{padding-left:0}td:last-child,th:last-child{padding-right:0}code,tt{font-size:1.05rem;color:#b22222;border-radius:3px}pre code{font-size:.88rem;background:none;line-height:1.42;padding:0}code:after,code:before,tt:after,tt:before{letter-spacing:-.2em}pre code:after,pre code:before,pre tt:after,pre tt:before{content:""}@media only screen and (max-width:480px){html{font-size:100%}}.react-syntax-highlighter-line-number{color:grey}.code-block{margin:2rem 0}.separator{display:inline-block;padding:0 .5rem}.offsite-link{color:#2e8b57;text-decoration:underline}blockquote{background-color:#ffe4e1;padding:.5rem}a:hover>code{color:#4169e1;outline-width:0;text-decoration:underline}</style><meta name="generator" content="Gatsby 2.13.32"/><title data-react-helmet="true">Pipelines | How to FP</title><script data-react-helmet="true" src="https://embed.runkit.com" data-element-id="runkit"></script><link rel="shortcut icon" href="/fp/icons/icon-48x48.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="manifest" href="/fp/manifest.webmanifest"/><meta name="theme-color" content="#663399"/><link rel="apple-touch-icon" sizes="48x48" href="/fp/icons/icon-48x48.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="72x72" href="/fp/icons/icon-72x72.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="96x96" href="/fp/icons/icon-96x96.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="144x144" href="/fp/icons/icon-144x144.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="192x192" href="/fp/icons/icon-192x192.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="256x256" href="/fp/icons/icon-256x256.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="384x384" href="/fp/icons/icon-384x384.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link rel="apple-touch-icon" sizes="512x512" href="/fp/icons/icon-512x512.png?v=a97a93a5dc4dc51bb0babe472a160ed9"/><link as="script" rel="preload" href="/fp/webpack-runtime-17b21688dadcfc640638.js"/><link as="script" rel="preload" href="/fp/app-2f70f34c782f741ba7f9.js"/><link as="script" rel="preload" href="/fp/styles-e272739fa9193237d330.js"/><link as="script" rel="preload" href="/fp/1-f97617762f9874010401.js"/><link as="script" rel="preload" href="/fp/2-498b5bb2908264d24291.js"/><link as="script" rel="preload" href="/fp/component---src-pages-inductive-composition-index-mdx-c2219dd982473add58a4.js"/><link as="fetch" rel="preload" href="/fp/page-data/inductive/composition/page-data.json" crossorigin="use-credentials"/></head><body><noscript id="gatsby-noscript">This app works best with JavaScript enabled.</noscript><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group" id="gatsby-focus-wrapper"><header style="background:RebeccaPurple;margin-bottom:1.45rem"><div style="display:flex;align-items:center;margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0;display:inline-block;flex-grow:1"><a style="color:white;text-decoration:none" href="/fp/">How to FP</a></h1><div style="flex-shrink:1"><a style="color:white;text-decoration:none;text-transform:lowercase;display:inline-block;padding:0 0.5rem" href="/fp/inductive">Bottom-up</a><a style="color:white;text-decoration:none;text-transform:lowercase;display:inline-block;padding:0 0.5rem" href="/fp/deductive">Top-down</a><a style="color:white;text-decoration:none;text-transform:lowercase;display:inline-block;padding:0 0.5rem" href="/fp/patterns-antipatterns">Patterns</a></div></div></header><div style="margin:0 auto;max-width:960px;padding:0 1.0875rem 1.45rem;padding-top:0"><main><p><a href="/fp/">Home</a><span class="separator">»</span><a href="/fp/inductive/">Bottom-up</a><span class="separator">»</span>Pipelines</p><article><h2>We can has pipelines!</h2><p>Everything we&#x27;ve discussed up to this point has been prologue. The <strong>true</strong> power of functional programming comes from <strong>combining functions</strong> to create a kind of function <!-- -->“<!-- -->pipeline<!-- -->”<!-- -->.</p><p>Here is the <strong>most important thing</strong> for you to understand about piping data from one function to another:</p><ul><li>The <strong>first function</strong> in a pipeline can take <strong>any number of parameters</strong>.</li><li>Each succeeding function in the pipeline <strong>must take only a single parameter</strong>.</li></ul><p>The reason for this should be obvious: every function after the first one is getting its input from the output of the preceeding function. As a function can only return a single value, there is no way to pass more than one argument to the next function in the pipe. Right?</p><p><a style="cursor:pointer"><strong>Show <!-- --> Evil Terminology</strong></a></p><p>Of course, functions in a pipe other than the first function <em>can</em> accept more than one parameter. It&#x27;s just that only a single argument will be passed from the preceeding function. But if the parameters after the first one have suitable default values, that can still work.</p><p>But pipelining functions will become much more useful to us if there is a way to <!-- -->“<!-- -->partially apply<!-- -->”<!-- --> functions so that we <!-- -->“<!-- -->pre-load<!-- -->”<!-- --> them with the other arguments they need. We can do this by creating functions that can return other functions if they are called with fewer arguments than the number of parameters they expect.</p><p><a style="cursor:pointer"><strong>Show <!-- --> Evil Terminology</strong></a></p><p>Here is where we <strong>separate the pros from the novices</strong>. We mentioned default values for the extra parameters above, and if you think that way, then your inclination will be to make the data that we intend to pass down the pipe the <strong>first</strong> parameter, because that&#x27;s the one that will be passed by the preceeding function, right?</p><p>But this means that the only way to fill the remaining arguments is with default values, which is pretty limiting.</p><p>But if we can apply fewer arguments than there are parameters to a function, and get back a function that remembers those arguments and accepts the remaining parameters, then <strong>we want the parameter that will be <!-- -->“<!-- -->chained<!-- -->”<!-- --> to be the <em>last</em> parameter</strong>, not the first. We&#x27;ll see this when we get to using <code>pipe</code> and <code>compose</code> below.</p><p><strong>This is where the Underscore and Lodash libraries went wrong</strong> (fixed in Lodash/FP), and what Ramda and Sanctuary got so right.</p><p>In Underscore and Lodash, the argument we want to pass down the pipe is passed as the <strong>first</strong> parameter, which means there is no way to set any remaining parameters, except by default value. Underscore and Lodash get around this by forcing you to add a <code>chain</code> function call<!-- -->—<!-- -->an absolute code <em>stink</em>—<!-- -->and they expect you to pipe function calls by dotting them together.</p><p>Ramda and Sanctuary, in contrast, allow you to <!-- -->“<!-- -->partially apply<!-- -->”<!-- --> functions so that only the last parameter remains unfilled, and then use <code>pipe</code> or <code>compose</code> to chain them together to create a new function that takes any number of parameters, passes the data down the chain of functions, and returns the final result.</p><p>Enough chat! Let&#x27;s cut to the chase!</p><h3 id="curry">Use <code>curry</code> to make functions that make functions</h3><p>The <code>curry</code> function takes a function that expects one or more parameters and turns it into a function that allows partial application of those parameters, ideally in any combination (but preserving order). Like this:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
 </span><span class="react-syntax-highlighter-line-number">2
 </span><span class="react-syntax-highlighter-line-number">3
 </span><span class="react-syntax-highlighter-line-number">4
 </span><span class="react-syntax-highlighter-line-number">5
-</span></code><code><span style="color:#859900">import</span> { map } <span style="color:#859900">from</span> <span style="color:#2aa198">&#x27;ramda&#x27;</span>
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span></code><code><span style="color:#859900">const</span> { curry } = <span style="color:#dc322f">require</span>(<span style="color:#2aa198">&#x27;ramda&#x27;</span>)
 
-<span style="color:#859900">const</span> nums = [<span style="color:#2aa198">1</span>, <span style="color:#2aa198">4</span>, <span style="color:#2aa198">9</span>, <span style="color:#2aa198">16</span>, <span style="color:#2aa198">25</span>]
+<span style="color:#859900">const</span> doSomeArithmetic = curry(<span class="hljs-function">(<span class="hljs-params">a, b, c, d</span>) =&gt;</span> a + b * c - d)
 
-map(<span style="color:#dc322f">Math</span>.sqrt, nums)</code></pre><small>Errors, bugs, suggestions, questions? Contact <a href="mailto:charles_munat@bnz.co.nz">Charles Munat</a></small>.</article></main></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/inductive/composition/";window.webpackCompilationHash="2eef34f3a56080f35333";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-d102fe6008af028834bb.js"],"component---src-pages-404-js":["/component---src-pages-404-js-c70e19210606ea6482c2.js"],"component---src-pages-deductive-index-mdx":["/component---src-pages-deductive-index-mdx-37dd2ec999628855d017.js"],"component---src-pages-index-mdx":["/component---src-pages-index-mdx-d142fd5a7b7761c98c96.js"],"component---src-pages-inductive-composition-index-mdx":["/component---src-pages-inductive-composition-index-mdx-012b1e36cc9ee1de0353.js"],"component---src-pages-inductive-immutability-index-mdx":["/component---src-pages-inductive-immutability-index-mdx-1b6fd9235bbd5366b8be.js"],"component---src-pages-deductive-more-fp-concepts-index-mdx":["/component---src-pages-deductive-more-fp-concepts-index-mdx-58849935843f1612695b.js"],"component---src-pages-deductive-pure-functions-index-mdx":["/component---src-pages-deductive-pure-functions-index-mdx-343e18e515451f044c4b.js"],"component---src-pages-inductive-iteration-index-mdx":["/component---src-pages-inductive-iteration-index-mdx-48d0c0d4126f62ce053b.js"],"component---src-pages-inductive-reusability-index-mdx":["/component---src-pages-inductive-reusability-index-mdx-96254470212b27356d55.js"],"component---src-pages-patterns-antipatterns-index-mdx":["/component---src-pages-patterns-antipatterns-index-mdx-c8d58d8aa5a6f668dde9.js"],"component---src-pages-inductive-index-mdx":["/component---src-pages-inductive-index-mdx-e15491b00a1735a8bc43.js"]};/*]]>*/</script><script src="/fp/component---src-pages-inductive-composition-index-mdx-012b1e36cc9ee1de0353.js" async=""></script><script src="/fp/2-a6d82e9708fac40fa4bc.js" async=""></script><script src="/fp/1-60b116aff0e55006d660.js" async=""></script><script src="/fp/styles-f3560c2066c1ba871771.js" async=""></script><script src="/fp/app-d102fe6008af028834bb.js" async=""></script><script src="/fp/webpack-runtime-aaaffb739411eafb5019.js" async=""></script></body></html>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10, 7, 5, 3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10, 7, 5)(3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10, 7)(5, 3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10)(7, 5, 3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10, 7)(5)(3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10)(7)(5, 3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10)(7)(5)(3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)</code></pre><p>But with Ramda&#x27;s <code>curry</code> function, we can also use the <code>__</code> placeholder for some really clever FP:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span></code><code><span style="color:#93a1a1">// Ramda&#x27;s double underscore __ works like the _ in FP</span>
+<span style="color:#859900">const</span> { __, curry } = <span style="color:#dc322f">require</span>(<span style="color:#2aa198">&#x27;ramda&#x27;</span>)
+
+<span style="color:#859900">const</span> doSomeArithmetic = curry(<span class="hljs-function">(<span class="hljs-params">a, b, c, d</span>) =&gt;</span> a + b * c - d)
+
+<span style="color:#93a1a1">// This is da bomb!</span>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doSomeArithmetic(10)(7)(5)(3) is <span style="color:#cb4b16">${doSomeArithmetic(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>)}</span>`</span>)
+
+<span style="color:#93a1a1">// Arguments are supplied to the first empty parameter, so do observe ordering</span>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;doSomeArithmetic(__, __, __, 3)(10, 7, 5) is &#x27;</span>
+  + <span style="color:#2aa198">`<span style="color:#cb4b16">${doSomeArithmetic(__, __, __, <span style="color:#2aa198">3</span>)(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">7</span>, <span style="color:#2aa198">5</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;doSomeArithmetic(__, 7, __, 3)(10, 5) is &#x27;</span>
+  + <span style="color:#2aa198">`<span style="color:#cb4b16">${doSomeArithmetic(__, <span style="color:#2aa198">7</span>, __, <span style="color:#2aa198">3</span>)(<span style="color:#2aa198">10</span>, <span style="color:#2aa198">5</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;doSomeArithmetic(__, __, __, 3)(10, __, 5)(7) is &#x27;</span>
+  + <span style="color:#2aa198">`<span style="color:#cb4b16">${doSomeArithmetic(__, __, __, <span style="color:#2aa198">3</span>)(<span style="color:#2aa198">10</span>, __, <span style="color:#2aa198">5</span>)(<span style="color:#2aa198">7</span>)}</span>`</span>)</code></pre><p>Vanilla JS is quite a bit more difficult. The easiest way is simply to be functional and create our own curry function:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span><span class="react-syntax-highlighter-line-number">16
+</span><span class="react-syntax-highlighter-line-number">17
+</span><span class="react-syntax-highlighter-line-number">18
+</span><span class="react-syntax-highlighter-line-number">19
+</span><span class="react-syntax-highlighter-line-number">20
+</span><span class="react-syntax-highlighter-line-number">21
+</span><span class="react-syntax-highlighter-line-number">22
+</span><span class="react-syntax-highlighter-line-number">23
+</span><span class="react-syntax-highlighter-line-number">24
+</span><span class="react-syntax-highlighter-line-number">25
+</span><span class="react-syntax-highlighter-line-number">26
+</span><span class="react-syntax-highlighter-line-number">27
+</span><span class="react-syntax-highlighter-line-number">28
+</span><span class="react-syntax-highlighter-line-number">29
+</span><span class="react-syntax-highlighter-line-number">30
+</span><span class="react-syntax-highlighter-line-number">31
+</span><span class="react-syntax-highlighter-line-number">32
+</span><span class="react-syntax-highlighter-line-number">33
+</span><span class="react-syntax-highlighter-line-number">34
+</span><span class="react-syntax-highlighter-line-number">35
+</span><span class="react-syntax-highlighter-line-number">36
+</span><span class="react-syntax-highlighter-line-number">37
+</span><span class="react-syntax-highlighter-line-number">38
+</span><span class="react-syntax-highlighter-line-number">39
+</span><span class="react-syntax-highlighter-line-number">40
+</span></code><code><span style="color:#93a1a1">// curryN takes the number of parameters and the function</span>
+<span style="color:#859900">const</span> curryN = <span class="hljs-function">(<span class="hljs-params">n, f</span>) =&gt;</span> (...args) =&gt; <span style="color:#93a1a1">// return a function that takes some arguments</span>
+  args.length === n  <span style="color:#93a1a1">// if all the arguments have been supplied</span>
+    ? f(...args)     <span style="color:#93a1a1">// then call the function with the args and return the result</span>
+    : curryN(
+      n - args.length,
+      (...newArgs) =&gt; f(...args, ...newArgs)
+    )                <span style="color:#93a1a1">// else recurse for the remaining arguments</span>
+
+<span style="color:#859900">const</span> curry = <span class="hljs-function"><span class="hljs-params">f</span> =&gt;</span> curryN(f.length, f) <span style="color:#93a1a1">// Create a closure on the number of parameters</span>
+  
+<span style="color:#93a1a1">// A function that takes 3 parameters</span>
+<span style="color:#859900">const</span> uncurried = <span class="hljs-function">(<span class="hljs-params">x, y, z</span>) =&gt;</span> ([x, y, z])
+
+<span style="color:#93a1a1">// Try applying it without currying</span>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`uncurried(1, 2, 3) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(uncurried(<span style="color:#2aa198">1</span>, <span style="color:#2aa198">2</span>, <span style="color:#2aa198">3</span>))}</span>`</span>)
+
+<span style="color:#93a1a1">// Oops</span>
+<span style="color:#859900">try</span> {
+  <span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`uncurried(1, 2)(3) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(uncurried(<span style="color:#2aa198">1</span>, <span style="color:#2aa198">2</span>)(<span style="color:#2aa198">3</span>))}</span>`</span>)
+  <span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`uncurried(1)(2, 3) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(uncurried(<span style="color:#2aa198">1</span>)(<span style="color:#2aa198">2</span>, <span style="color:#2aa198">3</span>))}</span>`</span>)
+  <span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`uncurried(1)(2)(3) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(uncurried(<span style="color:#2aa198">1</span>)(<span style="color:#2aa198">2</span>)(<span style="color:#2aa198">3</span>))}</span>`</span>)
+} <span style="color:#859900">catch</span> (e) {
+  <span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`Uh, oh: <span style="color:#cb4b16">${e}</span>`</span>)
+}
+
+<span style="color:#93a1a1">// Now let&#x27;s try again, but with our function curried properly</span>
+<span style="color:#859900">const</span> curried = curry(<span class="hljs-function">(<span class="hljs-params">x, y, z</span>) =&gt;</span> ([x, y, z]))
+
+<span style="color:#93a1a1">// Everything works</span>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`curried(4, 5, 6) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(curried(<span style="color:#2aa198">4</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">6</span>))}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`curried(4, 5)(6) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(curried(<span style="color:#2aa198">4</span>, <span style="color:#2aa198">5</span>)(<span style="color:#2aa198">6</span>))}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`curried(4)(5, 6) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(curried(<span style="color:#2aa198">4</span>)(<span style="color:#2aa198">5</span>, <span style="color:#2aa198">6</span>))}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`curried(4)(5)(6) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(curried(<span style="color:#2aa198">4</span>)(<span style="color:#2aa198">5</span>)(<span style="color:#2aa198">6</span>))}</span>`</span>)
+
+<span style="color:#93a1a1">// We can partially apply our function to create new functions</span>
+<span style="color:#93a1a1">// that &quot;remember&quot; one or more arguments</span>
+<span style="color:#859900">const</span> prependSeven = curried(<span style="color:#2aa198">7</span>)
+<span style="color:#859900">const</span> prependSevenAndEight = prependSeven(<span style="color:#2aa198">8</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`prependSevenAndEight(9) is <span style="color:#cb4b16">${<span style="color:#dc322f">JSON</span>.stringify(prependSevenAndEight(<span style="color:#2aa198">9</span>))}</span>`</span>)</code></pre><p>Lovely. But our own <code>curry</code> function does not allow the use of the <code>__</code> placeholder. We could add that, but now our function becomes quite a bit more complex<!-- -->—<!-- -->if you check the Ramda source code, they break it out into four different functions and a constant.</p><p>Our suggestion: If you want to do serious functional programming with these sorts of functions, just use Ramda or Sanctuary.</p><p>With a good build system, e.g., Webpack, you should be able to <!-- -->“<!-- -->tree shake<!-- -->”<!-- --> out any unused code, so you don&#x27;t bulk up your compiled code.</p><p>Now to see what we can do with <!-- -->“<!-- -->curried<!-- -->”<!-- --> functions.</p><p>(Note: Pretty much every function included in Ramda is pre-curried, so you can partially apply any of them. And you have the <code>curry</code> function to curry your own functions. Just remember, as Stan Lee reminds us, that with great power comes great responsibility.)</p><h3 id="pipe">Use <code>pipe</code> or <code>compose</code> to combine functions into pipelines</h3><p>The <code>pipe</code> and <code>compose</code> functions <strong>do the same thing</strong>, just in different directions. Each takes functions as parameters (in Sanctuary they are passed in a single parameter as an array). Each applies the functions one after the other. The difference is: <code>pipe</code> applies them left to right, and <code>compose</code> applies them right to left.</p><p>The reasons for this are historical. Use whichever makes more sense to you.</p><p>Consider a situation such as this:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span></code><code><span style="color:#859900">const</span> combinedFunctions = <span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> outerFunction(
+  middleFunction(
+    innerFunction(a, b, c)
+  )
+)</code></pre><p>This is essentially what <code>pipe</code> and <code>compose</code> do, but you don&#x27;t need to wrap <code>innerFunction</code>, <code>middleFunction</code>, and <code>outerFunction</code> in a yet another function as we do above. You just pass them to <code>pipe</code> or <code>compose</code> and you get a function back.</p><p>The <code>pipe</code> function takes the function arguments <strong>in the order that they will be applied</strong>. In the above, nested example, the functions will be applied from the innermost to the outermost, right? So our <code>pipe</code> would look like this:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code><span style="color:#859900">const</span> combinedFunctions = pipe(innerFunction, middleFunction, outerFunction)</code></pre><p>In contrast, the <code>compose</code> function follows the <!-- -->“<!-- -->nested<!-- -->”<!-- --> order that we see them in the above example (outermost to innermost):</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code><span style="color:#859900">const</span> combinedFunctions = compose(outerFunction, middleFunction, innerFunction)</code></pre><p>But the functions are still applied in the same order: <code>innerFunction</code> to <code>middleFunction</code> to <code>outerFunction</code>.</p><p>So <code>innerFunction</code> can take as many parameters as it needs, but <code>middleFunction</code> and <code>outerFunction</code> will each be passed only the result of the previous function, so they can only operate on a single parameter.</p><p>Suppose I used the (curried) Ramda functions, <code>add</code>, <code>subtract</code>, <code>multiply</code>, and <code>divide</code>. Each takes two parameters, so I will need to supply one of them for each (except, possibly, the first function in the pipeline).</p><p>I want to create a function that takes a number, adds five, subtracts that sum from twenty, multiplies the difference by nine, and divides that product by sixty, in that order.</p><p>Yes, yes, yes. We know. This is an absurd example and we&#x27;d just use the <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> operators. But it&#x27;s about the principle! So let&#x27;s run with it.</p><p>Here&#x27;s our example:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span><span class="react-syntax-highlighter-line-number">16
+</span><span class="react-syntax-highlighter-line-number">17
+</span><span class="react-syntax-highlighter-line-number">18
+</span><span class="react-syntax-highlighter-line-number">19
+</span><span class="react-syntax-highlighter-line-number">20
+</span><span class="react-syntax-highlighter-line-number">21
+</span><span class="react-syntax-highlighter-line-number">22
+</span><span class="react-syntax-highlighter-line-number">23
+</span><span class="react-syntax-highlighter-line-number">24
+</span><span class="react-syntax-highlighter-line-number">25
+</span><span class="react-syntax-highlighter-line-number">26
+</span><span class="react-syntax-highlighter-line-number">27
+</span><span class="react-syntax-highlighter-line-number">28
+</span><span class="react-syntax-highlighter-line-number">29
+</span><span class="react-syntax-highlighter-line-number">30
+</span><span class="react-syntax-highlighter-line-number">31
+</span><span class="react-syntax-highlighter-line-number">32
+</span><span class="react-syntax-highlighter-line-number">33
+</span><span class="react-syntax-highlighter-line-number">34
+</span><span class="react-syntax-highlighter-line-number">35
+</span><span class="react-syntax-highlighter-line-number">36
+</span><span class="react-syntax-highlighter-line-number">37
+</span><span class="react-syntax-highlighter-line-number">38
+</span></code><code><span style="color:#859900">const</span> { __, add, compose, divide, multiply, pipe, subtract } = <span style="color:#dc322f">require</span>(<span style="color:#2aa198">&#x27;ramda&#x27;</span>)
+
+<span style="color:#93a1a1">// The hard-to-read way</span>
+<span style="color:#859900">const</span> doTheMathNested = <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> divide(
+  multiply(
+    <span style="color:#2aa198">9</span>,
+    subtract(
+      <span style="color:#2aa198">20</span>,
+      add(<span style="color:#2aa198">5</span>, x)
+    ),
+  ),
+  <span style="color:#2aa198">60</span>
+)
+
+<span style="color:#93a1a1">// add and multiply are commutative, so ordering of parameters doesn&#x27;t matter</span>
+<span style="color:#93a1a1">// subtract and divide are not cummutative, so ordering counts</span>
+<span style="color:#93a1a1">// Here we want to divide our number by 60, not divide 60 by it, so we need the __ placeholder</span>
+<span style="color:#93a1a1">// compose runs right to left, which is more traditional, but possibly harder to read</span>
+<span style="color:#859900">const</span> doTheMathByCompose = compose(
+  divide(__, <span style="color:#2aa198">60</span>),
+  multiply(<span style="color:#2aa198">9</span>),
+  subtract(<span style="color:#2aa198">20</span>),
+  add(<span style="color:#2aa198">5</span>)
+)
+
+<span style="color:#93a1a1">// pipe runs left to right, which may be easier to comprehend</span>
+<span style="color:#859900">const</span> doTheMathByPipe = pipe(
+  add(<span style="color:#2aa198">5</span>),
+  subtract(<span style="color:#2aa198">20</span>),
+  multiply(<span style="color:#2aa198">9</span>),
+  divide(__, <span style="color:#2aa198">60</span>)
+)
+
+<span style="color:#93a1a1">// ((20 - (7  + 5)) * 9) / 60</span>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doTheMathNested(7) is <span style="color:#cb4b16">${doTheMathNested(<span style="color:#2aa198">7</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doTheMathByCompose(7) is <span style="color:#cb4b16">${doTheMathByCompose(<span style="color:#2aa198">7</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`doTheMathByPipe(7) is <span style="color:#cb4b16">${doTheMathByPipe(<span style="color:#2aa198">7</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`((20 - (7  + 5)) * 9) / 60 is <span style="color:#cb4b16">${((<span style="color:#2aa198">20</span> - (<span style="color:#2aa198">7</span>  + <span style="color:#2aa198">5</span>)) * <span style="color:#2aa198">9</span>) <span style="color:#2aa198">/ 60}`)</span></span></span></code></pre><p>Here&#x27;s a more complex example in which we use <code>tap</code> to <!-- -->“<!-- -->tap<!-- -->”<!-- --> into the pipe and use a side effect to log the value to the console. Remember that <code>tap</code> passes the value unchanged, so it is always and <em>only</em> used for side effects such as logging. <strong>Do not use <code>tap</code> to mutate program state!</strong></p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span><span class="react-syntax-highlighter-line-number">16
+</span><span class="react-syntax-highlighter-line-number">17
+</span><span class="react-syntax-highlighter-line-number">18
+</span><span class="react-syntax-highlighter-line-number">19
+</span><span class="react-syntax-highlighter-line-number">20
+</span><span class="react-syntax-highlighter-line-number">21
+</span><span class="react-syntax-highlighter-line-number">22
+</span><span class="react-syntax-highlighter-line-number">23
+</span><span class="react-syntax-highlighter-line-number">24
+</span><span class="react-syntax-highlighter-line-number">25
+</span><span class="react-syntax-highlighter-line-number">26
+</span><span class="react-syntax-highlighter-line-number">27
+</span><span class="react-syntax-highlighter-line-number">28
+</span><span class="react-syntax-highlighter-line-number">29
+</span><span class="react-syntax-highlighter-line-number">30
+</span></code><code><span style="color:#859900">const</span> { __, add, curry, map, pipe, reduce, tap } = <span style="color:#dc322f">require</span>(<span style="color:#2aa198">&#x27;ramda&#x27;</span>)
+
+<span style="color:#859900">const</span> binaries = [<span style="color:#2aa198">&#x27;1&#x27;</span>, <span style="color:#2aa198">&#x27;100&#x27;</span>, <span style="color:#2aa198">&#x27;1001&#x27;</span>, <span style="color:#2aa198">&#x27;10000&#x27;</span>, <span style="color:#2aa198">&#x27;11001&#x27;</span>]
+
+<span style="color:#93a1a1">// We can curry the JS parseInt function</span>
+<span style="color:#93a1a1">// Then partially apply it by supplying the second parameter</span>
+<span style="color:#93a1a1">// parseBinary takes a binary number string and converts it to an integer</span>
+<span style="color:#859900">const</span> parseBinary = curry(<span style="color:#dc322f">parseInt</span>)(__, <span style="color:#2aa198">2</span>)
+
+<span style="color:#93a1a1">// We can use tap to log out the value at any point in the pipe</span>
+<span style="color:#93a1a1">// THIS IS A SIDE EFFECT! DO NOT USE tap TO CHANGE STATE!</span>
+<span style="color:#859900">const</span> sumBinary = pipe(
+  tap(<span style="color:#dc322f">console</span>.log),
+  map(parseBinary),    <span style="color:#93a1a1">// map the binary strings to integers</span>
+  tap(<span style="color:#dc322f">console</span>.log),
+  map(<span style="color:#dc322f">Math</span>.sqrt),      <span style="color:#93a1a1">// map the integers to their square roots</span>
+  tap(<span style="color:#dc322f">console</span>.log),
+  reduce(add, <span style="color:#2aa198">0</span>),      <span style="color:#93a1a1">// add the square roots up to get the sum</span>
+  tap(<span style="color:#dc322f">console</span>.log),
+  n =&gt; n.toString(<span style="color:#2aa198">2</span>),  <span style="color:#93a1a1">// convert the integer sum to a binary number string</span>
+  tap(<span style="color:#dc322f">console</span>.log)
+)
+
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`binaries is [<span style="color:#cb4b16">${binaries}</span>]`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;Tapping the pipe:&#x27;</span>)
+
+<span style="color:#859900">const</span> sum = sumBinary(binaries)
+
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;Pipe complete&#x27;</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`The sum of the squares of the binaries is binary <span style="color:#cb4b16">${sum}</span>`</span>)</code></pre><p>We can also use Ramda&#x27;s <code>then</code> and <code>otherwise</code> to handle async behaviour with Promises. See if you can figure out what this does:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span><span class="react-syntax-highlighter-line-number">16
+</span><span class="react-syntax-highlighter-line-number">17
+</span><span class="react-syntax-highlighter-line-number">18
+</span><span class="react-syntax-highlighter-line-number">19
+</span><span class="react-syntax-highlighter-line-number">20
+</span><span class="react-syntax-highlighter-line-number">21
+</span><span class="react-syntax-highlighter-line-number">22
+</span><span class="react-syntax-highlighter-line-number">23
+</span><span class="react-syntax-highlighter-line-number">24
+</span><span class="react-syntax-highlighter-line-number">25
+</span><span class="react-syntax-highlighter-line-number">26
+</span><span class="react-syntax-highlighter-line-number">27
+</span><span class="react-syntax-highlighter-line-number">28
+</span><span class="react-syntax-highlighter-line-number">29
+</span><span class="react-syntax-highlighter-line-number">30
+</span><span class="react-syntax-highlighter-line-number">31
+</span><span class="react-syntax-highlighter-line-number">32
+</span><span class="react-syntax-highlighter-line-number">33
+</span><span class="react-syntax-highlighter-line-number">34
+</span><span class="react-syntax-highlighter-line-number">35
+</span><span class="react-syntax-highlighter-line-number">36
+</span></code><code><span style="color:#859900">const</span> { otherwise, pick, pipe, then } = <span style="color:#dc322f">require</span>(<span style="color:#2aa198">&#x27;ramda&#x27;</span>)
+
+<span style="color:#859900">const</span> makeQuery = <span class="hljs-function"><span class="hljs-params">email</span> =&gt;</span> ({ <span style="color:#b58900">query</span>: email })
+<span style="color:#859900">const</span> useDefault = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> ({
+  <span style="color:#b58900">nameGiven</span>: <span style="color:#2aa198">&#x27;Aleister&#x27;</span>,
+  <span style="color:#b58900">nameFamily</span>: <span style="color:#2aa198">&#x27;Crowley&#x27;</span>,
+  <span style="color:#b58900">email</span>: <span style="color:#2aa198">&#x27;aleister@goldendawn.com&#x27;</span>
+})
+
+<span style="color:#93a1a1">// Use setTimeout to simulate an asynchronous process</span>
+<span style="color:#859900">const</span> fetchProfile = <span class="hljs-function"><span class="hljs-params">options</span> =&gt;</span> <span style="color:#859900">new</span> <span style="color:#dc322f">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  options.query === <span style="color:#2aa198">&#x27;bob@slack.com&#x27;</span>
+    ? setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> resolve({
+        <span style="color:#b58900">nameGiven</span>: <span style="color:#2aa198">&#x27;Bob&#x27;</span>,
+        <span style="color:#b58900">nameFamily</span>: <span style="color:#2aa198">&#x27;Dobbs&#x27;</span>,
+        <span style="color:#b58900">email</span>: <span style="color:#2aa198">&#x27;bob@slack.com&#x27;</span>
+      }), <span style="color:#2aa198">3000</span>)
+    : setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> reject({
+        <span style="color:#b58900">error</span>: <span style="color:#2aa198">&#x27;Bad email address&#x27;</span>
+      }), <span style="color:#2aa198">6000</span>)
+})
+
+<span style="color:#93a1a1">// Returns a promise</span>
+<span style="color:#859900">const</span> getProfleFromEmail = pipe(
+  makeQuery,                               <span style="color:#93a1a1">// convert email to query</span>
+  fetchProfile,                            <span style="color:#93a1a1">// use query to fetch profile</span>
+  otherwise(useDefault),                   <span style="color:#93a1a1">// default profile if fetch fails</span>
+  then(pick([<span style="color:#2aa198">&#x27;nameGiven&#x27;</span>, <span style="color:#2aa198">&#x27;nameFamily&#x27;</span>]))  <span style="color:#93a1a1">// extract just the names from the profile</span>
+)
+
+<span style="color:#93a1a1">// The first of these fails and gets the default profile</span>
+<span style="color:#93a1a1">// The second passes and retrieves the profile for bob@slack.com</span>
+<span style="color:#93a1a1">// Note the delay and the order of output</span>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;Wait for it!&#x27;</span>)
+getProfleFromEmail(<span style="color:#2aa198">&#x27;joe@chicago.com&#x27;</span>).then(<span style="color:#dc322f">console</span>.log) <span style="color:#93a1a1">// resolves in 6 seconds</span>
+getProfleFromEmail(<span style="color:#2aa198">&#x27;bob@slack.com&#x27;</span>).then(<span style="color:#dc322f">console</span>.log)   <span style="color:#93a1a1">// resolves in 3 seconds</span>
+</code></pre><h3 id="state-state-state">Think in terms of state!</h3><p>In the simplest sense, the <strong>state</strong> of your application is anything that could conceivably be different at time t<sub>2</sub> than it was at time t<sub>1</sub>: <code>value<sub>t1</sub> !== value<sub>t2</sub></code>.</p><p>When we work in a functional paradigm, our concerns about state are twofold:</p><ol><li>Do not destroy state: make a new copy</li><li>Do not share state between processes: keep processes isolated</li></ol><p>We can&#x27;t always keep these promises, but we should do our utmost to live up to these best practices.</p><p>The two most important practices for handling state properly are <strong>immutability</strong> and keeping our functions <strong>pure</strong>.</p><p><strong>Immutability</strong> means that once we create a variable, we never reassign it or change it. It is <!-- -->“<!-- -->frozen<!-- -->”<!-- -->. If we need to change it, we make a new copy that reflect the change. This means that we never lose track of our previous state (until we want to). It also means that if we know what value a variable had when it was assigned, then we know what value it has now. It never changes.</p><p><strong>Pure functions</strong> help us to isolate processes to avoid sharing state. They also help with immutability by always returning a copy rather than mutating in place. A pure function, if you recall, is a function that always returns the same result for the same arguments, and does not affect the program in any other way: no reaching out from within a function; no reaching into functions to muck about.</p><p>How can we avoid mutating variables? The best way is to <em>use functions</em> instead of loops, conditionals, and other constructs.</p><p>For example, suppose that I want to assign a variable <code>colour</code> differntly depending on the value of variables <code>a</code> and <code>b</code>:</p><small>Lasciate ogne speranza, voi ch&#x27;entrate!</small><pre style="display:block;overflow-x:auto;padding:0.5em;background:#002b36;color:#839496"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span><span class="react-syntax-highlighter-line-number">16
+</span><span class="react-syntax-highlighter-line-number">17
+</span><span class="react-syntax-highlighter-line-number">18
+</span><span class="react-syntax-highlighter-line-number">19
+</span><span class="react-syntax-highlighter-line-number">20
+</span><span class="react-syntax-highlighter-line-number">21
+</span></code><code><span style="color:#586e75">// DO NOT DO THIS!</span>
+<span class="hljs-function"><span style="color:#859900">function</span> <span style="color:#268bd2">getColourTheBadWay</span> (<span class="hljs-params">a, b</span>) </span>{
+  <span style="color:#859900">let</span> colour
+
+  <span style="color:#859900">if</span> (a &amp;&amp; b) {
+    colour = <span style="color:#2aa198">&#x27;red&#x27;</span>
+  } <span style="color:#859900">else</span> <span style="color:#859900">if</span> (a) {
+    colour = <span style="color:#2aa198">&#x27;yellow&#x27;</span>
+  } <span style="color:#859900">else</span> <span style="color:#859900">if</span> (b) {
+    colour = <span style="color:#2aa198">&#x27;orange&#x27;</span>
+  } <span style="color:#859900">else</span> {
+    colour = <span style="color:#2aa198">&#x27;black&#x27;</span>
+  }
+
+  <span style="color:#859900">return</span> colour
+}
+
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColourTheBadWay(true, true) is <span style="color:#cb4b16">${getColourTheBadWay(<span style="color:#2aa198">true</span>, <span style="color:#2aa198">true</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColourTheBadWay(true, false) is <span style="color:#cb4b16">${getColourTheBadWay(<span style="color:#2aa198">true</span>, <span style="color:#2aa198">false</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColourTheBadWay(false, true) is <span style="color:#cb4b16">${getColourTheBadWay(<span style="color:#2aa198">false</span>, <span style="color:#2aa198">true</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColourTheBadWay(false, false) is <span style="color:#cb4b16">${getColourTheBadWay(<span style="color:#2aa198">false</span>, <span style="color:#2aa198">false</span>)}</span>`</span>)</code></pre><p>A much better style is this:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span></code><code><span class="hljs-function"><span style="color:#859900">function</span> <span style="color:#268bd2">getColour</span> (<span class="hljs-params">a, b</span>) </span>{
+  <span style="color:#859900">if</span> (a &amp;&amp; b) { <span style="color:#859900">return</span> <span style="color:#2aa198">&#x27;blue&#x27;</span> }
+  
+  <span style="color:#859900">if</span> (a) { <span style="color:#859900">return</span> <span style="color:#2aa198">&#x27;cyan&#x27;</span> }
+  
+  <span style="color:#859900">if</span> (b) { <span style="color:#859900">return</span> <span style="color:#2aa198">&#x27;magenta&#x27;</span> }
+  
+  <span style="color:#859900">return</span> <span style="color:#2aa198">&#x27;white&#x27;</span>
+}
+
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColour(true, true) is <span style="color:#cb4b16">${getColour(<span style="color:#2aa198">true</span>, <span style="color:#2aa198">true</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColour(true, false) is <span style="color:#cb4b16">${getColour(<span style="color:#2aa198">true</span>, <span style="color:#2aa198">false</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColour(false, true) is <span style="color:#cb4b16">${getColour(<span style="color:#2aa198">false</span>, <span style="color:#2aa198">true</span>)}</span>`</span>)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">`getColour(false, false) is <span style="color:#cb4b16">${getColour(<span style="color:#2aa198">false</span>, <span style="color:#2aa198">false</span>)}</span>`</span>)</code></pre><p>Not only to we get rid of <code>let</code>, assigning a variable altogether, and mutation, but our code is cleaner, more readable, and more succinct. We also lose the <code>else</code> construct. The function returns the moment the correct answer is found. The use of <code>return</code> is very clear.</p><p>What&#x27;s more, with the use of <code>return</code> the <code>switch</code> statement, formerly something to avoid, becomes quite useful as a sort of switchboard or pattern matcher:</p><pre style="display:block;overflow-x:auto;padding:0.5em;background:#fdf6e3;color:#657b83"><code style="float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span><span class="react-syntax-highlighter-line-number">16
+</span><span class="react-syntax-highlighter-line-number">17
+</span><span class="react-syntax-highlighter-line-number">18
+</span><span class="react-syntax-highlighter-line-number">19
+</span><span class="react-syntax-highlighter-line-number">20
+</span><span class="react-syntax-highlighter-line-number">21
+</span><span class="react-syntax-highlighter-line-number">22
+</span><span class="react-syntax-highlighter-line-number">23
+</span><span class="react-syntax-highlighter-line-number">24
+</span><span class="react-syntax-highlighter-line-number">25
+</span><span class="react-syntax-highlighter-line-number">26
+</span><span class="react-syntax-highlighter-line-number">27
+</span><span class="react-syntax-highlighter-line-number">28
+</span><span class="react-syntax-highlighter-line-number">29
+</span><span class="react-syntax-highlighter-line-number">30
+</span><span class="react-syntax-highlighter-line-number">31
+</span><span class="react-syntax-highlighter-line-number">32
+</span><span class="react-syntax-highlighter-line-number">33
+</span><span class="react-syntax-highlighter-line-number">34
+</span><span class="react-syntax-highlighter-line-number">35
+</span><span class="react-syntax-highlighter-line-number">36
+</span><span class="react-syntax-highlighter-line-number">37
+</span><span class="react-syntax-highlighter-line-number">38
+</span><span class="react-syntax-highlighter-line-number">39
+</span><span class="react-syntax-highlighter-line-number">40
+</span><span class="react-syntax-highlighter-line-number">41
+</span><span class="react-syntax-highlighter-line-number">42
+</span></code><code><span style="color:#859900">const</span> { sort } = <span style="color:#dc322f">require</span>(<span style="color:#2aa198">&#x27;ramda&#x27;</span>)
+
+<span class="hljs-function"><span style="color:#859900">function</span> <span style="color:#268bd2">selectComparator</span> (<span class="hljs-params">type</span>) </span>{
+  <span style="color:#859900">switch</span>(type) {
+    <span style="color:#859900">case</span> <span style="color:#2aa198">&#x27;DESC&#x27;</span>:
+      <span style="color:#859900">return</span> <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> b - a
+    <span style="color:#859900">case</span> <span style="color:#2aa198">&#x27;LENGTH_ASC&#x27;</span>:
+      <span style="color:#859900">return</span> <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a.length - b.length
+    <span style="color:#859900">case</span> <span style="color:#2aa198">&#x27;LENGTH_DESC&#x27;</span>:
+      <span style="color:#859900">return</span> <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> b.length - a.length
+    <span style="color:#859900">default</span>:
+      <span style="color:#859900">return</span> <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b
+  }
+}
+
+<span style="color:#859900">const</span> names = [<span style="color:#2aa198">&#x27;Bob&#x27;</span>, <span style="color:#2aa198">&#x27;Carol&#x27;</span>, <span style="color:#2aa198">&#x27;Ted&#x27;</span>, <span style="color:#2aa198">&#x27;Alice&#x27;</span>, <span style="color:#2aa198">&#x27;Samson&#x27;</span>, <span style="color:#2aa198">&#x27;Delilah&#x27;</span>]
+
+<span style="color:#93a1a1">// Array.sort sorts in place mutating the array</span>
+<span style="color:#93a1a1">// DO NOT USE THIS!</span>
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;names is:&#x27;</span>, names)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;names.sort() is&#x27;</span>, names.sort())
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;names is now:&#x27;</span>, names)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;Bad sort. Bad! Let\&#x27;s try again:&#x27;</span>)
+
+<span style="color:#93a1a1">// USE THIS</span>
+<span style="color:#dc322f">console</span>.log(
+  <span style="color:#2aa198">`sort(selectComparator(&#x27;LENGTH_DESC&#x27;), names) is:`</span>,
+  sort(selectComparator(<span style="color:#2aa198">&#x27;LENGTH_DESC&#x27;</span>), names)
+)
+<span style="color:#dc322f">console</span>.log(<span style="color:#2aa198">&#x27;names is unchanged:&#x27;</span>, names)
+<span style="color:#dc322f">console</span>.log(
+  <span style="color:#2aa198">`sort(selectComparator(&#x27;LENGTH_ASC&#x27;), names) is:`</span>,
+  sort(selectComparator(<span style="color:#2aa198">&#x27;LENGTH_ASC&#x27;</span>), names)
+)
+<span style="color:#dc322f">console</span>.log(
+  <span style="color:#2aa198">`sort(selectComparator(&#x27;DESC&#x27;), [2, 5, 3, 9, 1]) is:`</span>,
+  sort(selectComparator(<span style="color:#2aa198">&#x27;DESC&#x27;</span>), [<span style="color:#2aa198">2</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>, <span style="color:#2aa198">9</span>, <span style="color:#2aa198">1</span>])
+)
+<span style="color:#dc322f">console</span>.log(
+  <span style="color:#2aa198">`sort(selectComparator(&#x27;ASC&#x27;), [2, 5, 3, 9, 1]) is:`</span>,
+  sort(selectComparator(<span style="color:#2aa198">&#x27;ASC&#x27;</span>), [<span style="color:#2aa198">2</span>, <span style="color:#2aa198">5</span>, <span style="color:#2aa198">3</span>, <span style="color:#2aa198">9</span>, <span style="color:#2aa198">1</span>])
+)</code></pre><p>You will see this pattern over and over again.</p><p>When we mutate variables or reassign them, and when we reach outside of functions to change state in the global context, we create chaos. Anarchy! Who knows what is changing what else and when?</p><p>It&#x27;s like spaghetti code. You find yourself tracing from line to line and function to function and even file to file just to figure out where something was mutated.</p><p>Avoid the anarchy! A well-regulated state, being necessary to the security of your code base, the right of variables to be free of mutation and functions to be free of side effects shall not be infringed.</p><p>Functional programming gives you all the tools to build fast, efficient, understandable, and error-free code. Embrace the functional style.</p><blockquote>Things fall apart; the centre cannot hold;<br/>Mere anarchy is loosed upon the world...</blockquote><p>What rough beast, indeed.</p><small>Errors, bugs, suggestions, questions? Surplus rye whiskey? Contact <a href="mailto:charles_munat@bnz.co.nz">Charles Munat</a></small>.</article></main></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/inductive/composition/";window.webpackCompilationHash="5106a71ad0933a7fff7f";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-2f70f34c782f741ba7f9.js"],"component---src-pages-404-js":["/component---src-pages-404-js-60f98897468310d2a939.js"],"component---src-pages-deductive-index-mdx":["/component---src-pages-deductive-index-mdx-4e41de2a4ca819e80996.js"],"component---src-pages-deductive-more-fp-concepts-index-mdx":["/component---src-pages-deductive-more-fp-concepts-index-mdx-3e20cfd8263ac04ad636.js"],"component---src-pages-inductive-composition-index-mdx":["/component---src-pages-inductive-composition-index-mdx-c2219dd982473add58a4.js"],"component---src-pages-index-mdx":["/component---src-pages-index-mdx-dd5e0e00f7f205769d00.js"],"component---src-pages-deductive-pure-functions-index-mdx":["/component---src-pages-deductive-pure-functions-index-mdx-11ad3b2042af1a8a4ab3.js"],"component---src-pages-inductive-immutability-index-mdx":["/component---src-pages-inductive-immutability-index-mdx-0d6148f65cf3ec4ce5d1.js"],"component---src-pages-inductive-index-mdx":["/component---src-pages-inductive-index-mdx-fd2072dd2ddf354c84e8.js"],"component---src-pages-inductive-iteration-index-mdx":["/component---src-pages-inductive-iteration-index-mdx-aedf8dec4d2117e19c0f.js"],"component---src-pages-patterns-antipatterns-index-mdx":["/component---src-pages-patterns-antipatterns-index-mdx-a622a82d91f0877465ab.js"],"component---src-pages-inductive-reusability-index-mdx":["/component---src-pages-inductive-reusability-index-mdx-33d4c1aa7bd569de1ddf.js"]};/*]]>*/</script><script src="/fp/component---src-pages-inductive-composition-index-mdx-c2219dd982473add58a4.js" async=""></script><script src="/fp/2-498b5bb2908264d24291.js" async=""></script><script src="/fp/1-f97617762f9874010401.js" async=""></script><script src="/fp/styles-e272739fa9193237d330.js" async=""></script><script src="/fp/app-2f70f34c782f741ba7f9.js" async=""></script><script src="/fp/webpack-runtime-17b21688dadcfc640638.js" async=""></script></body></html>
