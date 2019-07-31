@@ -9,25 +9,168 @@ trail:
 import Link from '../../../components/Link'
 
 import CodeBlock from '../../../components/CodeBlock'
-import mapSource from '../../../runkits/inductive/map'
+import Highlighter from '../../../components/Highlighter'
+import OffsiteLink from '../../../components/OffsiteLink'
+import TerminologyBlock from '../../../components/TerminologyBlock'
+import advancedCurrySource from '../../../runkits/inductive/advanced-curry'
+import asyncPipeSource from '../../../runkits/inductive/async-pipe'
+import badConditionsSource from '../../../runkits/inductive/bad-conditions'
+import basicCurrySource from '../../../runkits/inductive/basic-curry'
+import composeAndPipeSource from '../../../runkits/inductive/compose-and-pipe'
+import goodConditionsSource from '../../../runkits/inductive/good-conditions'
+import jsTapSource from '../../../runkits/inductive/js-tap'
+import ourCurrySource from '../../../runkits/deductive/our-curry'
+import switchSource from '../../../runkits/inductive/switch'
 
 ## We can has pipelines!
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Everything we've discussed up to this point has been prologue. The **true** power of functional programming comes from **combining functions** to create a kind of function &ldquo;pipeline&rdquo;.
 
-<h3 id='pipe'>Use <code>pipe</code> or <code>compose</code> to combine functions into pipelines</h3>
+Here is the **most important thing** for you to understand about piping data from one function to another:
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+* The **first function** in a pipeline can take **any number of parameters**.
+* Each succeeding function in the pipeline **must take only a single parameter**.
+
+The reason for this should be obvious: every function after the first one is getting its input from the output of the preceeding function. As a function can only return a single value, there is no way to pass more than one argument to the next function in the pipe. Right?
+
+<TerminologyBlock>The number of parameters a function accepts is called its <OffsiteLink href='https://en.wikipedia.org/wiki/Arity'>arity</OffsiteLink>. The above can be restated thus: In a pipeline of functions, the first function can have <em>any</em> arity, but each succeeding function must have arity of 1.<br /><br />This process of combining functions together is called <OffsiteLink href='https://en.wikipedia.org/wiki/Function_composition_(computer_science)'>function composition</OffsiteLink>. We can compose functions in JavaScript because functions are <OffsiteLink href='https://en.wikipedia.org/wiki/First-class_function'>first-class citizens</OffsiteLink>, meaning that they can be passed into and returned from other functions.<br /><br />Functions that either take or return another function are called <OffsiteLink href='https://en.wikipedia.org/wiki/Higher-order_function'>higher-order functions</OffsiteLink>. JavaScript supports higher-order functions.</TerminologyBlock>
+
+Of course, functions in a pipe other than the first function _can_ accept more than one parameter. It's just that only a single argument will be passed from the preceeding function. But if the parameters after the first one have suitable default values, that can still work.
+
+But pipelining functions will become much more useful to us if there is a way to &ldquo;partially apply&rdquo; functions so that we &ldquo;pre-load&rdquo; them with the other arguments they need. We can do this by creating functions that can return other functions if they are called with fewer arguments than the number of parameters they expect.
+
+<TerminologyBlock>When we modify a function to permit it to accept a subset of its parameters (i.e., a number of arguments less than the &ldquo;arity&rdquo; of the function), and to return a new function that &ldquo;remembers&rdquo; the arguments already passed, accepts the remaining parameters, and then applies all of them and returns the result, then we call that <OffsiteLink href='https://en.wikipedia.org/wiki/Currying'>currying</OffsiteLink> the function, and we say that the function has been &ldquo;curried&rdquo;.<br /><br />When we create a <OffsiteLink href='https://en.wikipedia.org/wiki/Closure_(computer_programming)'>closure</OffsiteLink> by passing fewer arguments to a function than there are parameters and getting back a new function, we call that <OffsiteLink href='https://en.wikipedia.org/wiki/Partial_application'>partial application</OffsiteLink> and the function (closure) returned a &ldquo;partially-applied function&rdquo;.</TerminologyBlock>
+
+Here is where we **separate the pros from the novices**. We mentioned default values for the extra parameters above, and if you think that way, then your inclination will be to make the data that we intend to pass down the pipe the **first** parameter, because that's the one that will be passed by the preceeding function, right?
+
+But this means that the only way to fill the remaining arguments is with default values, which is pretty limiting.
+
+But if we can apply fewer arguments than there are parameters to a function, and get back a function that remembers those arguments and accepts the remaining parameters, then **we want the parameter that will be &ldquo;chained&rdquo; to be the _last_ parameter**, not the first. We'll see this when we get to using `pipe` and `compose` below.
+
+**This is where the Underscore and Lodash libraries went wrong** (fixed in Lodash/FP), and what Ramda and Sanctuary got so right.
+
+In Underscore and Lodash, the argument we want to pass down the pipe is passed as the **first** parameter, which means there is no way to set any remaining parameters, except by default value. Underscore and Lodash get around this by forcing you to add a `chain` function call&mdash;an absolute code _stink_&mdash;and they expect you to pipe function calls by dotting them together.
+
+Ramda and Sanctuary, in contrast, allow you to &ldquo;partially apply&rdquo; functions so that only the last parameter remains unfilled, and then use `pipe` or `compose` to chain them together to create a new function that takes any number of parameters, passes the data down the chain of functions, and returns the final result.
+
+Enough chat! Let's cut to the chase!
 
 <h3 id='curry'>Use <code>curry</code> to make functions that make functions</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The `curry` function takes a function that expects one or more parameters and turns it into a function that allows partial application of those parameters, ideally in any combination (but preserving order). Like this:
+
+<CodeBlock {...basicCurrySource} />
+
+But with Ramda's `curry` function, we can also use the `__` placeholder for some really clever FP:
+
+<CodeBlock {...advancedCurrySource} />
+
+Vanilla JS is quite a bit more difficult. The easiest way is simply to be functional and create our own curry function:
+
+<CodeBlock {...ourCurrySource} />
+
+Lovely. But our own `curry` function does not allow the use of the `__` placeholder. We could add that, but now our function becomes quite a bit more complex&mdash;if you check the Ramda source code, they break it out into four different functions and a constant.
+
+Our suggestion: If you want to do serious functional programming with these sorts of functions, just use Ramda or Sanctuary.
+
+With a good build system, e.g., Webpack, you should be able to &ldquo;tree shake&rdquo; out any unused code, so you don't bulk up your compiled code.
+
+Now to see what we can do with &ldquo;curried&rdquo; functions.
+
+(Note: Pretty much every function included in Ramda is pre-curried, so you can partially apply any of them. And you have the `curry` function to curry your own functions. Just remember, as Stan Lee reminds us, that with great power comes great responsibility.)
+
+<h3 id='pipe'>Use <code>pipe</code> or <code>compose</code> to combine functions into pipelines</h3>
+
+The `pipe` and `compose` functions **do the same thing**, just in different directions. Each takes functions as parameters (in Sanctuary they are passed in a single parameter as an array). Each applies the functions one after the other. The difference is: `pipe` applies them left to right, and `compose` applies them right to left.
+
+The reasons for this are historical. Use whichever makes more sense to you.
+
+Consider a situation such as this:
+
+<Highlighter code={`const combinedFunctions = (a, b, c) => outerFunction(
+  middleFunction(
+    innerFunction(a, b, c)
+  )
+)`} />
+
+This is essentially what `pipe` and `compose` do, but you don't need to wrap `innerFunction`, `middleFunction`, and `outerFunction` in a yet another function as we do above. You just pass them to `pipe` or `compose` and you get a function back.
+
+The `pipe` function takes the function arguments **in the order that they will be applied**. In the above, nested example, the functions will be applied from the innermost to the outermost, right? So our `pipe` would look like this:
+
+<Highlighter code={`const combinedFunctions = pipe(innerFunction, middleFunction, outerFunction)`} showLineNumbers={false} />
+
+In contrast, the `compose` function follows the &ldquo;nested&rdquo; order that we see them in the above example (outermost to innermost):
+
+<Highlighter code={`const combinedFunctions = compose(outerFunction, middleFunction, innerFunction)`} showLineNumbers={false} />
+
+But the functions are still applied in the same order: `innerFunction` to `middleFunction` to `outerFunction`.
+
+So `innerFunction` can take as many parameters as it needs, but `middleFunction` and `outerFunction` will each be passed only the result of the previous function, so they can only operate on a single parameter.
+
+Suppose I used the (curried) Ramda functions, `add`, `subtract`, `multiply`, and `divide`. Each takes two parameters, so I will need to supply one of them for each (except, possibly, the first function in the pipeline).
+
+I want to create a function that takes a number, adds five, subtracts that sum from twenty, multiplies the difference by nine, and divides that product by sixty, in that order.
+
+Yes, yes, yes. We know. This is an absurd example and we'd just use the `+`, `-`, `*`, and `/` operators. But it's about the principle! So let's run with it.
+
+Here's our example:
+
+<CodeBlock {...composeAndPipeSource} />
+
+Here's a more complex example in which we use `tap` to &ldquo;tap&rdquo; into the pipe and use a side effect to log the value to the console. Remember that `tap` passes the value unchanged, so it is always and _only_ used for side effects such as logging. **Do not use `tap` to mutate program state!**
+
+<CodeBlock {...jsTapSource} />
+
+We can also use Ramda's `then` and `otherwise` to handle async behaviour with Promises. See if you can figure out what this does:
+
+<CodeBlock {...asyncPipeSource} />
 
 <h3 id='state-state-state'>Think in terms of state!</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In the simplest sense, the **state** of your application is anything that could conceivably be different at time t<sub>2</sub> than it was at time t<sub>1</sub>: <code>value<sub>t1</sub> !== value<sub>t2</sub></code>.
+
+When we work in a functional paradigm, our concerns about state are twofold:
+
+1. Do not destroy state: make a new copy
+1. Do not share state between processes: keep processes isolated
+
+We can't always keep these promises, but we should do our utmost to live up to these best practices.
+
+The two most important practices for handling state properly are **immutability** and keeping our functions **pure**.
+
+**Immutability** means that once we create a variable, we never reassign it or change it. It is &ldquo;frozen&rdquo;. If we need to change it, we make a new copy that reflect the change. This means that we never lose track of our previous state (until we want to). It also means that if we know what value a variable had when it was assigned, then we know what value it has now. It never changes.
+
+**Pure functions** help us to isolate processes to avoid sharing state. They also help with immutability by always returning a copy rather than mutating in place. A pure function, if you recall, is a function that always returns the same result for the same arguments, and does not affect the program in any other way: no reaching out from within a function; no reaching into functions to muck about.
+
+How can we avoid mutating variables? The best way is to _use functions_ instead of loops, conditionals, and other constructs.
+
+For example, suppose that I want to assign a variable `colour` differntly depending on the value of variables `a` and `b`:
+
+<CodeBlock {...badConditionsSource} theme='dark' warn={() => <small>Lasciate ogne speranza, voi ch'entrate!</small>} />
+
+A much better style is this:
+
+<CodeBlock {...goodConditionsSource} />
+
+Not only to we get rid of `let`, assigning a variable altogether, and mutation, but our code is cleaner, more readable, and more succinct. We also lose the `else` construct. The function returns the moment the correct answer is found. The use of `return` is very clear.
+
+What's more, with the use of `return` the `switch` statement, formerly something to avoid, becomes quite useful as a sort of switchboard or pattern matcher:
+
+<CodeBlock {...switchSource} />
+
+You will see this pattern over and over again.
+
+When we mutate variables or reassign them, and when we reach outside of functions to change state in the global context, we create chaos. Anarchy! Who knows what is changing what else and when?
+
+It's like spaghetti code. You find yourself tracing from line to line and function to function and even file to file just to figure out where something was mutated.
+
+Avoid the anarchy! A well-regulated state, being necessary to the security of your code base, the right of variables to be free of mutation and functions to be free of side effects shall not be infringed.
+
+Functional programming gives you all the tools to build fast, efficient, understandable, and error-free code. Embrace the functional style.
+
+<blockquote>Things fall apart; the centre cannot hold;<br />Mere anarchy is loosed upon the world...</blockquote>
+
+What rough beast, indeed.
 
 
-<CodeBlock {...mapSource} />
-
-<small>Errors, bugs, suggestions, questions? Contact <a href='mailto:charles_munat@bnz.co.nz'>Charles Munat</a></small>.
+<small>Errors, bugs, suggestions, questions? Surplus rye whiskey? Contact <a href='mailto:charles_munat@bnz.co.nz'>Charles Munat</a></small>.

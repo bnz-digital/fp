@@ -215,7 +215,7 @@ As we see above, simple values are &ldquo;passed by value&rdquo;, which means th
 
 Now, if we mutate (change) that variable in the function scope, we are actually reaching outside the scope to change the original value. This is a big no-no:
 
-<CodeBlock {...byReferenceSource} theme='dark' />
+<CodeBlock {...byReferenceSource} theme='dark' warn={() => <small>We wrote this code so you don't have to.</small>} />
 
 So how do we avoid this? We can use the spread operator `...` to make a copy of our referenced object and then update the copy. Easy peasy!
 

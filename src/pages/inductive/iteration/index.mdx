@@ -14,18 +14,29 @@ import TerminologyBlock from '../../../components/TerminologyBlock'
 import badLoopSource from '../../../runkits/inductive/bad-loop'
 import jsAdjustSource from '../../../runkits/inductive/js-adjust'
 import jsAdjustCurriedSource from '../../../runkits/inductive/js-adjust-curried'
+import jsAllSource from '../../../runkits/inductive/js-all'
+import jsAnySource from '../../../runkits/inductive/js-any'
 import jsAppendSource from '../../../runkits/inductive/js-append'
+import jsBadForeachSource from '../../../runkits/inductive/js-bad-foreach'
+import jsConcatSource from '../../../runkits/inductive/js-concat'
 import jsFilterSource from '../../../runkits/inductive/js-filter'
+import jsFlattenSource from '../../../runkits/inductive/js-flatten'
+import jsHeadTailSource from '../../../runkits/inductive/js-head-tail'
 import jsInsertSource from '../../../runkits/inductive/js-insert'
 import jsMapWithGuardSource from '../../../runkits/inductive/js-map-with-guard'
 import jsMapSquaresSource from '../../../runkits/inductive/js-map-squares'
 import jsMapToUpperSource from '../../../runkits/inductive/js-map-to-upper'
+import jsNoneSource from '../../../runkits/inductive/js-none'
 import jsPrependSource from '../../../runkits/inductive/js-prepend'
 import jsReduceAsMapSource from '../../../runkits/inductive/js-reduce-as-map'
 import jsReduceOverObjectSource from '../../../runkits/inductive/js-reduce-over-object'
 import jsReduceSumSource from '../../../runkits/inductive/js-reduce-sum'
 import jsReduceStringToUpperSource from '../../../runkits/inductive/js-reduce-string-to-upper'
+import jsRemoveSource from '../../../runkits/inductive/js-remove'
+import jsTimesSource from '../../../runkits/inductive/js-times'
+import jsUnnestSource from '../../../runkits/inductive/js-unnest'
 import jsVadjustSource from '../../../runkits/inductive/js-vadjust'
+import jsZipSource from '../../../runkits/inductive/js-zip'
 import lessBadLoopSource from '../../../runkits/inductive/less-bad-loop'
 import lessBadLoopFixedSource from '../../../runkits/inductive/less-bad-loop-fixed'
 import nonTailSource from '../../../runkits/inductive/non-tail'
@@ -71,11 +82,11 @@ But if you're familiar with this loop, then you'll know that the most common mis
 
 So gnarly is the `for` construct that later versions of JavaScript have introduced `for/in` and `for/of`. These simplify our loop, but again, you have to remember when to use `in` and when to use `of`, and this still ends up mutating a variable, though at least we don't have to worry about indexes:
 
-<CodeBlock {...lessBadLoopSource} theme='dark' />
+<CodeBlock {...lessBadLoopSource} theme='dark' warn={() => <small>The only thing necessary for the triumph of evil is for good men to do nothing.</small>} />
 
 Ha, ha. Yeah. You thought that `for/in` would pass you each item in the array one at a time? Seems obvious, but think again. It passes the _index_. So we're back to indexes! Let's try that again:
 
-<CodeBlock {...lessBadLoopFixedSource} theme='dark' />
+<CodeBlock {...lessBadLoopFixedSource} theme='dark' warn={() => <small>The greatest trick the Devil ever pulled was convincing the world he didn’t exist.</small>} />
 
 Wondering why we ended up with `0012345` in the broken version of `for/in` above? That's because for some difficult-to-grasp reason, the index is passed in as a **string**, so the `+=` operator _concatenates_ strings instead of adding numbers. WTF? Is this some kind of sick joke?
 
@@ -89,7 +100,7 @@ Surely, there is a better way! Step into the light...
 
 One simple way to handle looping through a set of items, such as an array of numbers, is to process each number in turn. We can use a function call to do this, and rather than putting our function in a loop, we can just pass it the list, have it take the &ldquo;head&rdquo; of the list, process it, and then _call itself again with the &ldquo;tail&rdquo; of the list_, which is just the rest of the list.
 
-<TerminologyBlock>In functional programming we work a lot with the <OffsiteLink href='https://en.wikipedia.org/wiki/List_(abstract_data_type)'><strong>list</strong></OffsiteLink> type. In JavaScript, we typically use the <code>Array</code> to mimic a list. It is particularly important when operating on lists to <OffsiteLink href='https://en.wikipedia.org/wiki/List_(abstract_data_type)#Operations'>know your <strong>head</strong> from your <strong>tail</strong></OffsiteLink>, but then that's probably important in many areas of life.</TerminologyBlock>
+<TerminologyBlock>In functional programming we work a lot with the <OffsiteLink href='https://en.wikipedia.org/wiki/List_(abstract_data_type)'><strong>list</strong></OffsiteLink> type. In JavaScript, we typically use the <code>Array</code> to mimic a list. It is particularly important when operating on lists to <OffsiteLink href='https://en.wikipedia.org/wiki/List_(abstract_data_type)#Operations'>know your <strong>head</strong> from your <strong>tail</strong></OffsiteLink>, but then that's probably important in many areas of life&mdash;unless you're a politician.</TerminologyBlock>
 
 And we can continue this process until we run out of list elements. Then we will stop and return the fully processed list, whatever that looks like.
 
@@ -327,7 +338,7 @@ Ramda's `adjust` can also handle negative indexes (working back from the end of 
 
 But now it's on us to test it and keep it current. Much easier to use a library such as Ramda or Lodash/FP!
 
-<h3 id='append'>Use <code>append</code>, <code>insert</code>, or <code>prepend</code> to add an item to a list</h3>
+<h3 id='append-insert-prepend'>Use <code>append</code>, <code>insert</code>, or <code>prepend</code> to add an item to a list</h3>
 
 These functions do exactly what you'd expect. Should we do it by hand, or use a library? For `append` and `prepend`, at least, vanilla JS is probably enough&mdash;unless we're pipelining (composing) functions.
 
@@ -343,32 +354,127 @@ The `insert` function is a bit trickier:
 
 <CodeBlock {...jsInsertSource} />
 
+<h3 id='remove'>Use <code>remove</code> to remove an item from a list</h3>
+
+Ramda's `remove` function removes one or more sequential items from a list.
+
+It expects three parameters:
+
+1. The index at which to start removing items.
+1. The number of items to remove.
+1. The list from which to remove the items
+
+And returns a **copy** of the list with the items removed.
+
+We can accomplish this in vanilla JS with a little more work. What we want to **avoid** is using the Array `splice` method as it mutates the array in place, and we would never do that, would we?
+
+<CodeBlock {...jsRemoveSource} />
+
 <h3 id='concat'>Use <code>concat</code> or <code>zip</code> to combine two lists</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The `concat` function takes two arrays of equal length and returns an array of arrays, each with two elements: the first from the first array; the second the matching element in the second array. For example:
+
+<Highlighter code={`concat([1, 2], [3, 4]) // yields [1, 2, 3, 4]`} showLineNumbers={false} />
+
+<CodeBlock {...jsConcatSource} />
+
+The `zip` function takes two arrays of equal length and returns an array of arrays, each with two elements: the first from the first array; the second the matching element in the second array. For example:
+
+<Highlighter code={`zip([1, 2], [3, 4]) // yields [[1, 3], [2, 4]]`} showLineNumbers={false} />
+
+<CodeBlock {...jsZipSource} />
 
 <h3 id='times'>Use <code>times</code> to create a new list</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The `times` function takes a function and a number of times, `n`, to iterate and returns an array of `n` length with the result of calling the function with the array index. So:
 
-<h3 id='head'>Use <code>head</code> or destructuring to get the first item in a list</h3>
+<Highlighter code={`times(n => n * 2, 5) // yields [0, 2, 4, 6, 8]`} showLineNumbers={false} />
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Easy, no?
 
-<h3 id='tail'>Use <code>tail</code> or destructuring to get the list minus the first element</h3>
+Doing the same in vanilla JS can be a bit more complex.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<CodeBlock {...jsTimesSource} />
+
+Some equivalencies (there may be easier ways, but we don't know them):
+
+<Highlighter code={`times(identity, 5) // yields [0, 1, 2, 3, 4]
+new Array(5).fill(null).map((_, i) => i) // yields [0, 1, 2, 3, 4]\n
+times(n => (n + 1) * (n + 1), 5) // yields [1, 4, 9, 16, 25]
+new Array(5).fill(null).map((_, i) => (i + 1) * (i + 1)) // [1, 4, 9, 16, 25]\n
+times(() => '', 3) // yields ['', '', '']
+new Array(3).fill('') // yields ['', '', '']\n
+times(n => n.toString(2), 12) // yields binary 0 to 1011
+new Array(12).fill(null).map((_, i) => (i + 1).toString(2)) // yields binary 0 to 1011`} showLineNumbers={false} />
+
+As you can see, while it can be done in vanilla JS, the Ramda `times` function is much easier to use. You could, of course, create your own vanilla JS version, but we'll leave that as an exercise for the reader.
+
+**Note**: The `_` (underscore) is often used in functional programming to indicate a value that we don't care about. In the above examples, the Array `map` method passes the index as the _second_ argument to the function. Here we only care about the index, not the `null` that is the value at that index, so we use `(_, i)` to get the index of the element and ignore the value at that index.
+
+<h3 id='head-tail'>Use <code>head</code> and <code>tail</code> to destructure a list</h3>
+
+Remember that the `head` of a list is just the first element in the list. If it's a list of numbers, then the head is a number; if a list of strings, then the head is a string.
+
+The `tail`, in contrast, is _the rest of the array_, so it is **always** an array of the same type as the original array, just without the head element. Note: the `tail` can be _empty_, but it is never undefined.
+
+If we try to get the `head` of an empty array, it will be `undefined`.
+
+<CodeBlock {...jsHeadTailSource} />
+
+Frankly, this is one area where Ramda's functions don't always add much value. It is usually easier to use destructuring. Where Ramda's `head` and `tail` functions are very useful is in pipelined functions, discussed in <Link to='/inductive/composition/' aria-label='Composition'>We can has pipelines!</Link>
 
 <h3 id='all'>Use <code>all</code>, <code>any</code>, or <code>none</code> to test a list</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The `all` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed returns true **every time** it is applied to an item in the list.
+
+The vanilla JS equivalent is the Array `every` method.
+
+<CodeBlock {...jsAllSource} />
+
+The `any` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed returns true **at least once** when it is applied to an item in the list.
+
+The vanilla JS equivalent is the Array `some` method.
+
+<CodeBlock {...jsAnySource} />
+
+The `none` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed returns **false** every time it is applied to an item in the list.
+
+The vanilla JS equivalent is the Array `every` method, but with the function changed to return `true` when the condition is **not** met, which is pretty non-intuitive. But there doesn't appear to be a true equivalent of `none`
+
+<CodeBlock {...jsNoneSource} />
+
+Of course, all of the Array methods are **methods**, so they must be called on the array, which makes pipelining functions more difficult, as we'll see. The Ramda functions are true functions.
 
 <h3 id='flatten'>Use <code>flatten</code> to flatten nested lists into a single list</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+This is a simple way to turn this:
+
+<Highlighter code={`[[1, 2, 3], [4, 5], [6, 7, 8]]`} />
+
+Into this:
+
+<Highlighter code={`[1, 2, 3, 4, 5, 6, 7, 8]`} />
+
+Let's try it:
+
+<CodeBlock {...jsFlattenSource} />
+
+In this unusual case, working with _partially_ unnesting arrays is actually easier with the Array `flat` method. Of course, because the method returns a copy, we could always create our own.
+
+Here use Ramda's `curry` function (more on this later) to make it possible to apply the arguments one at a time. This gives us the same power as Ramda's functions to be &ldquo;partially applied&rdquo; and then used in pipelined functions:
+
+<CodeBlock {...jsUnnestSource} />
 
 <h3 id='avoid-foreach'>Avoid <code>forEach</code>! Avoid <code>forEach</code>! Avoid <code>forEach</code>!</h3>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The `forEach` method on the Array (and&mdash;gasp!&mdash;the `forEach` function in Ramda) is used **entirely for side effects**. Say it ain't so, Ramda!
 
-<small>Errors, bugs, suggestions, questions? Contact <a href='mailto:charles_munat@bnz.co.nz'>Charles Munat</a></small>.
+Side effects almost always mean mutation. And that leads directly to the _zombie apocalypse_. Avoid.
+
+<CodeBlock {...jsBadForeachSource} theme='dark' warn={() => <small>Get thee behind me, Satan!</small>} />
+
+Every time you use `forEach`, a kitten dies. A really adorable one. Just sayin'.
+
+Next, we'll talk about <Link to='/inductive/composition/' aria-label='Composition'>pipelines</Link>.
+
+<small>Errors, bugs, suggestions, questions? Spare paper bags filled with unmarked fifties and hundreds? Contact <a href='mailto:charles_munat@bnz.co.nz'>Charles Munat</a></small>.

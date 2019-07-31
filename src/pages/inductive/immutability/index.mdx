@@ -32,7 +32,8 @@ But we kid you not, JavaScript actually considers this a _feature_. Go figure.
 
 Here is an example: We could declare a variable with `let`, then later assign a number as its value, and then later still assign a string to the same variable:
 
-<CodeBlock {...letSource} theme='dark' />
+<CodeBlock {...letSource} theme='dark' warn={() =>
+  <small>Don't give in to <code>let</code>. That leads to the dark side. Once you start down the dark path, forever will it dominate your destiny.</small>} />
 
 If you were looking for an effective way to create **hard-to-find bugs** in your code, you'd be hard-pressed (heh) to find a better one. If variables can change not only value, but also **type**, then how can you be sure what the value or type of _any_ variable is anywhere in your code?
 
@@ -64,7 +65,8 @@ Unreassignable is not the same thing as &ldquo;immutable&rdquo; (unchangeable). 
 
 JavaScript does offer, however, a way to reach into objects and make them &ldquo;read-only&rdquo;. Now they really are immutable. Unfortunately, this capability only freezes one level at a time, so to fully &ldquo;freeze&rdquo; an object, we have to traverse the entire tree freezing all the levels.
 
-<CodeBlock {...freezeMyButtSource} />
+<CodeBlock {...freezeMyButtSource} theme='dark' warn={() =>
+  <small>&ldquo;Take thy beak from out my heart, and take thy form from off my door!&rdquo; Quoth the Raven &ldquo;Nevermore.&rdquo;</small>} />
 
 Well, now, ain't that a damn shame. Mutations be getting all up in them nested objects.
 

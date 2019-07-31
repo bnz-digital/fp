@@ -588,7 +588,7 @@ li>p {
   margin-bottom: calc(1.45rem / 2);
 }
 
-code {
+a> {
   line-height: 1.45rem;
 }
 
@@ -644,7 +644,7 @@ th:last-child, td:last-child {
 }
 
 tt, code {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: FireBrick;
   border-radius: 3px;
 }
@@ -691,4 +691,10 @@ pre code:before, pre code:after, pre tt:before, pre tt:after {
 blockquote {
   background-color: MistyRose;
   padding: 0.5rem;
+}
+
+a:hover>code {
+  color: RoyalBlue;
+  outline-width: 0;
+  text-decoration: underline;
 }

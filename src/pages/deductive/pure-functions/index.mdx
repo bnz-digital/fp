@@ -37,7 +37,7 @@ Let's look at another example using shared state:
 
 <h3 id='avoid-side-effects'>Avoid side effects</h3>
 
-A <OffsiteLink href='https://en.wikipedia.org/wiki/Side_effect_(computer_science'>side effect</OffsiteLink>) is any application state change that is observable outside the called function other than its return value. Side effects include:
+A <OffsiteLink href='https://en.wikipedia.org/wiki/Side_effect_(computer_science)'>side effect</OffsiteLink> is any application state change that is observable outside the called function other than its return value. Side effects include:
 
 * Modifying shared state: any external variable or object property (e.g., a global variable, or a variable in the parent function scope chain)
 * Logging to the console
@@ -103,7 +103,7 @@ A better way to freeze objects to ensure that they are immutable is to write you
 
 <CodeBlock {...deepFreezeSource} />
 
-There are also several libraries for creating immutable objects&mdash;<OffsiteLink href='https://github.com/immutable-js/immutable-js'>Immutable.js</OffsiteLink>&mdash;or for simply freezing objects recursively&mdash:<OffsiteLink href='https://www.npmjs.com/package/deep-freeze'>deep-freeze</OffsiteLink>.
+There are also several libraries for creating immutable objects (e.g., <OffsiteLink href='https://github.com/immutable-js/immutable-js'>Immutable.js</OffsiteLink>) or for simply freezing objects recursively (e.g., <OffsiteLink href='https://www.npmjs.com/package/deep-freeze'>deep-freeze</OffsiteLink>).
 
 This is probably overkill in production. The best way to keep things immutable in JavaScript is with best practices. Learn the techniques and the gotchas and practice them religiously. Use libraries such as `deep-freeze` (or write your own utility function) in your **tests** to make sure that your code isn't mutating variables or sharing state.
 
@@ -116,5 +116,7 @@ Any function that reaches out for the DOM or uses variables that are not in its 
 In "pure" functional programming languages, the "impure" I/O is isolated in its own module, as is anything else impure. This permits the bulk of the application to be kept pure. The best practice is to do the  same in your code.
 
 The goal of FP is to compose the majority of your program from small pieces of logic that can be combined together and reused. Side effects are inevitable, but by limiting them to certain places in your application, they will be easier to manage and track.
+
+Next, <Link to='/deductive/more-fp-concepts/' aria-label='More FP Concepts'>More FP concepts</Link>.
 
 <small>Errors, bugs, suggestions, questions? Contact <a href='mailto:Prateek_Sharma@bnz.co.nz'>Prateek Sharma</a></small>.
