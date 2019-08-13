@@ -20,6 +20,14 @@ module.exports = {
             options: {
               maxWidth: 590
             }
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: 'language-',
+              inlineCodeMarker: null,
+              aliases: {}
+            }
           }
         ]
       }
@@ -31,6 +39,7 @@ module.exports = {
         path: `${__dirname}/src/images`
       }
     },
+    `gatsby-plugin-styled-components`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {

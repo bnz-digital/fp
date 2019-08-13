@@ -1,11 +1,42 @@
+import Card from '../components/Card'
+import CardDescription from '../components/CardDescription'
+import CardImage from '../components/CardImage'
+import Cards from '../components/Cards'
+import CardTitle from '../components/CardTitle'
 import Link from '../components/Link'
 
-**Quick links**:
-
-* <Link to='/inductive/' aria-label='Bottom-up FP'>Learn FP from examples &rarr; concepts</Link> (bottom-up)
-* <Link to='/deductive/' aria-label='Top-down FP'>Learn FP from concepts &rarr; examples</Link> (top-down)
-* <Link to='/patterns-antipatterns/' aria-label='Patterns and antipatterns'>Patterns and antipatterns</Link>
-
+<Cards>
+  <Card>
+    <CardImage name='pattern.jpg' to='/inductive/' />
+    <CardTitle>
+      <small>How to FP:</small><br/>
+      <Link to='/inductive/' aria-label='Bottom-up FP'>Examples &rarr; concepts</Link> 
+    </CardTitle>
+    <CardDescription>
+      Start with examples and work up to the concepts.
+    </CardDescription>
+  </Card>
+  <Card>
+    <CardImage name='pattern.jpg' to='/deductive/' />
+    <CardTitle>
+      <small>How to FP:</small><br/>
+      <Link to='/deductive/' aria-label='Top-down FP'>Concepts &rarr; examples</Link>
+    </CardTitle>
+    <CardDescription>
+      Start with the concepts and work down to the examples.
+    </CardDescription>
+  </Card>
+  <Card>
+    <CardImage name='pattern.jpg' to='/patterns-antipatterns/' />
+    <CardTitle>
+      <small>Resources:</small><br/>
+      <Link to='/patterns-antipatterns/' aria-label='Patterns and antipatterns'>Patterns/anti-patterns</Link>
+    </CardTitle>
+    <CardDescription>
+      Best practices to follow and anti-patterns to avoid.
+    </CardDescription>
+  </Card>
+</Cards>
 
 ## How to use this resource
 
