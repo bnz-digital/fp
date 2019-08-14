@@ -10,7 +10,7 @@ import Link from '../components/Link'
     <CardImage name='inductive-simplified.png' to='/inductive/' />
     <CardTitle>
       <small>How to FP:</small><br/>
-      <Link to='inductive/' aria-label='Bottom-up FP'>Examples &rarr; concepts</Link> 
+      <Link to='/inductive/' aria-label='Bottom-up FP'>Examples &rarr; concepts</Link> 
     </CardTitle>
     <CardDescription>
       Start with the examples and work up to abstract concepts.
@@ -20,7 +20,7 @@ import Link from '../components/Link'
     <CardImage name='deductive-simplified.png' to='/deductive/' />
     <CardTitle>
       <small>How to FP:</small><br/>
-      <Link to='deductive/' aria-label='Top-down FP'>Concepts &rarr; examples</Link>
+      <Link to='/deductive/' aria-label='Top-down FP'>Concepts &rarr; examples</Link>
     </CardTitle>
     <CardDescription>
       Start with abstract concepts and work down to the examples.
@@ -30,7 +30,7 @@ import Link from '../components/Link'
     <CardImage name='pattern.jpg' to='/patterns-antipatterns/' />
     <CardTitle>
       <small>Resources:</small><br/>
-      <Link to='patterns-antipatterns/' aria-label='Patterns and antipatterns'>Patterns/anti-patterns</Link>
+      <Link to='/patterns-antipatterns/' aria-label='Patterns and antipatterns'>Patterns/anti-patterns</Link>
     </CardTitle>
     <CardDescription>
       Best practices to follow and anti-patterns to avoid.
@@ -54,6 +54,14 @@ For example, to learn functional programming, you jump right in and begin writin
 
 After we've guided you through a few examples (or given you a Runkit to play with), we extract a principle. We start with the simplest principles and build up from there. We hold off on explaining _why_ until you've seen the _what_. This works best for most people and especially when you're new to a topic.
 
+<figure>
+  <img
+    src='/images/inductive.png'
+    alt='Inductive learning goes from concrete examples to abstract concepts.'
+    style={{ border: '1px solid lightgray' }}
+  />
+</figure>
+
 <Link to='/inductive/' aria-label='bottom-up fp'><strong>Try it the inductive way: learn FP from the bottom up</strong></Link>
 
 ### Deductive learning: from abstract theory to real-world examples
@@ -67,6 +75,14 @@ But if you're changing paradigms&mdash;say from OOP to FP&mdash;or new to learni
 If you're not sure, then you might try starting with the deductive style below, and then if you find yourself confused, switch to the inductive style above. There are even links in the deductive &ldquo;top-down&rdquo; version to help you do that.
 
 Let us know what you think.
+
+<figure>
+  <img
+    src='/images/deductive.png'
+    alt='Deductive learning goes from abstract concepts to concrete examples.'
+    style={{ border: '1px solid lightgray' }}
+  />
+</figure>
 
 <Link to='/deductive/' aria-label='top-down fp'><strong>Try it the deductive way: learn FP from the top down</strong></Link>
 
