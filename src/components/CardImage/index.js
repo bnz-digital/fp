@@ -13,7 +13,7 @@ StyledCardImage.displayName = 'StyledCardImage'
 export default function CardImage ({ name, to }) {
   return (
     <Link to={to}>
-      <StyledCardImage src={`fp/images/${name}`} />
+      <StyledCardImage src={`images/${name}`} />
     </Link>
   )
 }
