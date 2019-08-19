@@ -4,6 +4,160 @@ trail:
   - label: Home
     href: '/'
 ---
+import CodeBlock from '../../components/CodeBlock'
+import Highlighter from '../../components/Highlighter'
 import Link from '../../components/Link'
 
-**Patterns and antipatterns** (coming soon).
+import badInheritanceSource from '../../runkits/patterns/bad-inheritance'
+import compositionByAggregationSource from '../../runkits/patterns/composition-by-aggregation'
+import compositionByConcatenationSource from '../../runkits/patterns/composition-by-concatenation'
+import compositionByDelegationSource from '../../runkits/patterns/composition-by-delegation'
+import utilityFunctionsSource from '../../runkits/patterns/utility-functions'
+
+<ul>
+  <li>
+    <Link to='./#no-more-page-objects' aria-label='No more Page Objects'>No more Page Objects</Link>
+  </li>
+  <li>
+    <Link to='./#enter-page-modules' aria-label='Enter Page Modules'>Enter Page Modules</Link>
+  </li>
+  <li>
+    <Link to='./#but-what-about-inheritance' aria-label='But what about inheritance?'>But what about inheritance?</Link>
+  </li>
+  <li>
+    <Link to='./#favour-composition-over-inheritance' aria-label='Favour composition over inheritance'>&ldquo;Favour composition over inheritance&rdquo;</Link>
+  </li>
+</ul>
+
+<h3 id='no-more-page-objects'>No more Page Objects</h3>
+
+The **Page Object** design pattern offers two benefits:
+
+1. It keeps all page element selectors in one place; thus, it provides separation of test code from the locators of the application under test (AUT).
+1. It standardises how tests interact with the page; thus, it avoids duplication of code and eases code maintenance.
+
+Object-orientation (OO) in JavaScript is a bit awkward. Introduction of the `class` keyword in JavaScript 2015 helped, but classes, and specifically the `this` keyword, still surprise people Java programmers because they work very differently.
+
+[Here is a great blog from Kent C. Dodds which highlights this point](https://kentcdodds.com/blog/classes-complexity-and-functional-programming).
+
+<h3 id='enter-page-modules'>Enter Page Modules</h3>
+
+In Java land, it's pretty common to find Page Objects which inherit from the Base Page. In JavaScript, that might look like this:
+
+<Highlighter code={`import { HomePage } from './BasePage'\n
+class HomePage extends BasePage  {
+  constructor() {
+    super();
+    this.mainElement = 'body > .banner';
+  }
+  //... More code\n
+  export const mainPage = new MainPage();
+}`} theme='dark' />
+
+_With the move to functional programming, we are going to loose not only **inheritance**, but the `class` itself._ Therefore, we need to use **modules** to arrange our code. Each module exports public functions that can be imported into other modules and used:
+
+<Highlighter code={`// In the HomePage module (HomePage.js or HomePage/index.js)
+export function login (email, password) {
+  //...
+}\n
+export function logout () {
+  //...
+}\n
+export function search (criterion) {
+  // ...
+}`} />
+
+This module can then be imported into your tests or other modules and used as below:
+
+<Highlighter code={`// In the HomePageTest module (HomePageTest.js or HomePageTest/index.js)
+import * as homePage from './HomePage.js'\n
+describe('Home Page', () => {
+  it('User can login', () => {
+      cy.visit('/')
+      homePage.login('prateek', '123456')
+  })
+})`} />
+
+or we can import individual functions from a module selectively:
+
+<Highlighter code={`import { login } from './HomePage.js'\n
+describe('Home Page', () => {
+  it('User can login', () => {
+    cy.visit('/')
+    login('prateek', '123456')
+  })
+})`} />
+
+In general, import only the functions you need when possible.
+
+<h3 id='but-what-about-inheritance'>But what about inheritance?</h3>
+
+<Highlighter code={`public class HomePage extends BasePage { ... } // Java`} language='java' showLineNumbers={false} />
+
+Often we come across test suites where Page Objects extend a `BasePage` or every test file extends a `BaseTest` class.
+
+The intention behind this is typically code reuse. Most often the `BaseTest` class has methods related to login, logout, logging, etc.
+
+**Please don't do that.** Bundling _unrelated functionality_ into a parent class for the purpose of reuse is an abuse of inheritance.
+
+Common functionality required by **specs** can be added as Cypress **custom commands**. Custom commands are available to be used globally with the `cy.` prefix. For example, we can add a method called `login` using a custom command:
+
+<Highlighter code={`Cypress.Commands.add('login', (username, password) => {
+    cy.get('#username').type(username)
+    //...
+})`} />
+
+The `Cypress.Commands.add` function takes the _name_ of the custom command as the first argument, and a _function_ as the second argument.
+
+Now we can use that name to call the custom command in any spec:
+
+<Highlighter code={`describe('Login Page', () => {
+  it('User can login', () => {
+    cy.login('prateek', '123456')
+    // ...
+  })
+})`} />
+
+Note: functionality that is shared between a few specs _but not all_ should be added to **utility modules** instead of adding a custom command. Reserve custom commands for widely-used functionality. 
+
+<h3 id='favour-composition-over-inheritance'>&ldquo;Favour composition over inheritance&rdquo;</h3>
+
+Why? Watch this video to find out:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wfMtDGfHWpA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Now, consider the code below that uses **inheritance** (don't do this):
+
+<CodeBlock {...badInheritanceSource} theme='dark' />
+
+Inheritance is actually a form of &ldquo;object composition&rdquo;. It is the form that binds the objects most tightly, hence it is the one to be most avoided, if possible.
+
+Here we are using inheritance to provide for code reuse. There is no separate `Person` object to which `Employee` refers. `Employee` simply inherits the properties (and methods, if any) of the `Person` object, so, for example, the `fullName` getter is available both within `Employee` (as in the `toString` method) and on instances of `Employee`.
+
+The same functionality could be achieved using **composition**. There are three common ways to compose objects in JavaScript: aggregation, delegation, and concatenation.
+
+**Aggregation** preserves the objects that we're composing (aggregating). Here, an `Employee` is simply a wrapper around a `Person` that adds an employee `id` property. A key feature of aggregation is that the `Person` object retains its integrity and we can extract it from the `Employee` object:
+
+<CodeBlock {...compositionByAggregationSource} />
+
+**Delegation** is similar, except we do not inject the `Person` into the `Employee`, so the `Person` is not directly visible in the `Employee` and we can't extract the `Person` back out again as easily.
+
+However, the properties of the `Person` are directly accessible from within the `Employee`, and if we mutate the `Person` (which we won't, right?), then those changes are immediately visible in the `Employee` that delegates to that person.
+
+To pull the `Person` back out, we've got to get it from the prototype: `Object.getPrototypeOf(employee)`.
+
+Delegation can be used to save memory, while making the properties of `Person` _directly_ accessible from within `Employee` (i.e., we don't have to go through the `person` property):
+
+<CodeBlock {...compositionByDelegationSource} />
+
+**Concatenation** is the simplest and often the best for our purposes as we always make copies rather than mutating in place. If we are never going to mutate the `Person` object once we've created it, then why bother linking to it? This is the loosest form of coupling, and should be the first one to which we turn.
+
+Concatenation simply creates a new object, copying the properties from all objects passed:
+
+<CodeBlock {...compositionByConcatenationSource} />
+
+Note: Functions which return objects are called **factory functions**.
+
+In our inheritance example above, `Person` provided a `fullName` getter&mdash;a computed property. The functional way to do this is with a utility function. We could put all our functions used for `Person` in a `Person` module rather than a `Person` class. Then we import that module&mdash;or just the functions we need&mdash;and use them.
+
+<CodeBlock {...utilityFunctionsSource} />
