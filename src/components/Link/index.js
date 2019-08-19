@@ -5,13 +5,17 @@ import { navigate } from '@reach/router'
 
 const pattern = /#|\?/g
 
-const makeOnClick = to => () => navigate(to)
+const makeOnClick = to => e => {
+  e.preventDefault
+
+  navigate(to)
+}
 
 export default function Link ({ children, to, ...props }) {
   const useAnchor = pattern.test(to)
 
   return useAnchor ? (
-    <a onClick={makeOnClick(to)} {...props} style={{ cursor: 'pointer' }}>
+    <a onClick={makeOnClick(to)} href={to} {...props}>
       {children}
     </a>
   ) : (
