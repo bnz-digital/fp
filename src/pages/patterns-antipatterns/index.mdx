@@ -192,10 +192,11 @@ Contrast that with this equivalent example:
 <Highlighter code={`import { addTodo, getTopTodoFromList, getTodoLabel } from './TodoUtil'\n
 const TODO_LABEL = 'My Todo'\n
 describe('Todo Application', () => {
-  it('Can add a new Todo', () => addTodo(TODO_LABEL)
-    .then(getTopTodoFromList)
-    .then(getTodoLabel)
-    .should('equal', TODO_LABEL)
+  it('Can add a new Todo', () =>
+    addTodo(TODO_LABEL)
+      .then(getTopTodoFromList)
+      .then(getTodoLabel)
+      .should('equal', TODO_LABEL)
   )
 })`} />
 
@@ -208,14 +209,17 @@ Our declarative second example is far more readable, which means much lower cogn
 So where can we find our `addTodo`, `getTopTodoFromList`, and `getTodoLabel` functions? They're nicely tucked away in our `TodoUtil.js` or `TodoUtil/index.js` file:
 
 <Highlighter code={`// TodoUtil.js
-export const addTodo = name => cy
-  .get('.new-todo')
-  .type(\`\${name}{enter}\`)\n
-export const getTopTodoFromList = () => cy
-  .get('.todo-list')
-  .eq(0)\n
-export const getTodoLabel = todo => todo
-  .find('label')
-  .text()`} />
+export const addTodo = name =>
+  cy
+    .get('.new-todo')
+    .type(\`\${name}{enter}\`)\n
+export const getTopTodoFromList = () =>
+  cy
+    .get('.todo-list')
+    .eq(0)\n
+export const getTodoLabel = todo =>
+  todo
+    .find('label')
+    .text()`} />
 
 This is where we hide the imperative code. At some low level, we will always need to tell the computer **how** to do things. But if we abstract this code into library or utility functions with **concise, clear names**, then our actual code is as easy to read as plain English. That is a major benefit of working in a **declarative** style.
