@@ -189,7 +189,7 @@ As you can see, while the _action_ we're undertaking&mdash;`get`, `type`, `eq`, 
 
 Contrast that with this equivalent example:
 
-<Highlighter code={`import { addTodo, getTopTodoFromList, getTodoLabel } from './TodoUtil'\n
+<Highlighter code={`import { addTodo, getTodoLabel, getTopTodoFromList } from './TodoUtil'\n
 const TODO_LABEL = 'My Todo'\n
 describe('Todo Application', () => {
   it('Can add a new Todo', () =>
@@ -223,3 +223,40 @@ export const getTodoLabel = todo =>
     .text()`} />
 
 This is where we hide the imperative code. At some low level, we will always need to tell the computer **how** to do things. But if we abstract this code into library or utility functions with **concise, clear names**, then our actual code is as easy to read as plain English. That is a major benefit of working in a **declarative** style.
+
+Now let's look at an update scenario.
+
+<Highlighter code={`import {addTodo, getTodoLabel, updateTodo} from './TodoUtil'\n
+describe('Todo Application', ()=> {
+  const INITIAL_TODO = 'Initial todo'
+  const UPDATED_TODO = 'Updated todo'\n
+  it('Can update a newly created todo', () =>
+    addTodo(INITIAL_TODO)
+      .then(updateTodo(UPDATED_TODO)) // updateTodo partially applied; creates a closure
+      .then(getTodoLabel)
+      .should('equal', UPDATED_TODO)
+  )
+})`} />
+
+And here is the `updateTodo` utility function:
+
+<Highlighter code={`// In TodoUtils.js or TodoUtils/index.js
+// Calling this with the updatedLabel returns a FUNCTION
+// that takes the todo and updates it
+export const updateTodo = updatedLabel =>
+  $todo => { // dollar sign indicates this is an element
+    cy
+      .wrap($todo) // wrap the element to give it Cypress superpowers
+      .within(     // scopes all subsequent commands to the $todo element
+        () => {    // callback function
+          cy
+            .get('label')     // grabs the label
+            .dblclick()       // double-clicks to open the editor\n
+          cy
+            .get('.edit')                   // grabs the editor input
+            .clear()                        // clears it
+            .type(\`\${updatedLabel}{enter}\`) // enters updated label and submits
+        }
+      )\n
+    return cy.wrap($todo) // return the wrapped todo element so we can chain \`thens\`
+  }`} />

@@ -1,85 +1,19 @@
 
-#### Readability
-
-The main benefit of using Page Object is that it encapsulates the complexity of the UI and locators and thus helping with reusability and making the tests more readable.
-
-> For these examples I am using the [Cypress TodoMVC Example Repo](https://github.com/cypress-io/cypress-example-todomvc) and refactoring few tests.
-
-Compare the below tests
-```js
-describe('Todo Application', ()=> {
-
-  it('Can add a new Todo', ()=>{
-     cy.get('.new-todo')
-      .type('First Todo')
-      .type('{enter}') 
-
-     cy.get('.todo-list li')
-      .eq(0)
-      .find('label')
-      .should('contain', 'First Todo')  
-  })
-})
-
-```
-
-VS
-
-```js
-import {addTodo, getTodoName} from './TodoUtil'
-
-describe('Todo Application', ()=> {
-
-  it('Can add a new Todo', ()=>{
-     addTodo('First Todo')
-     .then(getTodoName)
-     .should('equal', 'First Todo')
-  })
-})
-
-```
-
-The second test requires less cognitive load to understand because it's declarative and don't makes us read through the steps of how to add new todo or get it's name.
-
-The `addTodo` and `getTodoName` come from the `TodoUtil` module
-
-```js
-// TodoUtil.js
-export const addTodo = (name) => {
-  cy.get('.new-todo')
-    .type('First Todo')
-    .type('{enter}') 
-
-  return cy
-    .get('.todo-list')
-    .eq(0)
-}
-
-export const getTodoName = (todo) => {
-  return todo.find('label)
-}
-```
-
-While the first approach is fine for small and simple scenarios but as the scenarios become more complex or longer a more declarative approach can be a lifesaver.
-
 ```js
 // The scenario to test that we are able to update the newly created Todo will look like
-import {addTodo, getTodoName, updateTodo} from './TodoUtil'
+import {addTodo, getTodoLabel, getTopTodoFromList, updateTodo} from './TodoUtil'
 
 describe('Todo Application', ()=> {
-
   const INITIAL_TODO = 'Initial todo'
   const UPDATED_TODO = 'Updated todo'
 
-it('Can update a newly created todo', ()=>{
+  it('Can update a newly created todo', () =>
     addTodo(INITIAL_TODO)
-    .then(updateTodo(UPDATED_TODO))
-    .then(getTodoName)
-    .should('equal', UPDATED_TODO)
-
-  })
+      .then(updateTodo(UPDATED_TODO))
+      .then(getTodoName)
+      .should('equal', UPDATED_TODO)
+  )
 })
-
 ```
 
 The new method `updateTodo` from `TodoUtils.js` looks like
