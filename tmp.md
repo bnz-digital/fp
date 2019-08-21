@@ -68,13 +68,14 @@ import {addTodo, getTodoName, updateTodo} from './TodoUtil'
 
 describe('Todo Application', ()=> {
 
-  const TODO_NAME = 'First todo'
+  const INITIAL_TODO = 'Initial todo'
+  const UPDATED_TODO = 'Updated todo'
 
 it('Can update a newly created todo', ()=>{
-    addTodo(TODO_NAME)
-    .then(updateTodo(TODO_NAME + ' new'))
+    addTodo(INITIAL_TODO)
+    .then(updateTodo(UPDATED_TODO))
     .then(getTodoName)
-    .should('equal', TODO_NAME + ' new')
+    .should('equal', UPDATED_TODO)
 
   })
 })
