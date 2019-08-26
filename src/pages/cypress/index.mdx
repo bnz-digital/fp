@@ -7,6 +7,7 @@ trail:
 import CodeBlock from '../../components/CodeBlock'
 import Highlighter from '../../components/Highlighter'
 import Link from '../../components/Link'
+import OffsiteLink from '../../components/OffsiteLink'
 
 import badInheritanceSource from '../../runkits/cypress/bad-inheritance'
 import compositionByAggregationSource from '../../runkits/cypress/composition-by-aggregation'
@@ -15,30 +16,14 @@ import compositionByDelegationSource from '../../runkits/cypress/composition-by-
 import utilityFunctionsSource from '../../runkits/cypress/utility-functions'
 
 <ul>
-  <li>
-    No more Page Objects
-  </li>
-  <li>
-    Enter Page Modules
-  </li>
-  <li>
-    But what about inheritance?
-  </li>
-  <li>
-    Favour composition over inheritance
-  </li>
-  <li>
-    Readability
-  </li>
-  <li>
-    I need more convincing...
-  </li>
-  <li>
-    Page Objects break the Single Responsibility Principle
-  </li>
-  <li>
-    Page order is not user flow
-  </li>
+  <li><Link to='/cypress/#no-more-page-objects'>No more Page Objects</Link></li>
+  <li><Link to='/cypress/#enter-page-modules'>Enter Page Modules</Link></li>
+  <li><Link to='/cypress/#but-what-about-inheritance'>But what about inheritance?</Link></li>
+  <li><Link to='/cypress/#favour-composition-over-inheritance'>Favour composition over inheritance</Link></li>
+  <li><Link to='/cypress/#readability'>Readability</Link></li>
+  <li><Link to='/cypress/#i-need-more-convincing'>I need more convincing...</Link></li>
+  <li><Link to='/cypress/#page-objects-break-the-srp'>Page Objects break the Single Responsibility Principle</Link></li>
+  <li><Link to='/cypress/#page-order-is-not-user-flow'>Page order is not user flow</Link></li>
 </ul>
 
 <h3 id='no-more-page-objects'>No more Page Objects</h3>
@@ -290,7 +275,7 @@ New language &rarr; new paradigm &rarr; _new way of doing things_.
 
 But even in an OO paradigm, Page Objects leave a lot to be desired. For example:
 
-<h3 id='pos-break-the-srp'>Page Objects break the Single Responsibility Principle</h3>
+<h3 id='page-objects-break-the-srp'>Page Objects break the Single Responsibility Principle</h3>
 
 Page Objects bind unrelated functionality together in one class. For example, in the code below, `searchProduct()` functionality is _not related_ to the `login` or `logout` actions.
 
@@ -450,19 +435,19 @@ it('Admin is taken to Admin Dashboard on valid login', () => {
 
 <h3 id='resources'>Resources</h3>
 
-* [OOP vs. FP](https://medium.com/@cscalfani/)
-* [Goodby object-oriented programming](goodbye-object-oriented-programming-a59cda4c0e53)
-* [7 Reasons to use FP for Frontend](https://tsh.io/blog/7-reasons-to-use-functional-programming-on-frontend-1-2/)
-* [ImmutableJS](https://immutable-js.github.io/immutable-js/docs/#/)
-* [RamdaJS](https://ramdajs.com/)
-* [ESLint FP Plugin](https://www.npmjs.com/package/eslint-plugin-fp)
+* <OffsiteLink href='https://medium.com/@cscalfani/'>OOP vs. FP</OffsiteLink>
+* <OffsiteLink href='https://medium.com/@cscalfani/goodbye-object-oriented-programming-a59cda4c0e53'>Goodbye, object-oriented programming</OffsiteLink>
+* <OffsiteLink href='https://tsh.io/blog/7-reasons-to-use-functional-programming-on-frontend-1-2/'>7 Reasons to use FP for front-end</OffsiteLink>
+* <OffsiteLink href='https://immutable-js.github.io/immutable-js/docs/#/'>ImmutableJS</OffsiteLink>
+* <OffsiteLink href='https://ramdajs.com/'>RamdaJS</OffsiteLink>
+* <OffsiteLink href='https://www.npmjs.com/package/eslint-plugin-fp'>ESLint FP plugin</OffsiteLink>
 
 <h3 id='sources'>Sources</h3>
 
-* [Master the JavaScript interview: What is FP?](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0)
-* [So you want to be a functional programmer](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-3-1b0fd14eb1a7)
-* [7 Reasons to use FP for Frontend](https://tsh.io/blog/7-reasons-to-use-functional-programming-on-frontend-1-2/)
-* [FP paradigms in modern JavaScript: currying](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-currying-5652e489cce8)
-* [FP paradigms in modern JavaScript: pure functions](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
+* <OffsiteLink href='https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0'>Master the JavaScript interview: What is FP?</OffsiteLink>
+* <OffsiteLink href='https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-3-1b0fd14eb1a7'>So you want to be a functional programmer</OffsiteLink>
+* <OffsiteLink href='https://tsh.io/blog/7-reasons-to-use-functional-programming-on-frontend-1-2/'>7 Reasons to use FP for front-end</OffsiteLink>
+* <OffsiteLink href='https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-currying-5652e489cce8'>FP paradigms in modern JavaScript: currying</OffsiteLink>
+* <OffsiteLink href='https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1'>FP paradigms in modern JavaScript: pure functions</OffsiteLink>
 
 <small>Errors, bugs, suggestions, questions? Contact <a href='mailto:Prateek_Sharma@bnz.co.nz'>Prateek Sharma</a> or <a href='mailto:Charles_Munat@bnz.co.nz'>Charles Munat</a></small>.
