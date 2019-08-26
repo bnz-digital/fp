@@ -1,49 +1,4 @@
 
-```js
-// The scenario to test that we are able to update the newly created Todo will look like
-import {addTodo, getTodoLabel, getTopTodoFromList, updateTodo} from './TodoUtil'
-
-describe('Todo Application', ()=> {
-  const INITIAL_TODO = 'Initial todo'
-  const UPDATED_TODO = 'Updated todo'
-
-  it('Can update a newly created todo', () =>
-    addTodo(INITIAL_TODO)
-      .then(updateTodo(UPDATED_TODO))
-      .then(getTodoName)
-      .should('equal', UPDATED_TODO)
-  )
-})
-```
-
-The new method `updateTodo` from `TodoUtils.js` looks like
-
-```js
-export const updateTodo = (name) => ($todo) => {
-  cy.wrap($todo).within(() => {
-    cy.get('label').dblclick()
-    cy.get('.edit').clear().type(`${name}{enter}`)
-  })
-
-  return cy.wrap($todo)
-```
-
-### But I still love my Page Objects.
-
-Most common arguments against Page Objects are 
-
-1. Page Objects introduce additional state in addition to the AUT's state which makes tests hard to understand.
-1. Using Page object means that all our tests are going to go through the Application's GUI.
-1. Page objects try to fit multiple cases into a uniform interface, falling back to conditional logic.
-
-While the above arguments are all true in my experience, but biggest problem with Page Objects arise due to Selenium's recommendation that "methods should return Page Objects". 
-
-[Read all recommendations here](https://github.com/SeleniumHQ/selenium/wiki/PageObjects)
-
-Let's try to look at some common situations we find ourselves in when using Page Objects and how to solve them.
-
-#### Single Responsibility Principle is not met by Page Objects
-PO bind unrelated functionality together in one class. e.g. in the below code `searchProduct()` functionality is not related to `login` or `logout` actions.
 
 ```java
 public class HomePage {

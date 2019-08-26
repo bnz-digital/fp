@@ -32,7 +32,7 @@ function DefaultLinks () {
         Top-down
       </Link>
       <Link
-        to='/patterns-antipatterns'
+        to='/cypress'
         style={{
           color: `white`,
           textDecoration: `none`,
@@ -41,7 +41,7 @@ function DefaultLinks () {
           padding: '0 0.5rem'
         }}
       >
-        Patterns
+        Cypress
       </Link>
     </>
   )
@@ -150,7 +150,7 @@ function getColour (location) {
       return 'ForestGreen'
     case 'deductive':
       return 'MediumBlue'
-    case 'patterns-antipatterns':
+    case 'cypress':
       return 'Maroon'
     default:
       return 'RebeccaPurple'
