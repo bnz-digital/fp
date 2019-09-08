@@ -42,15 +42,15 @@ We can also use libraries of true FP functions to do the same thing, but without
 
 <CodeBlock {...ramdaMapSource} />
 
-As you can see, Ramda's pure `map` function is more powerful and reusable than even the `Array.map` method. We'll get to currying and composition more below.
+As you can see, Ramda's pure `map` function is more powerful and reusable than even the `Array.map` method. We'll explain [currying](https://en.wikipedia.org/wiki/Currying#Contrast_with_partial_function_application) and [composition](https://en.wikipedia.org/wiki/Function_composition_(computer_science)) in a moment.
 
 <h3 id='declarative-vs-imperative'>Declarative vs. imperative style</h3>
 
 Functional programming is **declarative**, meaning that the program logic is expressed without explicitly describing the flow control: it tells the code _what_ to do rather than telling it _how_ to do it.
 
-**Imperative** programs spend lines of code describing the specific steps used to achieve the desired results&mdash;the flow control: **How** to do things.
+**Imperative** programs require many lines of code to describe the specific steps needed to achieve the desired results&mdash;the flow control: **How** to do things.
 
-**Declarative** programs abstract the flow control process, and instead spend lines of code describing the data flow: **What** to do.
+**Declarative** programs abstract the flow control process, and instead use many fewer lines of code to describe the data flow: **What** to do.
 
 This means that under the covers, declarative languages are imperative. At some level, the computer only responds to "how". But by abstracting the "how" into higher-level "what", functional programming makes life much easier for the programmer.
 
@@ -62,7 +62,7 @@ Notice how you have to work your way through the `for` loop syntax. There's a lo
 
 <CodeBlock {...declarativeSource} />
 
-**Imperative** code frequently utilizes statements. A statement is a piece of code which performs some action. Examples of commonly used statements include `for`, `if`, `switch`, `throw`, etc.
+**Imperative** code frequently utilises statements. A statement is a piece of code which performs some action. Examples of commonly used statements include `for`, `if`, `switch`, `throw`, etc.
 
 **Declarative** code relies more on expressions. An expression is a piece of code which evaluates to some value. Expressions are usually some combination of function calls, values, and operators which are evaluated to produce the resulting value. Examples include:
 
@@ -75,7 +75,7 @@ Notice how you have to work your way through the `for` loop syntax. There's a lo
 
 Function composition is the act of combining multiple functions together in order to create more complex logical flows. 
 
-**The precondition that we need to have in mind is that when we compose functions each one should take the output from the previous.**
+The precondition that we need to bear in mind is this: **when we compose functions, each one should take as an argument the return value of the previous function in the pipe.**
 
 If we had to add two numbers and then multiply the result of the addition by 10, then we might write something like this:
 
@@ -90,7 +90,14 @@ const square = x => x * x
 const addTen = x => x + 10
 \nconst computeNumbers = addTen(square(sum(3, 5))) // 74`} />
 
-We can use <OffsiteLink href='https://ramdajs.com/docs/'>Ramda</OffsiteLink> to enable us to easily write functional code:
+The deeper the nesting, the more difficult to read, though formatting can help:
+
+<Highlighter code={`const sum = (a, b) => a + b
+const square = x => x * x
+const addTen = x => x + 10
+\nconst computeNumbers = addTen(\n  square(\n    sum(3, 5)\n  )\n) // 74`} />
+
+We can use a third-party library such as <OffsiteLink href='https://ramdajs.com/docs/'>Ramda</OffsiteLink> to enable us to write functional code easily and cleanly:
 
 <CodeBlock {...composeSource} />
 
@@ -98,15 +105,15 @@ We can use <OffsiteLink href='https://ramdajs.com/docs/'>Ramda</OffsiteLink> to 
 
 A **curried** function is a function that permits you to pass one parameter at a time. If you pass fewer arguments than the function expects, then it returns a function that takes the remaining arguments and remembers the arguments already passed.
 
-Essentially, you can "partially apply" curried functions, creating  new functions that remember the arguments already passed (called a "closure"). You can see this in the composition example above with the `add` function that takes two parameters, but is partially applied with the first parameter, `add(10)` to create a new function that will take a single number and add 10 to it.
+Essentially, you can "[partially apply](https://en.wikipedia.org/wiki/Currying#Contrast_with_partial_function_application)" curried functions, creating  new functions that remember the arguments already passed (this is called a "[closure](https://en.wikipedia.org/wiki/Closure_(computer_programming))"). You can see this in the composition example above with the `add` function that takes two parameters, but is partially applied with the first parameter, `add(10)` to create a _new_ function that will take a single number and add 10 to it.
 
 An easy way to "curry" JavaScript functions is by nesting single-parameter functions:
 
 <CodeBlock {...simpleCurrySource} />
 
-In the above example, `add(10, 5)` returned a function because it ignored the second argument, so instead it worked the same as `add(10)`: we got back a function that remembers the 10 and takes the second parameter.
+In the above example, `add(10, 5)` returned a function because it ignored the second argument, so instead it worked the same as `add(10)`: we got back a function that remembers the 10 and takes the second parameter. That's because this simplified method for currying means that we can _only_ supply arguments one at a time.
 
-What we want is a function that let's us apply the arguments in any combination. <OffsiteLink href='https://ramdajs.com/docs/#curry'>Ramda</OffsiteLink> provides us with just such a function:
+What we want is a function that let's us apply the arguments in _any_ combination. <OffsiteLink href='https://ramdajs.com/docs/#curry'>Ramda</OffsiteLink> provides us with just such a function:
 
 <CodeBlock {...currySource} />
 
@@ -114,7 +121,7 @@ Currying shines during refactoring when you create a generalized version of a fu
 
 <CodeBlock {...bestCurrySource} />
 
-We can easily write our own function to curry functions (as long as they take a fixed number of arguments&mdash;can you guess why?). So if you're into impressing your friends (or just curious), check out the example below:
+We can easily write our own function to curry other functions (as long as they take a fixed number of arguments&mdash;can you guess why?). So if you're into impressing your friends (or just curious), check out the example below:
 
 <CodeBlock {...ourCurrySource} />
 
@@ -122,7 +129,7 @@ Curry FTW.
 
 <h3 id='things-to-avoid'>More things to avoid</h3>
 
-A good first step towards writing good Functional code is to stop using the below JS constructs as they break one or more FP principles.
+An excellent first step towards writing good functional code is to stop using the vanilla JS constructs below as they break one or more FP principles.
 
 * Loops (loops lead to imperative code)
   * while
