@@ -1,4 +1,4 @@
-const code = `const { add, compose, negate, pipe, sum } = require('ramda')
+const code = `import { add, compose, negate, pipe, sum } from 'ramda'
 
 // compose applies the functions from  right to left
 const compute = compose(

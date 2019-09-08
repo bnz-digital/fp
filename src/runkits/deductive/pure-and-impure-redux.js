@@ -13,7 +13,8 @@ console.log(\`\\\`x\\\` is \\\`2\\\`. Let's call \\\`addImpure(3)\\\`: \${addImp
 
 x = 6
 
-console.log(\`\\\`x\\\` is now \\\`6\\\`. Now let's call \\\`addImpure(3)\\\` again: \${addImpure(3)}\`)`
+console.log(\`\\\`x\\\` is now \\\`6\\\`. Now let's call \\\`addImpure(3)\\\` again: \${addImpure(3)}\`)
+console.log('Oops.')`
 
 const imports = ``
 

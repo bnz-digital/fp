@@ -1,4 +1,4 @@
-const code = `const { curry } = require('ramda')
+const code = `import { curry } from 'ramda'
 
 const addEmUp = curry((x, y, z) => x + y + z)
 

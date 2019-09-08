@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Embed from 'react-runkit'
 
+import convertImports from '../../utilities/convertImports'
 import Highlighter from '../Highlighter'
 
 export default function CodeBlock ({
@@ -28,7 +29,7 @@ export default function CodeBlock ({
     <div className='code-block'>
       {warn()}
       <Embed
-        source={`${requires}${code}`}
+        source={`${requires}${convertImports(code)}`}
         nodeVersion='12'
         theme={`solarized-${theme}`}
       />

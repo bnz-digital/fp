@@ -1,4 +1,4 @@
-const code = `let mutableDollars = 1 // Mutable binding
+const code = `let mutableDollars = 1 // Mutable binding (don't be doing this)
 
 // Increment mutableDollars
 mutableDollars += 1

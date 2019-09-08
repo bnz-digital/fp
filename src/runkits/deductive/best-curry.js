@@ -1,4 +1,4 @@
-const code = `const { curry } = require('ramda')
+const code = `import { curry } from 'ramda'
 
 const fetchData = curry((method, url, data) => {
   console.log(\`Sending a \${method} request to \${url} with query \${data}.\`)
