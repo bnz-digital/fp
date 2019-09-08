@@ -33,9 +33,9 @@ The **Page Object** design pattern offers two benefits:
 1. It keeps all page element selectors in one place; thus, it provides separation of test code from the locators of the application under test (AUT).
 1. It standardises how tests interact with the page; thus, it avoids duplication of code and eases code maintenance.
 
-Object-orientation (OO) in JavaScript is a bit awkward. Introduction of the `class` keyword in JavaScript 2015 helped, but classes, and specifically the `this` keyword, still surprise people Java programmers because they work very differently.
+Object-orientation (OO) in JavaScript is a bit awkward. Introduction of the `class` keyword in JavaScript 2015 helped, but classes, and specifically the `this` keyword, still surprise Java programmers because they work very differently.
 
-[Here is a great blog from Kent C. Dodds which highlights this point](https://kentcdodds.com/blog/classes-complexity-and-functional-programming).
+[Here is a great blog post from Kent C. Dodds which highlights this point](https://kentcdodds.com/blog/classes-complexity-and-functional-programming).
 
 <h3 id='enter-page-modules'>Enter Page Modules</h3>
 
@@ -55,13 +55,13 @@ _With the move to functional programming, we are going to lose not only **inheri
 
 <Highlighter code={`// In the HomePage module (HomePage.js or HomePage/index.js)
 export function login (email, password) {
-  //...
+  // code here...
 }\n
 export function logout () {
-  //...
+  // code here...
 }\n
 export function search (criterion) {
-  // ...
+  // code here...
 }`} />
 
 This module can then be imported into your tests or other modules and used as below:
@@ -101,7 +101,7 @@ Common functionality required by **specs** can be added as Cypress **custom comm
 
 <Highlighter code={`Cypress.Commands.add('login', (username, password) => {
     cy.get('#username').type(username)
-    //...
+    // code here...
 })`} />
 
 The `Cypress.Commands.add` function takes the _name_ of the custom command as the first argument, and a _function_ as the second argument.
@@ -110,8 +110,8 @@ Now we can use that name to call the custom command in any spec:
 
 <Highlighter code={`describe('Login Page', () => {
   it('User can login', () => {
-    cy.login('prateek', '123456')
-    // ...
+    cy.login('prateek', '123456') // NOT a good password :-)
+    // code here...
   })
 })`} />
 
@@ -129,17 +129,17 @@ Now, consider the code below that uses **inheritance** (don't do this):
 
 Inheritance is actually a form of &ldquo;object composition&rdquo;. It is the form that binds the objects most tightly, hence it is the one to be most avoided, if possible.
 
-Here we are using inheritance to provide for code reuse. There is no separate `Person` object to which `Employee` refers. `Employee` simply inherits the properties (and methods, if any) of the `Person` object, so, for example, the `fullName` getter is available both within `Employee` (as in the `toString` method) and on instances of `Employee`.
+Here we are using inheritance to provide for code reuse. There is no separate `Person` object to which `Employee` refers. `Employee` simply inherits the properties (and methods, if any) of the `Person` object, so, for example, the `fullName` getter is available both within `Employee` (note the use of it in the `toString` method) and on instances of the `Employee` class.
 
-The same functionality could be achieved using **composition**. There are three common ways to compose objects in JavaScript: aggregation, delegation, and concatenation.
+The same functionality could be achieved using **composition**. There are three common ways to compose objects in JavaScript: **aggregation**, **delegation**, and **concatenation**.
 
-**Aggregation** preserves the objects that we're composing (aggregating). Here, an `Employee` is simply a wrapper around a `Person` that adds an employee `id` property. A key feature of aggregation is that the `Person` object retains its integrity and we can extract it from the `Employee` object:
+**Aggregation** _preserves_ the objects that we're composing (i.e., aggregating). Here, an `Employee` is simply a wrapper around a `Person` that adds an employee `id` property. A key feature of aggregation is that the `Person` object retains its integrity and we can extract it from the `Employee` object:
 
 <CodeBlock {...compositionByAggregationSource} />
 
 **Delegation** is similar, except we do not inject the `Person` into the `Employee`, so the `Person` is not directly visible in the `Employee` and we can't extract the `Person` back out again as easily.
 
-However, the properties of the `Person` are directly accessible from within the `Employee`, and if we mutate the `Person` (which we won't, right?), then those changes are immediately visible in the `Employee` that delegates to that person.
+However, the properties of the `Person` are directly accessible from within the `Employee`, and if we mutate the `Person` (which we won't, right?), then those changes are immediately visible in the `Employee` that delegates to that `Person` object.
 
 To pull the `Person` back out, we've got to get it from the prototype: `Object.getPrototypeOf(employee)`.
 
@@ -163,7 +163,7 @@ In our inheritance example above, `Person` provided a `fullName` getter&mdash;a 
 
 The reason many people give for using Page Objects is that they encapsulate the complexity of the UI and the locators, which helps with reusability and making the tests more readable. But what is the tradeoff? (There is _always_ a tradeoff.) And is there a better way?
 
-Note: For these examples I am using the [Cypress TodoMVC Example Repo](https://github.com/cypress-io/cypress-example-todomvc) and refactoring a few tests.
+Note: For these examples we are using the [Cypress TodoMVC Example Repo](https://github.com/cypress-io/cypress-example-todomvc) and refactoring a few tests.
 
 Consider this typical Cypress example:
 
@@ -202,7 +202,7 @@ Our declarative second example is far more readable, which means much lower cogn
 
 So where can we find our `addTodo`, `getTopTodoFromList`, and `getTodoLabel` functions? They're nicely tucked away in our `TodoUtil.js` or `TodoUtil/index.js` file:
 
-<Highlighter code={`// TodoUtil.js
+<Highlighter code={`// TodoUtil.js or TodoUtil/index.js
 export const addTodo = name =>
   cy
     .get('.new-todo')
@@ -218,7 +218,7 @@ export const getTodoLabel = todo =>
 
 This is where we hide the imperative code. At some low level, we will always need to tell the computer **how** to do things. But if we abstract this code into library or utility functions with **concise, clear names**, then our actual code is as easy to read as plain English. That is a major benefit of working in a **declarative** style.
 
-Now let's look at an update scenario.
+Now let's look at an update scenario:
 
 <Highlighter code={`import {addTodo, getTodoLabel, updateTodo} from './TodoUtil'\n
 describe('Todo Application', ()=> {
@@ -389,7 +389,7 @@ In the above example, our test creates user flows by calling loosely coupled ste
 
 Need another example of how loosely coupled steps reduce complexity? Consider the typical `LoginPage` class below:
 
-(The business requirement is that on successful login the user is redirected to the Home Page and on unsuccessful login, the user stays on the Log In page.)
+(The business requirement is that on successful login the user is redirected to the Home Page and on unsuccessful login, the user stays on the Login page.)
 
 <Highlighter code={`// This is Java, not JavaScript
 class LoginPage {
