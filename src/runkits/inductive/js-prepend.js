@@ -1,4 +1,4 @@
-const code = `const { prepend } = require('ramda')
+const code = `import { prepend } from 'ramda'
 
 const nums = [1, 2, 3]
 

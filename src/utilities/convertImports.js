@@ -1,6 +1,6 @@
 export default function convertImports (str) {
   return str.replace(
     /import (.+) from '(.+)'/g,
-    (a, b, c) => `// ${a}\nconst ${b} = require('${c}')`
+    (a, b, c) => `// ${a}\nconst ${b} = require('${c}') // runkit don't import!`
   )
 }

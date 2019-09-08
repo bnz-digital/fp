@@ -1,4 +1,4 @@
-const code = `const { curry } = require('ramda')
+const code = `import { curry } from 'ramda'
 
 const doSomeArithmetic = curry((a, b, c, d) => a + b * c - d)
 

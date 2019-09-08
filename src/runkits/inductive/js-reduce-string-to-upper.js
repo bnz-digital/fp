@@ -1,4 +1,4 @@
-const code = `const { keys, reduce, toUpper } = require('ramda')
+const code = `import { keys, reduce, toUpper } from 'ramda'
 
 const bob = {
   name: 'Bob',

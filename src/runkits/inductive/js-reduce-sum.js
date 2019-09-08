@@ -1,4 +1,5 @@
-const code = `const { add, reduce } = require('ramda') // add(1, 2) returns 3
+const code = `// add(1, 2) returns 3
+import { add, reduce } from 'ramda'
 
 const nums = [1, 2, 3, 4, 5]
 

@@ -1,4 +1,4 @@
-const code = `const { filter } = require('ramda')
+const code = `import { filter } from 'ramda'
 
 const names = [
   'Bob', 'Carol', 'Ted', 'Alice', 'Samson', 'Delilah'

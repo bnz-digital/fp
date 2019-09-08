@@ -1,5 +1,5 @@
 const code = `// Ramda's double underscore __ works like the _ in FP
-const { __, curry } = require('ramda')
+import { __, curry } from 'ramda'
 
 const doSomeArithmetic = curry((a, b, c, d) => a + b * c - d)
 

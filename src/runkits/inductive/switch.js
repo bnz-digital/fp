@@ -1,4 +1,4 @@
-const code = `const { sort } = require('ramda')
+const code = `import { sort } from 'ramda'
 
 function selectComparator (type) {
   switch(type) {

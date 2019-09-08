@@ -1,4 +1,4 @@
-const code = `const { map } = require('ramda')
+const code = `import { map } from 'ramda'
 
 const squares = [1, 4, 9, 16, 25]
 

@@ -1,4 +1,4 @@
-const code = `const { keys, reduce, toUpper } = require('ramda')
+const code = `import { keys, reduce, toUpper } from 'ramda'
 
 // Takes same three parameters as reduce, but last is an object
 const reduceOverObject = (f, acc, obj) => reduce(

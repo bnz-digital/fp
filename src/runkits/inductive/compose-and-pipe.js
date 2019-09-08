@@ -1,4 +1,4 @@
-const code = `const { __, add, compose, divide, multiply, pipe, subtract } = require('ramda')
+const code = `import { __, add, compose, divide, multiply, pipe, subtract } from 'ramda'
 
 // The hard-to-read way
 const doTheMathNested = x => divide(

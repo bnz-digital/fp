@@ -1,4 +1,4 @@
-const code = `const { zip } = require('ramda')
+const code = `import { zip } from 'ramda'
 
 const digits = [1, 2, 3, 4, 5, 6]
 const numerals = [

@@ -1,4 +1,4 @@
-const code = `const { concat } = require('ramda')
+const code = `import { concat } from 'ramda'
 
 const things = ['a', 'b', 'c']
 const moreThings = ['d', 'e']

@@ -1,4 +1,4 @@
-const code = `const { __, add, curry, map, pipe, reduce, tap } = require('ramda')
+const code = `import { __, add, curry, map, pipe, reduce, tap } from 'ramda'
 
 const binaries = ['1', '100', '1001', '10000', '11001']
 

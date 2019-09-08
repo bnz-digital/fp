@@ -1,4 +1,4 @@
-const code = `const { remove } = require('ramda')
+const code = `import { remove } from 'ramda'
 
 const names = [
   'Bob', 'Carol', 'Ted', 'Alice', 'Samson', 'Delilah'

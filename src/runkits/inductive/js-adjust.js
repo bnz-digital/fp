@@ -1,4 +1,4 @@
-const code = `const { adjust } = require('ramda')
+const code = `import { adjust } from 'ramda'
 
 const names = [
   'Bob', 'Carole', 'Ted', 'Alice', 'Samson', 'Delilah'

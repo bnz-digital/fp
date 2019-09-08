@@ -1,4 +1,4 @@
-const code = `const { map, reduce } = require('ramda')
+const code = `import { map, reduce } from 'ramda'
 
 // As with map, we take a function and an array to apply it to
 const reduceMap = (f, arr) => reduce(

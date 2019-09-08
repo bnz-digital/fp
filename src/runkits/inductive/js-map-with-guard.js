@@ -1,4 +1,4 @@
-const code = `const { map, toUpper } = require('ramda')
+const code = `import { map, toUpper } from 'ramda'
 
 const colours = ['red', 'green', 'blue']
 

@@ -1,4 +1,4 @@
-const code = `const { curry } = require('ramda')
+const code = `import { curry } from 'ramda'
 
 const nested = [[1, 2, 3], [4, 5], [6, 7, 8]]
 const deeplyNested = [1, [2, [3, [4, [5, [6]]]]]]

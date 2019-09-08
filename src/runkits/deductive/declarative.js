@@ -1,5 +1,5 @@
 const code = `// This is a much better way to code
-const { map } = require('ramda')
+import { map } from 'ramda'
 
 const nums = [1, 2, 3, 4, 5]
 const square = x => x * x

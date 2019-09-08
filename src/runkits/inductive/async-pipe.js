@@ -1,4 +1,4 @@
-const code = `const { otherwise, pick, pipe, then } = require('ramda')
+const code = `import { otherwise, pick, pipe, then } from 'ramda'
 
 const makeQuery = email => ({ query: email })
 const useDefault = () => ({

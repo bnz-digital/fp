@@ -1,4 +1,4 @@
-const code = `const { all } = require('ramda')
+const code = `import { all } from 'ramda'
 
 const tests = ['Bob', 'Sally', 'Samuel', 'Ruth']
 

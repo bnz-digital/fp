@@ -1,4 +1,4 @@
-const code = `const { head, tail } = require('ramda')
+const code = `import { head, tail } from 'ramda'
 
 const nums = [1, 2, 3, 4, 5]
 

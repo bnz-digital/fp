@@ -1,4 +1,4 @@
-const code = `const { adjust, toUpper } = require('ramda')
+const code = `import { adjust, toUpper } from 'ramda'
 
 const upcaseThirdElement = adjust(2, toUpper)
 

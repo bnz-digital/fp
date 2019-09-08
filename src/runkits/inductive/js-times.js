@@ -1,4 +1,4 @@
-const code = `const { identity, times } = require('ramda')
+const code = `import { identity, times } from 'ramda'
 
 // Ramda's times takes a function and a number n
 // Calls the function n times passing it 0, 1, 2, etc. (the index)

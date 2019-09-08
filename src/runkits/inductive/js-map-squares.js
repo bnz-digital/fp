@@ -1,5 +1,4 @@
-const code = `// Sadly, runkit does not support import yet
-const { map } = require('ramda') // The old-fashioned way
+const code = `import { map } from 'ramda'
 
 const nums = [1, 2, 3, 4, 5]
 
