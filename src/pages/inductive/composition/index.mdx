@@ -47,15 +47,19 @@ But this means that the only way to fill the remaining arguments is with default
 
 But if we can apply fewer arguments than there are parameters to a function, and get back a function that remembers those arguments and accepts the remaining parameters, then **we want the parameter that will be &ldquo;chained&rdquo; to be the _last_ parameter**, not the first. We'll see this when we get to using `pipe` and `compose` below.
 
-**This is where the Underscore and Lodash libraries went wrong** (fixed in Lodash/FP), and what Ramda and Sanctuary got so right.
+**This is where the Underscore and Lodash libraries went wrong**&mdash;fixed in <OffsiteLink href='https://github.com/lodash/lodash/wiki/FP-Guide'>Lodash/FP</OffsiteLink>&mdash;and what Ramda and Sanctuary got so right. As you can see from the butt-ugly documentation for the FP module (compared to the love given to the non-FP module), the folks at Lodash _still can't admit that they did it all wrong_. Sigh...
 
 In Underscore and Lodash, the argument we want to pass down the pipe is passed as the **first** parameter, which means there is no way to set any remaining parameters, except by default value. Underscore and Lodash get around this by forcing you to add a `chain` function call&mdash;an absolute code _stink_&mdash;and they expect you to pipe function calls by dotting them together.
+
+_Mit der Dummheit kämpfen Götter selbst vergebens_ &ndash; Friedrich Schiller.
+
+Against stupidity the gods themselves contend in vain.
 
 Ramda and Sanctuary, in contrast, allow you to &ldquo;partially apply&rdquo; functions so that only the last parameter remains unfilled, and then use `pipe` or `compose` to chain them together to create a new function that takes any number of parameters, passes the data down the chain of functions, and returns the final result.
 
 Enough chat! Let's cut to the chase!
 
-<h3 id='curry'>Use <code>curry</code> to make functions that make functions</h3>
+<h3 id='curry'>Use <code>curry</code> to make functions that <em>make functions</em></h3>
 
 The `curry` function takes a function that expects one or more parameters and turns it into a function that allows partial application of those parameters, ideally in any combination (but preserving order). Like this:
 
@@ -77,7 +81,7 @@ With a good build system, e.g., Webpack, you should be able to &ldquo;tree shake
 
 Now to see what we can do with &ldquo;curried&rdquo; functions.
 
-(Note: Pretty much every function included in Ramda is pre-curried, so you can partially apply any of them. And you have the `curry` function to curry your own functions. Just remember, as Stan Lee reminds us, that with great power comes great responsibility.)
+(Note: Pretty much every function included in Ramda is pre-curried, so you can partially apply any of them. And you have the `curry` function to curry your own functions. Just remember, as Stan Lee reminds us, that _with great power comes great responsibility_.)
 
 <h3 id='pipe'>Use <code>pipe</code> or <code>compose</code> to combine functions into pipelines</h3>
 
@@ -131,8 +135,8 @@ In the simplest sense, the **state** of your application is anything that could 
 
 When we work in a functional paradigm, our concerns about state are twofold:
 
-1. Do not destroy state: make a new copy
-1. Do not share state between processes: keep processes isolated
+1. Do not overwrite state: make a new copy&mdash;overwriting state is destroying history
+1. Do not share state between processes: keep processes isolated&mdash;shared state leads to race conditions and bugs
 
 We can't always keep these promises, but we should do our utmost to live up to these best practices.
 

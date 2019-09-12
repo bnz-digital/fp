@@ -43,6 +43,7 @@ import nonTailSource from '../../../runkits/inductive/non-tail'
 import recursiveSquaresSource from '../../../runkits/inductive/recursive-squares'
 import recursiveSumLoggedSource from '../../../runkits/inductive/recursive-sum-logged'
 import recursiveSumSource from '../../../runkits/inductive/recursive-sum'
+import sumComparisonSource from '../../../runkits/inductive/sum-comparison'
 
 ## Loops are so last millennium!
 
@@ -50,11 +51,11 @@ If you've done much programming, then you've almost certainly used looping const
 
 * `for`: repeat a code block a specified number of times
 * `for/in`: repeat a code block for each of the properties of an object
-* `for/of`: repeat  a code block for each values in an &ldquo;iterable&rdquo; object, such as an array
+* `for/of`: repeat  a code block for each value in an &ldquo;iterable&rdquo; object, such as an array
 * `while`: repeat a block of code while a specified condition is true
 * `do/while`: same as while, but always applies the code block at least once
 
-If you think these are easy to use, then you're fooling yourself. You've just been using them so long that you've forgotten how confusing they were the first time you saw them. Consider the `for` loop:
+If you think these are easy to use, then you're fooling yourself. You've just been using them for so long that you've forgotten how confusing they were the first time you saw them. Consider the `for` loop:
 
 <CodeBlock {...badLoopSource} theme='dark' warn={() => <small>No variables were harmed in the making of this code.</small>} />
 
@@ -84,7 +85,7 @@ So gnarly is the `for` construct that later versions of JavaScript have introduc
 
 <CodeBlock {...lessBadLoopSource} theme='dark' warn={() => <small>The only thing necessary for the triumph of evil is for good men to do nothing.</small>} />
 
-Ha, ha. Yeah. You thought that `for/in` would pass you each item in the array one at a time? Seems obvious, but think again. It passes the _index_. So we're back to indexes! Let's try that again:
+Ha, ha. Yeah. You thought that `for/in` would pass you each _value_ in the array one at a time? Psych! Seems obvious, but think again. It passes the _index_. So we're back to indexes! Let's try that again:
 
 <CodeBlock {...lessBadLoopFixedSource} theme='dark' warn={() => <small>The greatest trick the Devil ever pulled was convincing the world he didn’t exist.</small>} />
 
@@ -114,7 +115,7 @@ We can do the same thing by creating a function that takes our list and our runn
 
 That works. Of course, we could have written the function more simply this way:
 
-<Highlighter code={nonTailSource.code} />
+<Highlighter code={nonTailSource.code} theme='dark' />
 
 So why not do it that way? Well, let's see...
 
@@ -146,12 +147,16 @@ The first example above&mdash;`return sum(tail, total + head)`&mdash;just makes 
 
 So this version adds in the order you'd expect: `0 + 1 + 2 + 3 + 4 + 5`. Each call completes by making the next call, so the calls can replace each other on the stack. There's nothing to unwind. When the last call returns, that's our expected value.
 
+Compare them:
+
+<CodeBlock {...sumComparisonSource} />
+
 **Each of the three lines of our function block has a specific purpose**.
 
 For a function calling itself to work, we must observe two rules:
 
-1. We must have a <OffsiteLink href='https://en.wikipedia.org/wiki/Recursion#base_case'>base case</OffsiteLink> where the function returns something _without_ calling itself.
-1. Each time we call the function from within the function we must call it with _different_ arguments, _and the arguments must approach the base case!_
+1. We must have a <OffsiteLink href='https://en.wikipedia.org/wiki/Recursion#base_case'>base case</OffsiteLink> where the function returns something _without_ calling itself again. This stops the recursion.
+1. Each time we call the function from within the function we must call it with _different_ arguments, _and the arguments must approach the base case!_ Otherwise we never get to the base case and the recursion never stops.
 
 Let's look at the lines one at a time:
 
@@ -161,9 +166,9 @@ This is our &ldquo;base case&rdquo;. It tells our function when to **stop** call
 
 <Highlighter code={`const [head, ...tail] = nums`} startingLineNumber={4} />
 
-We are always going to operate on one element of the array at a time, so we'll need to lop the head off the array. When we next call the function, it will be on the remaining elements&mdash;the **tail**&mdash;so we need to hang on to those as well.
+We are always going to operate on one element of the array at a time, so we'll need to lop the head off the array. When we next call the function, it will be on the remaining elements&mdash;the **tail**&mdash;so we need to hang on to those as well. Don't make the mistake of calling the function recursively on the _same_ arguments (`nums`).
 
-Recall that arrays are passed by &ldquo;reference&rdquo;, which means they are not copied in but merely pointed to. So we'll want to copy the tail and use the copy rather than mutating the original list. Destructuring and the `...` (rest) syntax achieves that for us.
+Recall that arrays are passed by &ldquo;reference&rdquo;, which means they are not copied in but merely pointed to. So we'll want to **copy the tail** and use the copy rather than mutating the original list. Destructuring and the `...` (rest) syntax achieves that for us.
 
 When we do:
 
@@ -174,7 +179,7 @@ Then:
 * variable `head` has value `1`
 * variable `tail` has value `[2, 3, 4, 5]`.
 
-And these are new values in new variables. Our initial array remains unchanged.
+And these are **new values** in **new variables**. Our initial array remains unchanged.
 
 Finally, we do the work in our third line of code:
 
@@ -209,7 +214,7 @@ When we wrote our `sum` function, we took a list of items and reduced it down to
 But we want our `reduce` function to be generic, so we'll want to pass it the code block. How do we pass code blocks around in functional JavaScript? **Functions**, of course. So our `reduce` function will take:
 
 1. A **function** to be applied to the accumulator and each item of the list in turn
-1. The starting accumulator
+1. The starting accumulator (e.g., running total)
 1. The list of values
 
 And we can see that the function we provide as our first argument must:
@@ -223,6 +228,8 @@ For example, if we want to sum up a list of numbers, the function we pass to `re
 
 <Highlighter code={`(accumulator, value) => accumulator + value`} showLineNumbers={false} />
 
+The above example takes our running total (the `accumulator`) and the next value in the list (`value`) and returns the sum (`accumulator + value`), which becomes the new running total (`accumulator`), which is then passed to the next call to the function along with the next value from the list. And so on until we run out of values in the list. Then the final total is returned.
+
 When we `map` our list to the squares of the numbers, things get even simpler. We know we're just mapping from one array to another of equal size, right? So our starting accumulator is always `[]`. We don't really need to pass it to our function as it never changes. Thus, we can create a `map` function that:
 
 * Takes as parameters:
@@ -232,17 +239,17 @@ When we `map` our list to the squares of the numbers, things get even simpler. W
 
 Modern JavaScript provides functions such as `map` and `reduce` (and many more) already implemented for you. You just need to supply the right arguments.
 
-The built-in versions work in a very OO way: You call the `map` _method_ on the array (list) you want to map, pass it the function you want to apply to each item in turn, and it returns a _new_ array of the results.
+The built-in versions work in a very OO way: You call the `map` **method** on the array (list) you want to map, pass it the function you want to apply to each item in turn, and it returns a _new_ array of the results.
 
 Similarly, you call the `reduce` method on the array you want to reduce in some way, pass it the function (that takes the accumulator and each item in turn and returns a new accumulator value), and pass it the starting accumulator. It returns the final accumulator value, whatever that is.
 
-**But there is an even better way to do this functionally by pulling the methods out into their own functions, and passing the lists they operate on as an argument, rather than as the caller of a method.**
+**But there is an even better way to do this functionally by pulling the methods out into their own functions, and passing the lists they operate on as a parameter&mdash;the _last_ parameter&mdash;rather than as the caller of a method.**
 
 For this purpose, there are numerous libraries out there, the most popular of which is <OffsiteLink href='https://github.com/lodash/lodash/wiki/FP-Guide'>Lodash</OffsiteLink>. (But only use the new `lodash/fp` module! The original module is broken.).
 
-The <OffsiteLink href='https://ramdajs.com/'>Ramda</OffsiteLink> library is much better, having been built (mostly) correctly from the getgo. The best, however, is <OffsiteLink href='https://sanctuary.js.org/'>Sanctuary</OffsiteLink>, which is <OffsiteLink href='https://sanctuary.js.org/#overview'>scrupulously correct</OffsiteLink>, but this also makes it difficult to use in production. There is no slack at all. You must be _meticulous_.
+The <OffsiteLink href='https://ramdajs.com/'>Ramda</OffsiteLink> library is much better, having been built (mostly) correctly from the getgo. The best, however, is <OffsiteLink href='https://sanctuary.js.org/'>Sanctuary</OffsiteLink>, which is <OffsiteLink href='https://sanctuary.js.org/#overview'>scrupulously correct</OffsiteLink>, but this also makes it difficult to use in production. There is no slack at all. You must be _meticulous_. Ramda is probably a good middle ground.
 
-<TerminologyBlock>Sanctuary uses the nefarious <OffsiteLink href='https://sanctuary.js.org/#maybe-type'>Maybe</OffsiteLink> and <OffsiteLink href='https://sanctuary.js.org/#either-type'>Either</OffsiteLink> <OffsiteLink href='https://en.wikipedia.org/wiki/Monad_(functional_programming)'>monads</OffsiteLink>, which are wonderful but take some getting used to for sure. They explain why <OffsiteLink href='https://sanctuary.js.org/#overview'>not even Ramda</OffsiteLink> meets their exacting standards (Lodash doesn't even warrant a mention).<br /><br />But for the hardcore...</TerminologyBlock>
+<TerminologyBlock>Sanctuary uses the nefarious <OffsiteLink href='https://sanctuary.js.org/#maybe-type'>Maybe</OffsiteLink> and <OffsiteLink href='https://sanctuary.js.org/#either-type'>Either</OffsiteLink> <OffsiteLink href='https://en.wikipedia.org/wiki/Monad_(functional_programming)'>monads</OffsiteLink>, which are wonderful but take some getting used to for sure. They explain why <OffsiteLink href='https://sanctuary.js.org/#overview'>not even Ramda</OffsiteLink> meets their exacting standards (Lodash doesn't even warrant a mention).<br /><br />But for the hardcore... seek Sanctuary.</TerminologyBlock>
 
 For most cases, Ramda is your best bet unless you are already committed to something else. Below we examine the most common functions/methods available and show how they can be used both in vanilla JavaScript and in Ramda.
 
@@ -252,9 +259,9 @@ For most cases, Ramda is your best bet unless you are already committed to somet
 
 <h3 id='map'>Use <code>map</code> to modify each value in a list</h3>
 
-The `map` method (or function) does exactly what our `map` method above does, except abstractly: we can supply any function we like and it will be applied to each item in the list in turn, returning a new list of the &ldquo;mapped&rdquo; items.
+The `map` _function_ (or method) does exactly what our `mapSquares` function did above, except generically: we can supply any function we like and it will be applied to each item in the list in turn, returning a new list of the &ldquo;mapped&rdquo; items.
 
-In other words, to get it to _square_ each  of the numbers in our array, we need to pass it a squaring function: `x => x * x` will work:
+In other words, to get it to _square_ each  of the numbers in our array, we need to pass it a squaring function. `x => x * x` will work:
 
 <CodeBlock {...jsMapSquaresSource} warn={() => <small>Look, ma! No loops!</small>} />
 
@@ -276,7 +283,7 @@ So we can use conditionals or anything we like really, modifying some, all, or n
 
 We've already talked about `reduce` above. It takes a function, a starting accumulator, and the list to process. It returns the final accumulator.
 
-Above we used `reduce` first to add a list of numbers together to get a sum. Let's do it again using the Array's `reduce` method and Ramda's `reduce` function:
+Above we used `reduce` first to add a list of numbers together to get a sum. Let's do it again using both the Array's `reduce` method and Ramda's `reduce` function:
 
 <CodeBlock {...jsReduceSumSource} />
 
@@ -292,7 +299,7 @@ The above example isn't the greatest. We reach outside the `reduce` function to 
 
 <CodeBlock {...jsReduceOverObjectSource} />
 
-Now we're beginning to see the advantage of Ramda. Our new `reduceOverObject` function takes a function and passes it _three_ arguments: the current accumulator, the current key, and the current value. And we pass it the object rather than just the array of keys.
+Now we're beginning to see the advantage of Ramda. Our new `reduceOverObject` function takes a function and passes it _three_ arguments: the current accumulator, the current key, and the current value. And we pass it the entire object rather than just an array of the object's keys. Now our function operates only on its parameters and returns a _new_ object as its return value.
 
 Sweet. Everything is neatly contained in my `reduceOverObject` function. Consider how clean and readable this line is:
 
@@ -308,13 +315,15 @@ Functional code, especially with reuse, is _simpler_ than the OO equivalent. Tha
 
 <h3 id='filter'>Use <code>filter</code> to choose particular values from a list</h3>
 
-The `filter` method or function takes a function that returns a Boolean value and a list of items. It applies the function to each item in the list in turn. If the value returned is `true`, then that item is included in the output list. If it is `false`, then it isn't included. Remember, the output is a copy.
+The `filter` method or function takes a function as the first parameter and a list of items to operate on as the second. The function passed as the first argument should accept a value from the list and return a Boolean: `true` if that value should be included in the output, `false` if not. 
+
+Remember, the output of `filter` is a _new_ array containing only those items that passed the test.
 
 Suppose we had a list of names and we wanted to find all the names at least 5 letters long. We could do that easily with the `filter` method:
 
 <CodeBlock {...jsFilterSource} />
 
-Who needs loops? Not us.
+Who needs loops? Not we.
 
 <h3 id='adjust'>Use <code>adjust</code> to update a single value in a list</h3>
 
@@ -411,35 +420,37 @@ As you can see, while it can be done in vanilla JS, the Ramda `times` function i
 
 **Note**: The `_` (underscore) is often used in functional programming to indicate a value that we don't care about. In the above examples, the Array `map` method passes the index as the _second_ argument to the function. Here we only care about the index, not the `null` that is the value at that index, so we use `(_, i)` to get the index of the element and ignore the value at that index.
 
+It's a bit tricky to just use an underscore (`_`), but, ha, ha, Ramda to the rescue. Ramda provides a <OffsiteLink href='https://ramdajs.com/docs/#__'>double-underscore</OffsiteLink> (`__`) that you can import and use in the same way with your Ramda functions.
+
 <h3 id='head-tail'>Use <code>head</code> and <code>tail</code> to destructure a list</h3>
 
 Remember that the `head` of a list is just the first element in the list. If it's a list of numbers, then the head is a number; if a list of strings, then the head is a string.
 
-The `tail`, in contrast, is _the rest of the array_, so it is **always** an array of the same type as the original array, just without the head element. Note: the `tail` can be _empty_, but it is never undefined.
+The `tail`, in contrast, is _the rest of the array_, so it is **always** an array of the same type as the original array, just without the head element. Note: the `tail` can be _empty_, but it is never `undefined`.
 
 If we try to get the `head` of an empty array, it will be `undefined`.
 
 <CodeBlock {...jsHeadTailSource} />
 
-Frankly, this is one area where Ramda's functions don't always add much value. It is usually easier to use destructuring. Where Ramda's `head` and `tail` functions are very useful is in pipelined functions, discussed in <Link to='/inductive/composition/' aria-label='Composition'>We can has pipelines!</Link>
+Frankly, this is one area where Ramda's functions don't always add much value. As with `prepend` and `append`, it is usually easier to use destructuring. Where Ramda's `head` and `tail` functions are very useful is in pipelined functions, discussed in <Link to='/inductive/composition/' aria-label='Composition'>We can has pipelines!</Link>
 
 <h3 id='all'>Use <code>all</code>, <code>any</code>, or <code>none</code> to test a list</h3>
 
-The `all` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed returns true **every time** it is applied to an item in the list.
+The `all` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed **returns `true` for each and every item in the list**.
 
 The vanilla JS equivalent is the Array `every` method.
 
 <CodeBlock {...jsAllSource} />
 
-The `any` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed returns true **at least once** when it is applied to an item in the list.
+The `any` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed **returns `true` for at least one item in the list**.
 
 The vanilla JS equivalent is the Array `some` method.
 
 <CodeBlock {...jsAnySource} />
 
-The `none` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed returns **false** every time it is applied to an item in the list.
+The `none` takes a function and a list, applies the function to each item in the list, and returns `true` _if and only if_ the function passed **returns `false` for every item in the list** .
 
-The vanilla JS equivalent is the Array `every` method, but with the function changed to return `true` when the condition is **not** met, which is pretty non-intuitive. But there doesn't appear to be a true equivalent of `none`
+The vanilla JS equivalent is the Array `every` method, but with the function changed to return `true` when the condition is **not** met, which is pretty non-intuitive. But there doesn't appear to be a true vanilla JS equivalent of `none`.
 
 <CodeBlock {...jsNoneSource} />
 

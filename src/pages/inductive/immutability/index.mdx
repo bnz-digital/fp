@@ -26,7 +26,7 @@ import spreadObjectSource from '../../../runkits/inductive/spread-object'
 
 One fun &ldquo;feature&rdquo; of JavaScript is that variables are not <OffsiteLink href='https://en.wikipedia.org/wiki/Type_system#Static_type_checking'>statically typed</OffsiteLink>. That means not only that we can reassign variables or mutate their values, but also that we can change their _type_.
 
-We know what you're thinking! Whoa, that's insane, right? We can not only mutate the value of a variable but also the **type**? No way!
+We know what you're thinking! Whoa, that's insane, right? We can mutate not only the value of a variable but also the **type**? No way!
 
 But we kid you not, JavaScript actually considers this a _feature_. Go figure.
 
@@ -45,7 +45,7 @@ How do we manage this? Read on.
 
 ### <span id='use-const-exclusively'>Use <code>const</code> exclusively!</span>
 
-As a start, we prevent variables from being reassigned. We do this with `const`, a misnamed keyword. It is misnamed because it does not actually create a constant, but only prevents _re-assignment_. More on this below.
+As a start, we prevent variables from being **reassigned**. We do this with `const`, a misnamed keyword. It is misnamed because it does not actually create a constant, but only prevents _re-assignment_. More on this below.
 
 Here is `const` in action. Note: there is never a good reason to use `let` or, heaven forbid, `var` in your applications. (If you're building a library, on the other hand, then let's talk.)
 
@@ -86,7 +86,7 @@ Think about it. Suppose I use `let` to create a variable `x` and assign it value
 
 Now a bit later, I assign it a new value. Say, `5`. OK, what was the previous value?
 
-You might remember, _but your code doesn't_, because you _overwrote it_. Now why you wanna destroy that state? What did it ever do to you?
+You might remember, _but your code doesn't_, because you **overwrote it**. Now why you wanna destroy that state? What did it ever do to you?
 
 In functional JavaScript we keep track of state, in general, by making **new copies** when we want to change something. This means that if I go back to look at the value of `x` for any reason, then it is still `3`. My `newX` is `5`.
 
@@ -98,7 +98,7 @@ Speaking of state, one of the reasons we keep our variables immutable and our fu
 
 Sharing state is a good way to create difficult-to-find bugs. And it makes parallel processing difficult. When each process is responsible for its own state, life is sweet.
 
-So think about state whenever you write code. After all, every application manages some kind of state. If nothing ever changed, then what would be the point of the app?
+So think about state whenever you write code. After all, every application manages some kind of state. If nothing ever changed, then what would be the point of the app? Well, we suppose you could stare at it all day like a piece of art, but surely art suffices for that purpose...
 
 ### <span id='use-destructuring-to-make-copies'>Use destructuring and the rest/spread operators to make copies</span>
 
@@ -109,6 +109,8 @@ The **rest** syntax and the **spread** syntax look the same. Both use an ellipsi
 Check it out:
 
 <CodeBlock {...restArraySource} />
+
+See if you can make heads or tails out of that. (Yes, that's a joke.)
 
 Remember that JavaScript arrays _preserve ordering_. You can think of the left-hand side of the assignment operator as a &ldquo;pattern&rdquo; or &ldquo;mask&rdquo; for the right-hand side. By placing `x` in the position of the first element of the array, it is assigned the first element of our `[1, 2, 3, 4, 5]` array, which is `1`.
 
@@ -140,7 +142,7 @@ And here with an object:
 
 The ordering is important. As you can see from the code example above, when overwriting, whichever comes _last_, wins.
 
-One other common use for the **rest** syntax is to collect arguments into an array. With the **rest** syntax, the variable name with the `...` _must come last_. It's greedy. If you put it first, it will collect everything and there won't be any left:
+One other common use for the **rest** syntax is to collect arguments into an array. With the **rest** syntax, the variable name with the `...` _must come last_. It's greedy. If you put it first, it will collect everything and there won't _be_ any left:
 
 <CodeBlock {...restArgsSource} />
 

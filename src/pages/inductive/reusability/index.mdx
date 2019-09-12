@@ -98,13 +98,13 @@ Here is where FP starts to come into its own. If we can pass a function as an ar
 
 This is best explained with an example. The JavaScript `Array` object has a `sort` method. The default is to sort in ascending order. This uses a &ldquo;comparator&rdquo; function that takes two elements from the array and compares them.
 
-If the elements are of equal priority, meaning their ordering doesn't matter, then the comparator function returns **zero**. If the first argument should come first in the list, then the comparator returns a **positive** number; if it should come second, it returns a **negative** number. So our default comparator looks like this:
+If the elements are of equal priority, meaning their ordering doesn't matter, then the comparator function returns **zero**. If the first argument should come before the second, then the comparator returns a **positive** number; if it should come _after_ the second argument (reversing the order), then it returns a **negative** number. So our default comparator for an ascending (a-z) sort looks like this:
 
 <Highlighter code='(a, b) => a - b' showLineNumbers={false} />
 
-But what if we want to sort in descending order? Well, we could make our `sort` method take a constant, such as `ASC` or `DESC` and switch up the comparator function so on `DESC` it was `(a, b) => b - a`, right? But our options are pretty limited here, no? For example, what if we wanted to sort a list of strings by _the first uppercase letter in the string?_ Uh, oh.
+But what if we want to sort in descending (z-a) order? Well, we could make our `sort` method take a constant, such as `ASC` or `DESC` and switch up the comparator function so on `DESC` it was `(a, b) => b - a`, right? But our options are pretty limited here, no? For example, what if we wanted to sort a list of strings by _the first uppercase letter in the string?_ Uh, oh.
 
-So the vanilla JavaScript `sort` method allows us to pass it our own comparator function. Items in the list (array) will be passed to the comparator two at a time, and  the comparator should return a positive number (keep the ordering), 0 (doesn't matter), or a negative number (reverse the ordering). How it does that is up to us.
+So the vanilla JavaScript `sort` method allows us to **pass it our own comparator function**. Items in the list (array) will be passed to the comparator two at a time, and  the comparator should return a positive number (keep the ordering), 0 (doesn't matter), or a negative number (reverse the ordering). How it does that is up to us.
 
 Here is our example:
 
@@ -146,7 +146,7 @@ What about a list with only one number in it, such as `[5]`? Well, that's just `
 
 (Because the same input to a function always yields the same result, we can substitute `sum([])` for `0` in that last example. If `sum([])` could return different things at different times, then we could not make that substitution. This is the power of &ldquo;pure&rdquo; functions.)
 
-So if we were to take the list, `[5]` and pop the head off it (`5`) and add it to the sum of the remaining list (`[]`), then we'd get our new sum. But doesn't this work for a list of _any_ length? Isn't the sum of `[1, 2, 3]` just `1` plus the sum of `[2, 3]`, which is just `2` plus the sum of `[3]`, which is just `3` plus the sum of `[]`, which is just `0`?
+So if we were to take the list, `[5]` and pop the head off it (`5`) and add it to the sum of the remaining list (`[]`), then we'd get our new sum. But doesn't this work for a list of _any_ length? Isn't the sum of `[1, 2, 3]` just `1` plus the sum of `[2, 3]`, which is just `2` plus the sum of `[3]`, which is just `3` plus the sum of `[]` (which is `0`), hence the final sum is `3 + 0` or just `3`?
 
 <Highlighter code={`// Remember that sum takes an Array
 sum([1, 2, 3]) ===
@@ -187,7 +187,9 @@ But note that unless the outer function (our &ldquo;function factory&rdquo;) is 
 
 Of course, at some point we _must_ reach outside. We need to have input and output from our program, unless we want to **recreate the entire universe inside the program**, which might take some time (and a hell of a lot of memory). So the big exception to this rule is input-output.
 
-In pure functional programming languages, the &ldquo;impure&rdquo; I/O functionality is isolated in its own modules to avoid impurifying the rest of the code.
+(We hate to break it to you, but [Tron](https://www.youtube.com/watch?v=I9SCvkcDwA0) was _fiction_. Harsh, we know, but there you have it.)
+
+In pure functional programming languages, the &ldquo;impure&rdquo; I/O functionality is isolated in its own modules to avoid nastying up the rest of the code.
 
 In JavaScript, just make sure that **if** your function is changing something outside the function, or **if** it is affected by the state of something outside the function (other than an argument passed in), then _you know what you're doing and why_. Avoid it unless you absolutely have to do it, and then keep any &ldquo;impure&rdquo; functions isolated from the rest. Quarantine those spawn of Satan.
 
@@ -207,7 +209,7 @@ Often when programmers are just starting to work with functional JavaScript, the
 
 A &ldquo;feature&rdquo; of JavaScript is that primitive values, such as numbers, strings, and booleans, are _copied_ when they are passed as arguments to a function:
 
-<CodeBlock {...byValueSource} />
+<CodeBlock {...byValueSource} theme='dark' />
 
 As we see above, simple values are &ldquo;passed by value&rdquo;, which means they are _copied_ into the function scope. But more complex values, such as arrays and objects, are not copied. Instead, a reference to the original is passed.
 
@@ -254,7 +256,7 @@ Well, let's take it apart a little at a time. First, there's this line:
 
 This declares a function called `pipe`, assigns the first argument to a local variable called `f` (the parameters are functions, so `f` makes sense, right?), then gathers up the remaining arguments into an array of functions called `fs`.
 
-(Calling the head of a list `x` and the tail `xs`, or `y` and `ys`, or, as here, `f` and `fs` is a common way to denote the head and tail in FP. Think of it as similar to `element` and `elements`.)
+(Calling the head of a list `x` and the tail `xs`, or `y` and `ys`, or, as here, `f` and `fs` is a common way to denote the head and tail in FP. Think of it as similar to `element` and `elements`. Remember that the `head` is the first _value_ in the array while the `tail` is an _array_ of the remaining values. That's important!)
 
 We're assuming, of course, that all the arguments to `pipe` are functions, as **the point of `pipe` is to take one or more functions and return a function that applies them sequentially to a set of arguments**.
 
@@ -272,7 +274,7 @@ Next we hit the guard: `if (fs.length < 1) { return f }`. But our current `fs` h
 
 Oh, joy! But it's not as tricky as it looks at first. Because our functions _always return the same thing for the same input_, we can do some substitution, right?
 
-The first thing we know is that the value of `f` is `y => y + 5`, so we can substitute that in for `(...args)` and `f(...args)` (note that `...args` here is just `y`, right?):
+The first thing we know is that the value of `f` is `y => y + 5` (a function), so we can substitute that in for `(...args)` and `f(...args)` (note that `...args` here is just `y`, right?):
 
 <Highlighter code='return y => pipe(...fs)(y + 5)' showLineNumbers={false} />
 
@@ -282,7 +284,7 @@ We also know that the value of `fs` is `[subtract(7), multiply(10), divide(4)]`,
 
 Remember that the spread operator `...` &ldquo;spreads&rdquo; the array of functions out into individual arguments.
 
-Note that `pipe` returns a _function_, and we're calling that function with `y + 5`, which is the result of applying the first function in the pipe (`add(5)`) to `y`, whatever `y` is. 
+Note that `pipe` returns a _function_, and we're calling that function with `y + 5`, which is the result of applying the first function in the pipe (`add(5)`) to `y`, whatever `y` is. What we've done here is just substituted away one function call from our pipe.
 
 **Note: It is important to remember that `pipe` _returns a function_. We're not applying our outermost function yet, we're just nesting the four functions.)**
 
@@ -305,7 +307,7 @@ After the second call to `pipe`, we can simplify further:
 
 <Highlighter code='return y => pipe(multiply(10), divide(4))((y + 5) - 7)' showLineNumbers={false} />
 
-And further after the third call:
+Now we've substituted away _two_ functions from our pipe. And after the third call:
 
 <Highlighter code='return y => pipe(divide(4))(((y + 5) - 7) * 10)' showLineNumbers={false} />
 
@@ -313,9 +315,11 @@ And one last time:
 
 <Highlighter code='return y => (((y + 5) - 7) * 10) / 4' showLineNumbers={false} />
 
-Which means our final result is this:
+Which means our final result is this **after we've subsituted the bodies of our functions for the partially-applied function calls in the pipe**:
 
 <Highlighter code='const doTheMath = y => (((y + 5) - 7) * 10) / 4' showLineNumbers={false} />
+
+This is what `pipe` actually returns: `y => (((y + 5) - 7) * 10) / 4`. It's pretty straightforward arithmetic.
 
 So we can see that the value of `doTheMath` is a function that takes the `y` that `add(5)` is expecting, calls it with `y`, then takes the value returned from _that_ call and calls `subtract(7)` with it, and so on through the entire list of functions, returning the final result:
 
@@ -327,7 +331,7 @@ divide(4)(100) // returns 25, which is returned from doTheMath(12)`} showLineNum
 
 Combining functions together can get quite complex, but if we name the functions well, and we use pure functions that always return the same result for the same arguments, then we can substitute again and again, simplifying our code, until we see what's really happening.
 
-**Note that the _first_ function passed to `pipe` can take any number of parameters, but as each succeeding function takes as its argument the result of the previous function, all functions passed to `pipe` _after the first one_ must take only _one_ parameter.**
+**Note that the _first_ function passed to `pipe` can take any number of parameters, but as each succeeding function takes as its argument the return value of the previous function, all functions passed to `pipe` _after the first one_ must expect only _one_ parameter.**
 
 <TerminologyBlock>Our <code>pipe</code> function above is an example of <OffsiteLink href='https://en.wikipedia.org/wiki/Function_composition'>function composition</OffsiteLink>. We'll discuss composition in detail further on in this tutorial.</TerminologyBlock>
 
