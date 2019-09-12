@@ -134,7 +134,6 @@ function DeductiveLinks () {
 }
 
 function NavLinks ({ location }) {
-  console.log(`location: ${location}`)
   switch (location.pathname.split('/')[1]) {
     case 'inductive':
       return <InductiveLinks />
@@ -190,6 +189,9 @@ const Header = ({ siteTitle, location }) => {
         </h1>
         <div style={{ flexShrink: 1 }}>
           <NavLinks location={location} />
+          <span style={{ display: 'inline-block', padding: '0 0.5rem' }}>
+            {location}
+          </span>
         </div>
       </div>
     </header>
