@@ -145,7 +145,7 @@ function NavLinks ({ location }) {
 }
 
 function getColour (location) {
-  switch (location.pathname.split('/')[1]) {
+  switch (location.pathname.split('/')[1].toLowerCase()) {
     case 'inductive':
       return 'ForestGreen'
     case 'deductive':
@@ -190,7 +190,7 @@ const Header = ({ siteTitle, location }) => {
         <div style={{ flexShrink: 1 }}>
           <NavLinks location={location} />
           <span style={{ display: 'inline-block', padding: '0 0.5rem' }}>
-            {JSON.stringify(location.pathname)}
+            {JSON.stringify(location.pathname.split('/')[1].toLowerCase())}
           </span>
         </div>
       </div>
