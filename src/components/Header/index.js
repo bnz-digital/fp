@@ -134,6 +134,7 @@ function DeductiveLinks () {
 }
 
 function NavLinks ({ location }) {
+  console.log(`location: ${location}`)
   switch (location.pathname.split('/')[1]) {
     case 'inductive':
       return <InductiveLinks />
