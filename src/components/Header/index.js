@@ -190,7 +190,7 @@ const Header = ({ siteTitle, location }) => {
         <div style={{ flexShrink: 1 }}>
           <NavLinks location={location} />
           <span style={{ display: 'inline-block', padding: '0 0.5rem' }}>
-            {location}
+            {JSON.stringify(location.pathname)}
           </span>
         </div>
       </div>
