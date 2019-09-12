@@ -133,28 +133,40 @@ function DeductiveLinks () {
   )
 }
 
-function NavLinks ({ location }) {
-  switch (location.pathname.split('/')[1]) {
-    case 'inductive':
-      return <InductiveLinks />
-    case 'deductive':
-      return <DeductiveLinks />
-    default:
-      return <DefaultLinks />
+function NavLinks ({ location: { pathname = '' } = {} }) {
+  if (typeof pathname !== 'string') {
+    return <DefaultLinks />
   }
+
+  if (pathname.indexOf('inductive') > -1) {
+    return <InductiveLinks />
+  }
+
+  if (pathname.indexOf('deductive') > -1) {
+    return <DeductiveLinks />
+  }
+
+  return <DefaultLinks />
 }
 
-function getColour (location) {
-  switch (location.pathname.split('/')[1].toLowerCase()) {
-    case 'inductive':
-      return 'ForestGreen'
-    case 'deductive':
-      return 'MediumBlue'
-    case 'cypress':
-      return 'Maroon'
-    default:
-      return 'RebeccaPurple'
+function getColour ({ pathname = '' }) {
+  if (typeof pathname !== 'string') {
+    return 'RebeccaPurple'
   }
+
+  if (pathname.indexOf('inductive') > -1) {
+    return 'ForestGreen'
+  }
+
+  if (pathname.indexOf('deductive') > -1) {
+    return 'MediumBlue'
+  }
+
+  if (pathname.indexOf('cypress') > -1) {
+    return 'Maroon'
+  }
+
+  return 'RebeccaPurple'
 }
 
 const Header = ({ siteTitle, location }) => {
@@ -189,9 +201,6 @@ const Header = ({ siteTitle, location }) => {
         </h1>
         <div style={{ flexShrink: 1 }}>
           <NavLinks location={location} />
-          <span style={{ display: 'inline-block', padding: '0 0.5rem' }}>
-            {JSON.stringify(location.pathname.split('/')[1].toLowerCase())}
-          </span>
         </div>
       </div>
     </header>
